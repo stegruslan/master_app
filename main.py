@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from core.logging import setup_logging
+import models
+from api.auth import router as auth_router
 
 setup_logging()
 
@@ -10,6 +12,4 @@ app = FastAPI(
     
 )
 
-@app.get("/health")
-async def health_check():
-    return {"status": "ok"}
+app.include_router(auth_router)

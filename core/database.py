@@ -15,11 +15,12 @@ class Base(DeclarativeBase):
 async def get_db():
     async with async_session() as session:
         try:
-            yield session
             logger.info("Сессия БД открыта")
+            yield session
         except Exception as e:
             await session.rollback()
             logger.error(f"Ошибка сессии БД: {e}", exc_info=True)
             raise
         finally:
             await session.close()
+            logger.info("Сессия БД закрыта")

@@ -16,7 +16,7 @@ class Master(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True),server_default=func.now(), onupdate=func.now()) 
 
-    service = relationship("Service", back_populates="master")
+    services = relationship("Service", back_populates="master")
     subscription = relationship("Subscription", back_populates="master")
-    shedule = relationship("WorkSchedule", back_populates="master")
+    schedules = relationship("WorkSchedule", back_populates="master")
     bookings = relationship("Booking", back_populates="master")

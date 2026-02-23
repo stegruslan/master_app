@@ -13,4 +13,4 @@ class WorkSchedule(Base):
     end_time = Column(Time, nullable=False)     
     is_active = Column(Boolean, default=True)
 
-    master = relationship("Master", back_populates="work_schedule")
+    master = relationship("Master", back_populates="schedules")
