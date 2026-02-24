@@ -6,7 +6,8 @@ from core.security import hash_password,verify_password,create_access_token,crea
 from core.logging import get_logger
 from models.user import Master
 from models.subscription import Subscription
-from schemas.auth import MasterRegister, MasterLogin, TokenResponse, MasterResponse
+from schemas.auth import MasterRegister, MasterLogin, TokenResponse
+from schemas.master import MasterResponse
 from slugify import slugify
 
 router = APIRouter(prefix="/auth", tags=["auth"])

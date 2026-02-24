@@ -31,11 +31,3 @@ class TokenResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
-class MasterResponse(BaseModel):
-    id: int
-    name: str
-    phone: str
-    email: str | None
-    slug: str
-
-    model_config = ConfigDict(from_attributes=True)
