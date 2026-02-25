@@ -9,8 +9,8 @@ class WorkSchedule(Base):
     id = Column(Integer, primary_key=True, index=True)
     master_id = Column(Integer, ForeignKey("masters.id"), nullable=False, index=True)
     weekday = Column(Integer, nullable=False)  # 0 - Понедельник, 6 - Воскресенье
-    start_time = Column(Time, nullable=False)  
-    end_time = Column(Time, nullable=False)     
-    is_active = Column(Boolean, default=True)
+    start_time = Column(Time, nullable=False)
+    end_time = Column(Time, nullable=False)
+    is_working = Column(Boolean, default=True)
 
     master = relationship("Master", back_populates="schedules")
