@@ -7,12 +7,18 @@ from core.security import (
     verify_password,
     create_access_token,
     create_refresh_token,
+    decode_access_token,
 )
 from core.logging import get_logger
 from models.user import Master
 from models.subscription import Subscription
 from models.schedule import WorkSchedule
-from schemas.auth import MasterRegister, MasterLogin, TokenResponse
+from schemas.auth import (
+    MasterRegister,
+    MasterLogin,
+    TokenResponse,
+    RefreshTokenRequest,
+)
 from schemas.master import MasterResponse
 from slugify import slugify
 from datetime import time
@@ -95,4 +101,44 @@ async def login(data: MasterLogin, db: AsyncSession = Depends(get_db)):
     refresh_token = create_refresh_token({"sub": str(master.id)})
 
     logger.info(f"Мастер вошёл: {master.phone}")
+    return TokenResponse(access_token=access_token, refresh_token=refresh_token)
+
+
+@router.post("/refresh", response_model=TokenResponse)
+async def refresh_token(data: RefreshTokenRequest, db: AsyncSession = Depends(get_db)):
+    """Обновить access токен через refresh токен."""
+
+    payload = decode_access_token(data.refresh_token)
+
+    if payload is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Невалидный или истёкший refresh токен",
+        )
+
+    if payload.get("type") != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный тип токена"
+        )
+
+    master_id = payload.get("sub")
+    if master_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Невалидный токен"
+        )
+
+    result = await db.execute(select(Master).where(Master.id == int(master_id)))
+
+    master = result.scalar_one_or_none()
+
+    if master is None or not master.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Мастер не найден или заблокирован",
+        )
+
+    access_token = create_access_token({"sub": str(master_id)})
+    refresh_token = create_refresh_token({"sub": str(master_id)})
+
+    logger.info(f"Мастер обновил токен: {master.phone}")
     return TokenResponse(access_token=access_token, refresh_token=refresh_token)
