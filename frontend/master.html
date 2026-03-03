@@ -164,7 +164,7 @@
   .day-name { font-size: 14px; font-weight: 400; }
 
   .time-inputs { display: flex; align-items: center; gap: 8px; }
-  .time-input { background: var(--surface3); border: 1px solid var(--border2); color: var(--text); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; width: 90px; outline: none; border-radius: 2px; transition: border-color 0.2s; }
+  .time-input { background: var(--surface3); border: 1px solid var(--border2); color: var(--text); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; width: 110px; outline: none; border-radius: 2px; transition: border-color 0.2s; }
   .time-input:focus { border-color: var(--gold); }
   .time-input:disabled { opacity: 0.3; }
   .time-sep { color: var(--text-muted); font-size: 12px; }
@@ -184,12 +184,71 @@
     .booking-card { grid-template-columns: 1fr; }
   }
   @media (max-width: 768px) {
+    /* AUTH */
     .auth-layout { grid-template-columns: 1fr; }
     .panel-left { display: none; }
-    .panel-right { padding: 40px 28px; }
+    .panel-right { padding: 32px 20px; }
+
+    /* CABINET */
+    .cabinet { flex-direction: column; }
+
     .sidebar { display: none; }
-    .cabinet-main { padding: 24px 20px; }
-  }
+
+    .cabinet-main { padding: 20px 16px 80px; }
+
+    .section-title { font-size: 26px; }
+
+    /* нижняя навигация */
+    .mobile-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        z-index: 100;
+        padding: 8px 0;
+    }
+
+    .mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 0;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color 0.2s;
+        border: none;
+        background: none;
+        font-family: 'DM Sans', sans-serif;
+    }
+
+    .mobile-nav-item.active { color: var(--gold); }
+    .mobile-nav-item-icon { font-size: 20px; }
+
+    /* карточки на мобиле */
+    .booking-card { grid-template-columns: 1fr; gap: 12px; }
+    .booking-actions { justify-content: flex-start; }
+    .schedule-day { grid-template-columns: 1fr; gap: 12px; }
+    .form-row { grid-template-columns: 1fr; }
+
+    /* ссылка мастера */
+    .mobile-link-box {
+        display: block !important;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        padding: 14px 16px;
+        margin-bottom: 24px;
+    }
+
+    .mobile-link-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .mobile-link-url { font-size: 12px; color: var(--gold); word-break: break-all; margin-bottom: 8px; }
+}
 </style>
 </head>
 <body>
@@ -219,15 +278,27 @@
       <form class="form active" id="loginForm" onsubmit="handleLogin(event)">
         <div class="error-msg" id="loginError"></div>
         <div class="field"><label>Телефон</label><input type="tel" id="loginPhone" placeholder="+79991234567" required></div>
-        <div class="field"><label>Пароль</label><input type="password" id="loginPassword" placeholder="••••••••" required></div>
+        <div class="field">
+          <label>Пароль</label>
+          <div style="position:relative">
+            <input type="password" id="loginPassword" placeholder="••••••••" required style="width:100%;padding-right:48px">
+            <button type="button" onclick="togglePassword('loginPassword', this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0">👁</button>
+            </div>
+          </div>
         <button type="submit" class="btn-primary" id="loginBtn">Войти</button>
       </form>
       <form class="form" id="registerForm" onsubmit="handleRegister(event)">
         <div class="error-msg" id="registerError"></div>
         <div class="success-msg" id="registerSuccess">Аккаунт создан!</div>
         <div class="field"><label>Ваше имя</label><input type="text" id="regName" placeholder="Анна Иванова" required></div>
-        <div class="field"><label>Телефон</label><input type="tel" id="regPhone" placeholder="+79991234567" required></div>
-        <div class="field"><label>Пароль</label><input type="password" id="regPassword" placeholder="Минимум 6 символов" required></div>
+        <div class="field"><label>Телефон</label><input type="tel" id="regPhone" placeholder="+79991234567" oninput="formatPhone(this)" required></div>
+        <div class="field">
+          <label>Пароль</label>
+          <div style="position:relative">
+            <input type="password" id="regPassword" placeholder="Минимум 6 символов" required style="width:100%;padding-right:48px">
+            <button type="button" onclick="togglePassword('regPassword', this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0">👁</button>
+          </div>
+        </div>
         <button type="submit" class="btn-primary" id="registerBtn">Создать аккаунт</button>
       </form>
     </div>
@@ -256,6 +327,12 @@
   </div>
 
   <div class="cabinet-main">
+
+    <div class="mobile-link-box" style="display:none" id="mobileLinkBox">
+    <div class="mobile-link-label">Ссылка для записи</div>
+    <div class="mobile-link-url" id="mobileLinkUrl">—</div>
+    <button class="btn-copy" onclick="copyLink()">Скопировать</button>
+  </div>
 
     <!-- Записи -->
     <div class="section active" id="sectionBookings">
@@ -301,7 +378,29 @@
       <div class="schedule-list" id="scheduleList"><div class="loading">Загрузка...</div></div>
     </div>
 
+
   </div>
+  
+
+  <!-- Нижняя навигация -->
+  <nav class="mobile-nav" style="display:none">
+    <button class="mobile-nav-item active" onclick="showSection('bookings', this)">
+      <span class="mobile-nav-item-icon">📋</span>
+      Записи
+    </button>
+    <button class="mobile-nav-item" onclick="showSection('services', this)">
+      <span class="mobile-nav-item-icon">✂️</span>
+      Услуги
+    </button>
+    <button class="mobile-nav-item" onclick="showSection('schedule', this)">
+      <span class="mobile-nav-item-icon">🗓</span>
+      График
+    </button>
+    <button class="mobile-nav-item" onclick="logout()">
+      <span class="mobile-nav-item-icon">🚪</span>
+      Выйти
+    </button>
+  </nav>
 </div>
 
 <script>
@@ -313,6 +412,24 @@
   let allBookings = [];
 
   if (accessToken) showCabinet();
+
+  // ── API FETCH с обработкой 401 ──
+  async function apiFetch(url, options = {}) {
+    const res = await fetch(url, {
+      ...options,
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+    if (res.status === 401) {
+      localStorage.clear();
+      location.reload();
+      return null;
+    }
+    return res;
+  }
 
   // ── AUTH ──
   function switchTab(tab) {
@@ -374,7 +491,8 @@
   }
 
   async function loadProfile() {
-    const res = await fetch(`${API}/master/me`, { headers: { 'Authorization': `Bearer ${accessToken}` } });
+    const res = await apiFetch(`${API}/master/me`);
+    if (!res) return;
     const data = await res.json();
     localStorage.setItem('master_slug', data.slug);
     localStorage.setItem('master_name', data.name);
@@ -388,19 +506,21 @@
     document.getElementById('cabinet').classList.add('show');
     document.getElementById('sidebarName').textContent = localStorage.getItem('master_name') || '—';
     const slug = localStorage.getItem('master_slug');
-    document.getElementById('sidebarLink').textContent = `${window.location.origin}/frontend/book.html?master=${slug}`;
+    const link = `${window.location.origin}/frontend/book.html?master=${slug}`;
+    document.getElementById('sidebarLink').textContent = link;
+    document.getElementById('mobileLinkUrl').textContent = link; // добавили
     loadBookings();
-  }
+}
 
   function showSection(name, el) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('section' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('active');
     el.classList.add('active');
     if (name === 'bookings') loadBookings();
     if (name === 'services') loadServices();
     if (name === 'schedule') loadSchedule();
-  }
+}
 
   function copyLink() {
     const slug = localStorage.getItem('master_slug');
@@ -416,9 +536,10 @@
   async function loadBookings() {
     document.getElementById('bookingsList').innerHTML = '<div class="loading">Загрузка...</div>';
     try {
-      const res = await fetch(`${API}/bookings/`, { headers: { 'Authorization': `Bearer ${accessToken}` } });
+      const res = await apiFetch(`${API}/bookings/`);
+      if (!res) return;
       allBookings = await res.json();
-      renderBookings(allBookings);
+      renderBookings(allBookings.filter(b => b.status !== 'cancelled'));
     } catch(e) { document.getElementById('bookingsList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
   }
 
@@ -437,7 +558,7 @@
       return `<div class="booking-card">
         <div>
           <div class="booking-client">${b.client_name}</div>
-          <div class="booking-meta"><span>${dateStr}, ${timeStr}</span><span>${b.client_phone}</span></div>
+          <div class="booking-meta"><span>${dateStr}, ${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
         </div>
         <div class="booking-actions">
           <span class="status-badge ${statusCls[b.status]}">${statusLbl[b.status]}</span>
@@ -454,9 +575,8 @@
   }
 
   async function updateStatus(id, status) {
-    await fetch(`${API}/bookings/${id}/status`, {
+    await apiFetch(`${API}/bookings/${id}/status`, {
       method: 'PATCH',
-      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
     });
     loadBookings();
@@ -466,31 +586,32 @@
   async function loadServices() {
     document.getElementById('servicesList').innerHTML = '<div class="loading">Загрузка...</div>';
     try {
-      const res = await fetch(`${API}/services/`, { headers: { 'Authorization': `Bearer ${accessToken}` } });
+      const res = await apiFetch(`${API}/services/`);
+      if (!res) return;
       const services = await res.json();
       const el = document.getElementById('servicesList');
       if (!services.length) { el.innerHTML = '<div class="empty-state">Услуг пока нет — нажмите «+ Добавить»</div>'; return; }
       el.innerHTML = services.map(s => `
-        <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
-          <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
-            <button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="editService(${s.id},'${s.name}',${s.duration},${s.price})">Изменить</button>
-            <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
-          </div>
-        </div>
-        <div class="add-service-form" id="edit-form-${s.id}">
-          <div class="section-label">Редактирование</div>
-          <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
-          <div class="form-row">
-            <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
-            <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
-          </div>
-          <div style="display:flex;gap:10px">
-            <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
-            <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
-          </div>
-        </div>`).join('');
+  <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
+    <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
+      <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id},'${s.name}',${s.duration},${s.price})">Изменить</button>
+      <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
+    </div>
+  </div>
+  <div class="add-service-form" id="edit-form-${s.id}">
+    <div class="section-label">Редактирование</div>
+    <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
+    <div class="form-row">
+      <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
+      <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
+      <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
+    </div>
+  </div>`).join('');
     } catch(e) { document.getElementById('servicesList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
   }
 
@@ -506,9 +627,8 @@
     errEl.classList.remove('show');
     if (!name || !duration || !price) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
     try {
-      const res = await fetch(`${API}/services/`, {
+      const res = await apiFetch(`${API}/services/`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, duration, price })
       });
       if (!res.ok) throw new Error('Ошибка создания');
@@ -522,7 +642,7 @@
 
   async function deleteService(id) {
     if (!confirm('Удалить услугу?')) return;
-    await fetch(`${API}/services/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${accessToken}` } });
+    await apiFetch(`${API}/services/${id}`, { method: 'DELETE' });
     loadServices();
   }
 
@@ -530,7 +650,8 @@
   async function loadSchedule() {
     document.getElementById('scheduleList').innerHTML = '<div class="loading">Загрузка...</div>';
     try {
-      const res = await fetch(`${API}/schedule/`, { headers: { 'Authorization': `Bearer ${accessToken}` } });
+      const res = await apiFetch(`${API}/schedule/`);
+      if (!res) return;
       const schedule = await res.json();
       const el = document.getElementById('scheduleList');
       el.innerHTML = schedule.map(day => {
@@ -567,16 +688,32 @@
     const end = document.getElementById(`end-${weekday}`).value;
     const btn = document.getElementById(`saveBtn-${weekday}`);
     try {
-      await fetch(`${API}/schedule/${weekday}`, {
+      await apiFetch(`${API}/schedule/${weekday}`, {
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ start_time: start, end_time: end, is_working: isWorking })
       });
       btn.textContent = 'Сохранено ✓'; btn.style.color = 'var(--gold)';
       setTimeout(() => { btn.textContent = 'Сохранить'; btn.style.color = ''; }, 2000);
     } catch(e) { alert('Ошибка сохранения'); }
   }
-  function editService(id, name, duration, price) {
+  function formatPhone(input) {
+    let val = input.value.replace(/\D/g, '');
+    if (val.startsWith('8')) val = '7' + val.slice(1);
+    if (val.startsWith('7')) val = '+7' + val.slice(1);
+    else if (val && !val.startsWith('+')) val = '+' + val;
+    input.value = val;
+}
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        btn.textContent = '👁';
+    }
+}
+function editService(id, name, duration, price) {
     document.querySelectorAll('[id^="edit-form-"]').forEach(f => f.classList.remove('show'));
     document.getElementById(`edit-form-${id}`).classList.add('show');
 }
@@ -586,9 +723,8 @@ async function updateService(id) {
     const duration = parseInt(document.getElementById(`edit-duration-${id}`).value);
     const price = parseInt(document.getElementById(`edit-price-${id}`).value);
     if (!name || !duration || !price) { alert('Заполните все поля'); return; }
-    await fetch(`${API}/services/${id}`, {
+    await apiFetch(`${API}/services/${id}`, {
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, duration, price })
     });
     document.getElementById(`edit-form-${id}`).classList.remove('show');

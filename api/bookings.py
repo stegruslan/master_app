@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 from sqlalchemy import select
 from core.database import get_db
 from core.dependencies import get_current_master
 from core.logging import get_logger
 from models.user import Master
 from models.booking import Booking
+from models.service import Service
 from schemas.booking import BookingResponse, BookingStatusUpdate
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
@@ -20,11 +22,20 @@ async def get_bookings(
 
     result = await db.execute(
         select(Booking)
+        .options(joinedload(Booking.service))
         .where(Booking.master_id == master.id)
         .order_by(Booking.datetime_start)
     )
 
-    return result.scalars().all()
+    bookings = result.unique().scalars().all()
+
+    response = []
+    for b in bookings:
+        item = BookingResponse.model_validate(b)
+        item.service_name = b.service.name if b.service else None
+        response.append(item)
+
+    return response
 
 
 @router.get("/{booking_id}", response_model=BookingResponse)

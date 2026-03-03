@@ -12,6 +12,7 @@ class BookingResponse(BaseModel):
     status: str
     created_at: datetime
     service_id: int
+    service_name: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
