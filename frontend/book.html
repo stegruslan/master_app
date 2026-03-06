@@ -29,6 +29,7 @@
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
+    font-size: 16px;
   }
 
   body::before {
@@ -46,7 +47,6 @@
     padding: 60px 24px 80px;
   }
 
-  /* Master header */
   .master-header {
     text-align: center;
     margin-bottom: 56px;
@@ -72,14 +72,14 @@
 
   .master-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
+    font-size: 40px;
     font-weight: 300;
     letter-spacing: 0.02em;
     margin-bottom: 6px;
   }
 
   .master-label {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -98,7 +98,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -109,31 +109,18 @@
   .step.done { color: var(--text-muted); }
 
   .step-num {
-    width: 24px; height: 24px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     border: 1px solid currentColor;
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px;
+    font-size: 12px;
     transition: all 0.3s;
   }
 
-  .step.active .step-num {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: white;
-  }
+  .step.active .step-num { background: var(--gold); border-color: var(--gold); color: white; }
+  .step.done .step-num { background: var(--text-muted); border-color: var(--text-muted); color: white; }
 
-  .step.done .step-num {
-    background: var(--text-muted);
-    border-color: var(--text-muted);
-    color: white;
-  }
-
-  .step-line {
-    width: 40px; height: 1px;
-    background: var(--border);
-    margin: 0 8px;
-  }
+  .step-line { width: 40px; height: 1px; background: var(--border); margin: 0 8px; }
 
   /* Card */
   .card {
@@ -155,13 +142,11 @@
   .card-header {
     padding: 28px 32px 24px;
     border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: flex; flex-direction: column; gap: 4px;
   }
 
   .card-step-label {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
@@ -169,24 +154,18 @@
 
   .card-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 300;
   }
 
   .card-body { padding: 28px 32px 32px; }
 
   /* Service list */
-  .service-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  .service-list { display: flex; flex-direction: column; gap: 10px; }
 
   .service-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px;
     border: 1px solid var(--border);
     border-radius: 3px;
     cursor: pointer;
@@ -194,342 +173,173 @@
     background: var(--surface);
   }
 
-  .service-item:hover {
-    border-color: var(--border-gold);
-    background: var(--gold-dim);
-  }
+  .service-item:hover { border-color: var(--border-gold); background: var(--gold-dim); }
+  .service-item.selected { border-color: var(--gold); background: var(--gold-dim); }
 
-  .service-item.selected {
-    border-color: var(--gold);
-    background: var(--gold-dim);
-  }
+  .service-info { display: flex; flex-direction: column; gap: 4px; }
 
-  .service-info { display: flex; flex-direction: column; gap: 3px; }
-
-  .service-name {
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  .service-duration {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
+  .service-name { font-size: 17px; font-weight: 400; }
+  .service-duration { font-size: 14px; color: var(--text-muted); }
   .service-price {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--gold);
+    font-size: 24px; font-weight: 300; color: var(--gold);
   }
 
   /* Calendar */
-  .calendar {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+  .calendar { display: flex; flex-direction: column; gap: 16px; }
 
-  .cal-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .cal-nav { display: flex; align-items: center; justify-content: space-between; }
 
   .cal-month {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 300;
-    text-transform: capitalize;
+    font-size: 24px; font-weight: 300; text-transform: capitalize;
   }
 
   .cal-nav-btn {
-    background: none;
-    border: 1px solid var(--border);
-    width: 32px; height: 32px;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-muted);
-    transition: all 0.2s;
-    font-size: 14px;
+    background: none; border: 1px solid var(--border);
+    width: 34px; height: 34px; border-radius: 2px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.2s; font-size: 16px;
   }
+  .cal-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-  .cal-nav-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 
   .cal-weekday {
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: 4px 0 8px;
+    text-align: center; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); padding: 4px 0 8px;
   }
 
   .cal-day {
     aspect-ratio: 1;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 2px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid transparent;
+    border-radius: 2px; font-size: 15px;
+    cursor: pointer; transition: all 0.15s; border: 1px solid transparent;
   }
 
-  .cal-day:hover:not(.disabled):not(.empty) {
-    border-color: var(--border-gold);
-    background: var(--gold-dim);
-  }
-
-  .cal-day.selected {
-    background: var(--gold);
-    color: white;
-    border-color: var(--gold);
-  }
-
-  .cal-day.today {
-    border-color: var(--border-gold);
-    color: var(--gold);
-  }
-
-  .cal-day.disabled {
-    color: var(--border);
-    cursor: not-allowed;
-  }
-
+  .cal-day:hover:not(.disabled):not(.empty) { border-color: var(--border-gold); background: var(--gold-dim); }
+  .cal-day.selected { background: var(--gold); color: white; border-color: var(--gold); }
+  .cal-day.today { border-color: var(--border-gold); color: var(--gold); }
+  .cal-day.disabled { color: var(--border); cursor: not-allowed; }
   .cal-day.empty { cursor: default; }
 
   /* Slots */
-  .slots-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
+  .slots-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 
   .slot-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 10px 6px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.15s;
-    text-align: center;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 2px; padding: 12px 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300;
+    color: var(--text); cursor: pointer; transition: all 0.15s; text-align: center;
   }
-
-  .slot-btn:hover {
-    border-color: var(--border-gold);
-    background: var(--gold-dim);
-  }
-
-  .slot-btn.selected {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: white;
-  }
+  .slot-btn:hover { border-color: var(--border-gold); background: var(--gold-dim); }
+  .slot-btn.selected { background: var(--gold); border-color: var(--gold); color: white; }
 
   .no-slots {
-    text-align: center;
-    font-size: 13px;
-    color: var(--text-muted);
-    padding: 32px 0;
-    font-style: italic;
+    text-align: center; font-size: 15px;
+    color: var(--text-muted); padding: 32px 0; font-style: italic;
   }
 
   /* Form fields */
-  .form-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
+  .form-fields { display: flex; flex-direction: column; gap: 18px; }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .field { display: flex; flex-direction: column; gap: 8px; }
 
   .field label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
+    font-size: 13px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-muted);
   }
 
   .field input {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 13px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 2px; padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300;
+    color: var(--text); outline: none; transition: border-color 0.2s;
   }
-
   .field input:focus { border-color: var(--gold); }
   .field input::placeholder { color: var(--text-muted); }
 
   /* Summary */
   .summary {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
   }
 
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-  }
-
+  .summary-row { display: flex; justify-content: space-between; font-size: 15px; }
   .summary-label { color: var(--text-muted); }
   .summary-value { font-weight: 400; }
 
   /* Buttons */
   .btn-primary {
-    width: 100%;
-    background: var(--text);
-    color: var(--bg);
-    border: none;
-    padding: 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 8px;
+    width: 100%; background: var(--text); color: var(--bg); border: none;
+    padding: 16px; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 8px;
   }
-
   .btn-primary:hover { background: #333; }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .btn-back {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    padding: 12px 0 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.2s;
+    background: none; border: none; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 0.1em;
+    cursor: pointer; padding: 12px 0 0;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
   }
-
   .btn-back:hover { color: var(--text); }
 
   .btn-next {
-    width: 100%;
-    background: none;
-    border: 1px solid var(--text);
-    color: var(--text);
-    padding: 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 16px;
+    width: 100%; background: none; border: 1px solid var(--text);
+    color: var(--text); padding: 15px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; margin-top: 16px;
   }
-
   .btn-next:hover { background: var(--text); color: var(--bg); }
   .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
 
   /* Success */
   .success-card {
-    text-align: center;
-    padding: 48px 32px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+    text-align: center; padding: 48px 32px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
   }
 
   .success-icon {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: rgba(74,124,89,0.1);
-    border: 1px solid rgba(74,124,89,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(74,124,89,0.1); border: 1px solid rgba(74,124,89,0.3);
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
   }
 
   .success-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
+    font-size: 36px; font-weight: 300;
   }
 
   .success-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    max-width: 300px;
+    font-size: 16px; color: var(--text-muted);
+    line-height: 1.6; max-width: 300px;
   }
 
   .cancel-link {
-    font-size: 12px;
-    color: var(--text-muted);
-    word-break: break-all;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 12px 16px;
-    width: 100%;
-    text-align: center;
-    line-height: 1.5;
+    font-size: 13px; color: var(--text-muted); word-break: break-all;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 12px 16px;
+    width: 100%; text-align: center; line-height: 1.5;
   }
-
-  .cancel-link a {
-    color: var(--gold);
-    text-decoration: none;
-  }
+  .cancel-link a { color: var(--gold); text-decoration: none; }
 
   .loading {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-    font-size: 13px;
-    letter-spacing: 0.1em;
+    text-align: center; padding: 40px;
+    color: var(--text-muted); font-size: 14px; letter-spacing: 0.1em;
   }
 
   .error-msg {
-    font-size: 12px;
-    color: var(--error);
-    padding: 10px 14px;
-    background: rgba(192,80,74,0.06);
-    border: 1px solid rgba(192,80,74,0.2);
-    border-radius: 2px;
-    margin-bottom: 12px;
-    display: none;
+    font-size: 14px; color: var(--error);
+    padding: 10px 14px; background: rgba(192,80,74,0.06);
+    border: 1px solid rgba(192,80,74,0.2); border-radius: 2px;
+    margin-bottom: 12px; display: none;
   }
-
   .error-msg.show { display: block; }
 
   @media (max-width: 560px) {
@@ -537,6 +347,8 @@
     .card-body { padding: 20px 20px 24px; }
     .card-header { padding: 20px 20px 16px; }
     .slots-grid { grid-template-columns: repeat(3, 1fr); }
+    .step { font-size: 11px; }
+    .master-name { font-size: 32px; }
   }
 </style>
 </head>
@@ -558,21 +370,17 @@
   </div>
 
   <div class="card" id="mainCard" style="display:none">
-    <!-- Step 1: Services -->
     <div id="stepService">
       <div class="card-header">
         <div class="card-step-label">Шаг 1 из 4</div>
         <div class="card-title">Выберите услугу</div>
       </div>
       <div class="card-body">
-        <div class="service-list" id="serviceList">
-          <div class="loading">Загрузка услуг...</div>
-        </div>
+        <div class="service-list" id="serviceList"><div class="loading">Загрузка услуг...</div></div>
         <button class="btn-next" id="btnNextService" disabled onclick="goToStep(2)">Далее</button>
       </div>
     </div>
 
-    <!-- Step 2: Date -->
     <div id="stepDate" style="display:none">
       <div class="card-header">
         <div class="card-step-label">Шаг 2 из 4</div>
@@ -585,7 +393,6 @@
       </div>
     </div>
 
-    <!-- Step 3: Time -->
     <div id="stepTime" style="display:none">
       <div class="card-header">
         <div class="card-step-label">Шаг 3 из 4</div>
@@ -598,7 +405,6 @@
       </div>
     </div>
 
-    <!-- Step 4: Contact -->
     <div id="stepContact" style="display:none">
       <div class="card-header">
         <div class="card-step-label">Шаг 4 из 4</div>
@@ -626,13 +432,22 @@
       </div>
     </div>
 
-    <!-- Success -->
     <div id="stepSuccess" style="display:none">
       <div class="success-card">
         <div class="success-icon">✓</div>
         <div class="success-title">Вы записаны!</div>
         <div class="success-desc" id="successDesc">—</div>
-        <div class="cancel-link" id="cancelLinkBox"></div>
+
+        <div style="width:100%;background:#fff8ee;border:1px solid rgba(201,168,76,0.4);border-radius:4px;padding:16px 20px;text-align:left">
+          <div style="font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">⚠ Сохраните ссылку для отмены</div>
+          <div style="font-size:15px;color:var(--text-muted);margin-bottom:12px;line-height:1.5">Если захотите отменить запись — она понадобится. После закрытия страницы восстановить её можно только через мастера.</div>
+          <div id="cancelLinkBox" style="font-size:12px;color:var(--text-muted);word-break:break-all;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:10px 14px;margin-bottom:10px;line-height:1.5"></div>
+          <button onclick="copyCancelLink()" id="btnCopyCancel" style="width:100%;background:none;color:var(--gold);border:1px solid rgba(201,168,76,0.4);padding:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;margin-top:4px;transition:all 0.2s;">
+            Скопировать ссылку
+          </button>
+        </div>
+
+        <div id="masterContactBox" style="width:100%;text-align:center;font-size:14px;color:var(--text-muted)"></div>
       </div>
     </div>
   </div>
@@ -649,14 +464,11 @@
   let selectedDate = null;
   let selectedSlot = null;
   let currentStep = 1;
-
-  // Calendar state
   let calYear, calMonth;
   const today = new Date();
 
   if (!masterSlug) {
-    document.getElementById('masterHeader').innerHTML =
-      '<div class="loading">Мастер не указан</div>';
+    document.getElementById('masterHeader').innerHTML = '<div class="loading">Мастер не указан</div>';
   } else {
     init();
   }
@@ -667,20 +479,16 @@
         fetch(`${API}/book/${masterSlug}`),
         fetch(`${API}/book/${masterSlug}/services`)
       ]);
-
       master = await mRes.json();
       services = await sRes.json();
-
       renderMasterHeader();
       renderServices();
       document.getElementById('stepsBar').style.display = 'flex';
       document.getElementById('mainCard').style.display = 'block';
-
       calYear = today.getFullYear();
       calMonth = today.getMonth();
     } catch (e) {
-      document.getElementById('masterHeader').innerHTML =
-        '<div class="loading">Мастер не найден</div>';
+      document.getElementById('masterHeader').innerHTML = '<div class="loading">Мастер не найден</div>';
     }
   }
 
@@ -695,10 +503,7 @@
 
   function renderServices() {
     const list = document.getElementById('serviceList');
-    if (!services.length) {
-      list.innerHTML = '<div class="no-slots">Услуги не добавлены</div>';
-      return;
-    }
+    if (!services.length) { list.innerHTML = '<div class="no-slots">Услуги не добавлены</div>'; return; }
     list.innerHTML = services.map(s => `
       <div class="service-item" onclick="selectService(${s.id})" id="svc-${s.id}">
         <div class="service-info">
@@ -706,8 +511,7 @@
           <div class="service-duration">${s.duration} мин</div>
         </div>
         <div class="service-price">${s.price.toLocaleString()} ₽</div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 
   function selectService(id) {
@@ -717,17 +521,14 @@
     document.getElementById('btnNextService').disabled = false;
   }
 
-  // --- Calendar ---
   function renderCalendar() {
     const widget = document.getElementById('calendarWidget');
-    const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь',
-                        'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+    const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
     const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-
     const firstDay = new Date(calYear, calMonth, 1);
     const lastDay = new Date(calYear, calMonth + 1, 0);
-    let startDow = firstDay.getDay(); // 0=Sun
-    startDow = startDow === 0 ? 6 : startDow - 1; // make Mon=0
+    let startDow = firstDay.getDay();
+    startDow = startDow === 0 ? 6 : startDow - 1;
 
     let html = `
       <div class="cal-nav">
@@ -736,12 +537,9 @@
         <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
       </div>
       <div class="cal-grid">
-        ${dayNames.map(d => `<div class="cal-weekday">${d}</div>`).join('')}
-    `;
+        ${dayNames.map(d => `<div class="cal-weekday">${d}</div>`).join('')}`;
 
-    for (let i = 0; i < startDow; i++) {
-      html += `<div class="cal-day empty"></div>`;
-    }
+    for (let i = 0; i < startDow; i++) html += `<div class="cal-day empty"></div>`;
 
     for (let d = 1; d <= lastDay.getDate(); d++) {
       const date = new Date(calYear, calMonth, d);
@@ -749,12 +547,10 @@
       const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const dateStr = formatDate(date);
       const isSelected = selectedDate === dateStr;
-
       let cls = 'cal-day';
       if (isPast) cls += ' disabled';
       if (isToday) cls += ' today';
       if (isSelected) cls += ' selected';
-
       const click = isPast ? '' : `onclick="selectDate('${dateStr}')"`;
       html += `<div class="${cls}" ${click}>${d}</div>`;
     }
@@ -784,32 +580,23 @@
     return `${y}-${m}-${dd}`;
   }
 
-  // --- Slots ---
   async function loadSlots() {
     const container = document.getElementById('slotsContainer');
     container.innerHTML = '<div class="loading">Загрузка...</div>';
     document.getElementById('btnNextTime').disabled = true;
-
     try {
-      const res = await fetch(
-        `${API}/book/${masterSlug}/slots?service_id=${selectedService.id}&date=${selectedDate}`
-      );
+      const res = await fetch(`${API}/book/${masterSlug}/slots?service_id=${selectedService.id}&date=${selectedDate}`);
       const slots = await res.json();
-
       if (!slots.length) {
         container.innerHTML = '<div class="no-slots">Мастер не принимает в этот день — выберите другую дату</div>';
         return;
       }
-
       container.innerHTML = `<div class="slots-grid">
         ${slots.map((s,i) => {
-          const time =  new Date(s.datetime_start).toLocaleTimeString('ru', {
-              hour: '2-digit',
-              minute: '2-digit',
-              timeZone: 'UTC'  // показываем UTC без конвертации
-});
-          return `<button class="slot-btn" id="slot-${i}"
-            onclick="selectSlot('${s.datetime_start}', ${i})">${time}</button>`;
+          const time = new Date(s.datetime_start).toLocaleTimeString('ru', {
+            hour: '2-digit', minute: '2-digit', timeZone: 'UTC'
+          });
+          return `<button class="slot-btn" id="slot-${i}" onclick="selectSlot('${s.datetime_start}', ${i})">${time}</button>`;
         }).join('')}
       </div>`;
     } catch(e) {
@@ -824,103 +611,66 @@
     document.getElementById('btnNextTime').disabled = false;
   }
 
-  // --- Summary ---
   function renderSummary() {
     const dt = new Date(selectedSlot);
     const dateStr = dt.toLocaleDateString('ru', {day:'numeric', month:'long'});
-    const timeStr = dt.toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'});
-
+    const timeStr = dt.toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit', timeZone:'UTC'});
     document.getElementById('bookingSummary').innerHTML = `
-      <div class="summary-row">
-        <span class="summary-label">Услуга</span>
-        <span class="summary-value">${selectedService.name}</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-label">Дата</span>
-        <span class="summary-value">${dateStr}</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-label">Время</span>
-        <span class="summary-value">${timeStr}</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-label">Стоимость</span>
-        <span class="summary-value">${selectedService.price.toLocaleString()} ₽</span>
-      </div>
+      <div class="summary-row"><span class="summary-label">Услуга</span><span class="summary-value">${selectedService.name}</span></div>
+      <div class="summary-row"><span class="summary-label">Дата</span><span class="summary-value">${dateStr}</span></div>
+      <div class="summary-row"><span class="summary-label">Время</span><span class="summary-value">${timeStr}</span></div>
+      <div class="summary-row"><span class="summary-label">Стоимость</span><span class="summary-value">${selectedService.price.toLocaleString()} ₽</span></div>
     `;
   }
 
-  // --- Booking ---
   async function createBooking() {
     const name = document.getElementById('clientName').value.trim();
     const phone = document.getElementById('clientPhone').value.trim();
     const email = document.getElementById('clientEmail').value.trim();
     const errEl = document.getElementById('bookingError');
     const btn = document.getElementById('btnBook');
-
     errEl.classList.remove('show');
-    if (!name || !phone) {
-      errEl.textContent = 'Заполните имя и телефон';
-      errEl.classList.add('show');
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = '...';
-
+    if (!name || !phone) { errEl.textContent = 'Заполните имя и телефон'; errEl.classList.add('show'); return; }
+    btn.disabled = true; btn.textContent = '...';
     try {
       const res = await fetch(`${API}/book/${masterSlug}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          client_name: name,
-          client_phone: phone,
-          client_email: email || null,
-          service_id: selectedService.id,
-          datetime_start: selectedSlot,
-        })
+        body: JSON.stringify({ client_name: name, client_phone: phone, client_email: email || null, service_id: selectedService.id, datetime_start: selectedSlot })
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Ошибка записи');
-
       showSuccess(data, name);
     } catch(e) {
-      errEl.textContent = e.message;
-      errEl.classList.add('show');
-      btn.disabled = false;
-      btn.textContent = 'Записаться';
+      errEl.textContent = e.message; errEl.classList.add('show');
+      btn.disabled = false; btn.textContent = 'Записаться';
     }
   }
 
   function showSuccess(booking, name) {
     const dt = new Date(booking.datetime_start);
     const dateStr = dt.toLocaleDateString('ru', {day:'numeric', month:'long'});
-    const timeStr = dt.toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'});
+    const timeStr = dt.toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit', timeZone:'UTC'});
 
     document.getElementById('successDesc').textContent =
-      `${name}, вы записаны ${dateStr} в ${timeStr} на услугу «${selectedService.name}»`;
+        `${name}, вы записаны ${dateStr} в ${timeStr} на услугу «${selectedService.name}»`;
 
-    const cancelUrl = `${window.location.origin}/frontend/cancel.html?token=${booking.cancel_token}`
+    cancelUrl = `${window.location.origin}/frontend/cancel.html?token=${booking.cancel_token}`;
     document.getElementById('cancelLinkBox').innerHTML =
-      `Чтобы отменить запись: <a href="${cancelUrl}">${cancelUrl}</a>`;
+        `<a href="${cancelUrl}" style="color:var(--gold);text-decoration:none;font-size:14px">${cancelUrl}</a>`;
+
+    if (master.phone) {
+        document.getElementById('masterContactBox').innerHTML =
+            `Если потеряли ссылку — свяжитесь с мастером:<br><strong style="color:var(--text)">${master.phone}</strong>`;
+    }
 
     goToStep(5);
-  }
+}
 
-  // --- Navigation ---
   function goToStep(step) {
-    const stepMap = {
-      1: 'stepService', 2: 'stepDate',
-      3: 'stepTime', 4: 'stepContact', 5: 'stepSuccess'
-    };
-
-    Object.values(stepMap).forEach(id => {
-      document.getElementById(id).style.display = 'none';
-    });
+    const stepMap = { 1:'stepService', 2:'stepDate', 3:'stepTime', 4:'stepContact', 5:'stepSuccess' };
+    Object.values(stepMap).forEach(id => document.getElementById(id).style.display = 'none');
     document.getElementById(stepMap[step]).style.display = 'block';
-
-    // Update steps bar
     for (let i = 1; i <= 4; i++) {
       const el = document.getElementById(`step${i}`);
       if (!el) continue;
@@ -928,19 +678,34 @@
       if (i < step) el.classList.add('done');
       if (i === step) el.classList.add('active');
     }
-
     currentStep = step;
-
     if (step === 2) renderCalendar();
     if (step === 3) loadSlots();
     if (step === 4) renderSummary();
   }
+
   function formatPhone(input) {
-    let val = input.value.replace(/\D/g, ''); // оставляем только цифры
+    let val = input.value.replace(/\D/g, '');
     if (val.startsWith('8')) val = '7' + val.slice(1);
     if (val.startsWith('7')) val = '+7' + val.slice(1);
     else if (val && !val.startsWith('+')) val = '+' + val;
     input.value = val;
+  }
+  let cancelUrl = '';
+
+function copyCancelLink() {
+    navigator.clipboard.writeText(cancelUrl);
+    const btn = document.getElementById('btnCopyCancel');
+    btn.textContent = 'Скопировано ✓';
+    btn.style.background = 'rgba(74,124,89,0.1)';
+    btn.style.color = '#4a7c59';
+    btn.style.borderColor = 'rgba(74,124,89,0.4)';
+    setTimeout(() => {
+        btn.textContent = 'Скопировать ссылку';
+        btn.style.background = 'none';
+        btn.style.color = 'var(--gold)';
+        btn.style.borderColor = 'rgba(201,168,76,0.4)';
+    }, 2000);
 }
 </script>
 </body>

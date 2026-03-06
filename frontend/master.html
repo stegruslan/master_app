@@ -44,17 +44,17 @@
 
   .logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
 
-  .hero-text { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 0; }
-  .hero-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .hero-text { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 30px 0; }
+  .hero-label { font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
   .hero-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
   .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 5vw, 72px); font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 24px; }
   .hero-title em { font-style: italic; color: var(--gold-light); }
-  .hero-desc { font-size: 14px; line-height: 1.7; color: var(--text-muted); max-width: 340px; }
+  .hero-desc { font-size: 16px; line-height: 1.7; color: var(--text-muted); max-width: 340px; }
 
   .stats { display: flex; gap: 40px; }
   .stat-item { display: flex; flex-direction: column; gap: 4px; }
   .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--gold); line-height: 1; }
-  .stat-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  .stat-label { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
 
   .panel-right { display: flex; align-items: center; justify-content: center; padding: 48px 56px; background: var(--surface); }
   .form-container { width: 100%; max-width: 380px; }
@@ -111,7 +111,7 @@
   .btn-copy { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
   .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
 
-  .btn-logout { background: none; border: none; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; padding: 12px 28px; transition: color 0.2s; text-align: left; }
+  .btn-logout { background: none; border: none; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 15px; letter-spacing: 0.1em; cursor: pointer; padding: 12px 28px; transition: color 0.2s; text-align: left; }
   .btn-logout:hover { color: var(--error); }
 
   .cabinet-main { flex: 1; overflow-y: auto; padding: 40px 48px; }
@@ -134,8 +134,8 @@
   .bookings-list { display: flex; flex-direction: column; gap: 10px; }
   .booking-card { background: var(--surface2); border: 1px solid var(--border2); border-radius: 2px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; transition: border-color 0.2s; }
   .booking-card:hover { border-color: var(--border); }
-  .booking-client { font-size: 15px; font-weight: 400; margin-bottom: 6px; }
-  .booking-meta { font-size: 12px; color: var(--text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
+  .booking-client { font-size: 19px; font-weight: 400; margin-bottom: 6px; }
+  .booking-meta { font-size: 15px; color: var(--text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
   .booking-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
   .status-badge { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
@@ -148,9 +148,9 @@
   .service-card { background: var(--surface2); border: 1px solid var(--border2); border-radius: 2px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; transition: border-color 0.2s; }
   .service-card:hover { border-color: var(--border); }
   .service-card.inactive { opacity: 0.4; }
-  .service-card-name { font-size: 15px; font-weight: 400; margin-bottom: 3px; }
-  .service-card-meta { font-size: 12px; color: var(--text-muted); }
-  .service-card-price { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--gold); margin-right: 16px; }
+  .service-card-name { font-size: 18px; font-weight: 400; margin-bottom: 3px; }
+  .service-card-meta { font-size: 15px; color: var(--text-muted); }
+  .service-card-price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--gold); margin-right: 16px; }
 
   .add-service-form { background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; padding: 28px; display: none; flex-direction: column; gap: 16px; margin-bottom: 20px; }
   .add-service-form.show { display: flex; animation: fadeUp 0.2s ease; }
@@ -161,10 +161,10 @@
   .schedule-day { background: var(--surface2); border: 1px solid var(--border2); border-radius: 2px; padding: 20px 24px; display: grid; grid-template-columns: 140px 1fr auto; gap: 24px; align-items: center; transition: border-color 0.2s; }
   .schedule-day:hover { border-color: var(--border); }
   .schedule-day.day-off { opacity: 0.45; }
-  .day-name { font-size: 14px; font-weight: 400; }
+  .day-name { font-size: 17px; font-weight: 400; }
 
   .time-inputs { display: flex; align-items: center; gap: 8px; }
-  .time-input { background: var(--surface3); border: 1px solid var(--border2); color: var(--text); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; width: 110px; outline: none; border-radius: 2px; transition: border-color 0.2s; }
+  .time-input { background: var(--surface3); border: 1px solid var(--border2); color: var(--text); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; width: 110px; outline: none; border-radius: 2px; transition: border-color 0.2s; }
   .time-input:focus { border-color: var(--gold); }
   .time-input:disabled { opacity: 0.3; }
   .time-sep { color: var(--text-muted); font-size: 12px; }
@@ -249,6 +249,11 @@
     .mobile-link-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
     .mobile-link-url { font-size: 12px; color: var(--gold); word-break: break-all; margin-bottom: 8px; }
 }
+  .mobile-auth-header { display: none; }
+
+  @media (max-width: 768px) {
+    .mobile-auth-header { display: block; }
+}
 </style>
 </head>
 <body>
@@ -256,9 +261,9 @@
 <!-- AUTH -->
 <div class="auth-layout" id="authLayout">
   <div class="panel-left">
-    <div class="logo">Maestro</div>
+    <div class="logo">SEANSA</div>
     <div class="hero-text">
-      <div class="hero-label">Платформа для мастеров</div>
+      <div class="hero-label">Платформа для специалистов</div>
       <h1 class="hero-title">Ваши клиенты<br>записываются <em>сами</em></h1>
       <p class="hero-desc">Создайте личную страницу, добавьте услуги и получите ссылку для записи. Без лишнего.</p>
     </div>
@@ -271,13 +276,18 @@
 
   <div class="panel-right">
     <div class="form-container">
+      <!-- мобильная шапка -->
+      <div class="mobile-auth-header">
+        <div class="logo" style="margin-bottom:8px">SEANSA</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:32px">Платформа для специалистов</div>
+      </div>
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('login')">Войти</button>
         <button class="tab-btn" onclick="switchTab('register')">Регистрация</button>
       </div>
       <form class="form active" id="loginForm" onsubmit="handleLogin(event)">
         <div class="error-msg" id="loginError"></div>
-        <div class="field"><label>Телефон</label><input type="tel" id="loginPhone" placeholder="+79991234567" required></div>
+        <div class="field"><label>Телефон</label><input type="tel" id="loginPhone" placeholder="+79991234567" oninput="formatPhone(this)" required></div>
         <div class="field">
           <label>Пароль</label>
           <div style="position:relative">
@@ -308,14 +318,14 @@
 <!-- CABINET -->
 <div class="cabinet" id="cabinet">
   <div class="sidebar">
-    <div class="sidebar-logo">Maestro</div>
+    <div class="sidebar-logo">SEANSA</div>
     <div class="sidebar-master">
       <div class="sidebar-master-greeting">Кабинет мастера</div>
       <div class="sidebar-master-name" id="sidebarName">—</div>
     </div>
     <div class="sidebar-nav">
       <div class="nav-item active" onclick="showSection('bookings', this)"><span class="nav-item-icon">📋</span> Мои записи</div>
-      <div class="nav-item" onclick="showSection('services', this)"><span class="nav-item-icon">✂️</span> Услуги</div>
+      <div class="nav-item" onclick="showSection('services', this)"><span class="nav-item-icon">⭐</span> Услуги</div>
       <div class="nav-item" onclick="showSection('schedule', this)"><span class="nav-item-icon">🗓</span> Расписание</div>
     </div>
     <div class="sidebar-link-box">
@@ -389,7 +399,7 @@
       Записи
     </button>
     <button class="mobile-nav-item" onclick="showSection('services', this)">
-      <span class="mobile-nav-item-icon">✂️</span>
+      <span class="mobile-nav-item-icon">⭐</span>
       Услуги
     </button>
     <button class="mobile-nav-item" onclick="showSection('schedule', this)">

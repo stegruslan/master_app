@@ -8,6 +8,7 @@ from api.services import router as services_router
 from api.schedule import router as schedule_router
 from api.bookings import router as bookings_router
 from api.public import router as public_router
+from admin.setup import setup_admin
 
 
 setup_logging()
@@ -31,3 +32,5 @@ app.include_router(services_router)
 app.include_router(schedule_router)
 app.include_router(bookings_router)
 app.include_router(public_router)
+
+setup_admin(app)
