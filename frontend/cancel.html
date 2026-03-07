@@ -1,205 +1,237 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Отмена записи</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отмена записи</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  :root {
-    --gold: #c9a84c;
-    --bg: #f7f4f0;
-    --surface: #ffffff;
-    --border: rgba(0,0,0,0.08);
-    --text: #1a1714;
-    --text-muted: #9a918a;
-    --error: #c0504a;
-    --success: #4a7c59;
-  }
+    :root {
+      --gold: #c9a84c;
+      --bg: #f7f4f0;
+      --surface: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #1a1714;
+      --text-muted: #9a918a;
+      --error: #c0504a;
+      --success: #4a7c59;
+    }
 
-  body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
 
-  body::before {
-    content: '';
-    position: fixed; top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gold), #e8c97a, var(--gold));
-  }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), #e8c97a, var(--gold));
+    }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 2px 24px rgba(0,0,0,0.06);
-    overflow: hidden;
-    animation: fadeUp 0.4s ease;
-  }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      animation: fadeUp 0.4s ease;
+    }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
 
-  .card-body {
-    padding: 48px 40px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .icon {
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    margin-bottom: 8px;
-  }
+    .card-body {
+      padding: 48px 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
 
-  .icon-warning {
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.3);
-  }
+    .icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
 
-  .icon-success {
-    background: rgba(74,124,89,0.1);
-    border: 1px solid rgba(74,124,89,0.3);
-  }
+    .icon-warning {
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+    }
 
-  .icon-error {
-    background: rgba(192,80,74,0.1);
-    border: 1px solid rgba(192,80,74,0.3);
-  }
+    .icon-success {
+      background: rgba(74, 124, 89, 0.1);
+      border: 1px solid rgba(74, 124, 89, 0.3);
+    }
 
-  .title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-  }
+    .icon-error {
+      background: rgba(192, 80, 74, 0.1);
+      border: 1px solid rgba(192, 80, 74, 0.3);
+    }
 
-  .desc {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    max-width: 280px;
-  }
+    .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+    }
 
-  .btn-cancel {
-    background: var(--error);
-    color: white;
-    border: none;
-    padding: 14px 32px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    border-radius: 2px;
-    margin-top: 8px;
-  }
+    .desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 280px;
+    }
 
-  .btn-cancel:hover { opacity: 0.85; }
-  .btn-cancel:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-cancel {
+      background: var(--error);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
 
-  .btn-keep {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: color 0.2s;
-    padding: 4px 0;
-  }
+    .btn-cancel:hover {
+      opacity: 0.85;
+    }
 
-  .btn-keep:hover { color: var(--text); }
+    .btn-cancel:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
 
-  .loading {
-    color: var(--text-muted);
-    font-size: 13px;
-    letter-spacing: 0.1em;
-  }
-</style>
+    .btn-keep {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 4px 0;
+    }
+
+    .btn-keep:hover {
+      color: var(--text);
+    }
+
+    .loading {
+      color: var(--text-muted);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="card">
-  <div class="card-body" id="content">
-    <div class="loading">Загрузка...</div>
+  <div class="card">
+    <div class="card-body" id="content">
+      <div class="loading">Загрузка...</div>
+    </div>
   </div>
-</div>
 
-<script>
-  const API = 'http://localhost:8000';
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
+  <script>
+    const API = '';
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
 
-  if (!token) {
-    showError('Неверная ссылка');
-  } else {
-    showConfirm();
-  }
+    if (!token) {
+      showError('Неверная ссылка');
+    } else {
+      showConfirm();
+    }
 
-  function showConfirm() {
-    document.getElementById('content').innerHTML = `
+    function showConfirm() {
+      document.getElementById('content').innerHTML = `
       <div class="icon icon-warning">✕</div>
       <div class="title">Отменить запись?</div>
       <div class="desc">Вы уверены что хотите отменить запись? Это действие нельзя отменить.</div>
       <button class="btn-cancel" id="confirmBtn" onclick="cancelBooking()">Да, отменить</button>
       <button class="btn-keep" onclick="history.back()">Нет, оставить</button>
     `;
-  }
+    }
 
-  async function cancelBooking() {
-    const btn = document.getElementById('confirmBtn');
-    btn.disabled = true;
-    btn.textContent = '...';
+    async function cancelBooking() {
+      const btn = document.getElementById('confirmBtn');
+      btn.disabled = true;
+      btn.textContent = '...';
 
-    try {
-      const res = await fetch(`${API}/cancel/${token}`);
-      const data = await res.json();
+      try {
+        const res = await fetch(`${API}/cancel/${token}`);
+        const data = await res.json();
 
-      if (!res.ok) throw new Error(data.detail || 'Ошибка отмены');
+        if (!res.ok) throw new Error(data.detail || 'Ошибка отмены');
 
-      document.getElementById('content').innerHTML = `
+        document.getElementById('content').innerHTML = `
         <div class="icon icon-success">✓</div>
         <div class="title">Запись отменена</div>
         <div class="desc">Ваша запись успешно отменена.</div>
       `;
-    } catch(e) {
-      document.getElementById('content').innerHTML = `
+      } catch (e) {
+        document.getElementById('content').innerHTML = `
         <div class="icon icon-error">!</div>
         <div class="title">Ошибка</div>
         <div class="desc">${e.message}</div>
       `;
+      }
     }
-  }
 
-  function showError(msg) {
-    document.getElementById('content').innerHTML = `
+    function showError(msg) {
+      document.getElementById('content').innerHTML = `
       <div class="icon icon-error">!</div>
       <div class="title">Ошибка</div>
       <div class="desc">${msg}</div>
     `;
-  }
-</script>
+    }
+  </script>
 </body>
+
 </html>

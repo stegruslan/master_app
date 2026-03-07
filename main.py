@@ -33,4 +33,5 @@ app.include_router(schedule_router)
 app.include_router(bookings_router)
 app.include_router(public_router)
 
+
 setup_admin(app)

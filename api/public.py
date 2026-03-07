@@ -151,7 +151,15 @@ async def get_slots(
     for slot_start, slot_end in slots:
         is_busy = False
         for booking in existing_bookings:
-            if slot_start < booking.datetime_end and slot_end > booking.datetime_start:
+            booking_start = booking.datetime_start
+            booking_end = booking.datetime_end
+
+            if booking_start.tzinfo is None:
+                booking_start = booking_start.replace(tzinfo=timezone.utc)
+            if booking_end.tzinfo is None:
+                booking_end = booking_end.replace(tzinfo=timezone.utc)
+
+            if slot_start < booking_end and slot_end > booking_start:
                 is_busy = True
                 break
         if not is_busy:
