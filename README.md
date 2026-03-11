@@ -34,8 +34,11 @@
 │   ├── config.py         # Настройки через pydantic-settings
 │   ├── database.py       # Подключение к БД, движок, сессии
 │   ├── dependencies.py   # get_current_master
-│   ├── logging.py        # Логирование
+│   ├── logging.py        # Логирование (stdout, уровень через DEBUG в .env)
 │   └── security.py       # Хэширование паролей, JWT
+├── certbot/
+│   ├── conf/             # SSL сертификаты Let's Encrypt
+│   └── www/              # Для верификации домена
 ├── frontend/
 │   ├── master.html       # Кабинет мастера
 │   ├── book.html         # Страница записи клиента
@@ -47,6 +50,8 @@
 │   ├── service.py        # Услуга
 │   ├── subscription.py   # Подписка мастера
 │   └── user.py           # Мастер
+├── nginx/
+│   └── nginx.conf        # Конфигурация Nginx
 ├── schemas/              # Pydantic схемы
 ├── tests/
 │   ├── conftest.py       # Фикстуры и тестовая БД
@@ -55,6 +60,8 @@
 │   └── test_slots.py     # Тесты генерации слотов
 ├── utils/
 │   └── validators.py
+├── docker-compose.yml    # Docker Compose конфигурация
+├── Dockerfile            # Образ приложения
 ├── main.py               # Точка входа FastAPI
 └── .env                  # Переменные окружения
 ```

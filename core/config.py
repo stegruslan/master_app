@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str
     ADMIN_SECRET_KEY: str
 
+    DEBUG: bool = False
+
     @computed_field
     @property
     def DATABASE_URL(self) -> str:
