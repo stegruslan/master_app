@@ -1,0 +1,72 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest
+        run: pytest --tb=short
+        env:
+          # Тесты используют SQLite in-memory, реальные значения не нужны
+          SECRET_KEY: ci-secret-key-for-tests
+          ALGORITHM: HS256
+          ACCESS_TOKEN_EXPIRE_MINUTES: 30
+          REFRESH_TOKEN_EXPIRE_DAYS: 30
+          ADMIN_PASSWORD: ci-admin-password
+          ADMIN_SECRET_KEY: ci-admin-secret
+
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: test  # деплой только если тесты прошли
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e  # остановить при любой ошибке
+
+            cd /root/seansa
+
+            echo ">>> git pull"
+            git pull origin master
+
+            echo ">>> pip install"
+            ./venv/bin/pip install -r requirements.txt --quiet
+
+            echo ">>> alembic upgrade"
+            ./venv/bin/alembic upgrade head
+
+            echo ">>> restart service"
+            sudo systemctl restart seansa
+
+            echo ">>> done"
