@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Run pytest
-        run: pytest --tb=short
+        run: python -m pytest --tb=short
         env:
           SECRET_KEY: ci-secret-key-for-tests
           ALGORITHM: HS256
