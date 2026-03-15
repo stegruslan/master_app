@@ -26,6 +26,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
       - name: Run pytest
         run: python -m pytest --tb=short
         env:
@@ -45,7 +48,7 @@ jobs:
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
-    needs: test  # деплой только если тесты прошли
+    needs: test
 
     steps:
       - name: Deploy via SSH
@@ -55,7 +58,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            set -e  # остановить при любой ошибке
+            set -e
 
             cd /root/seansa
 
