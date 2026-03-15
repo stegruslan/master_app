@@ -43,7 +43,7 @@ jobs:
           DB_PORT: 5432
           DB_USER: ci
           DB_PASSWORD: ci
-          DB_NAME: ci
+          DB_NAME: ":memory:"
 
   deploy:
     name: Deploy to VPS
