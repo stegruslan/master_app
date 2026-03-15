@@ -26,19 +26,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
       - name: Run pytest
         run: pytest --tb=short
         env:
-          # Тесты используют SQLite in-memory, реальные значения не нужны
           SECRET_KEY: ci-secret-key-for-tests
           ALGORITHM: HS256
           ACCESS_TOKEN_EXPIRE_MINUTES: 30
           REFRESH_TOKEN_EXPIRE_DAYS: 30
           ADMIN_PASSWORD: ci-admin-password
           ADMIN_SECRET_KEY: ci-admin-secret
+          DB_DIALECT: sqlite+aiosqlite
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: ci
+          DB_PASSWORD: ci
+          DB_NAME: ci
 
   deploy:
     name: Deploy to VPS
