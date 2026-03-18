@@ -1220,6 +1220,26 @@
         Выйти
       </button>
     </nav>
+    <!-- Модалка подтверждения отмены -->
+    <div id="cancelModal"
+      style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center">
+      <div
+        style="background:var(--surface);border:1px solid var(--border);padding:40px;max-width:360px;width:90%;text-align:center;animation:fadeUp 0.2s ease">
+        <div
+          style="width:48px;height:48px;border:1px solid rgba(192,80,74,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:20px">
+          ✕</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;margin-bottom:12px">Отменить
+          запись?</div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:32px">Вы уверены что хотите
+          отменить запись? Это действие нельзя отменить.</div>
+        <button class="btn-danger"
+          style="width:100%;padding:14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px"
+          onclick="confirmCancel()">Да, отменить</button>
+        <button onclick="closeModal()"
+          style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Нет,
+          оставить</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1415,12 +1435,33 @@
       renderBookings(status === 'all' ? allBookings : allBookings.filter(b => b.status === status));
     }
 
+    let pendingCancelId = null;
+
     async function updateStatus(id, status) {
+      if (status === 'cancelled') {
+        pendingCancelId = id;
+        document.getElementById('cancelModal').style.display = 'flex';
+        return;
+      }
       await apiFetch(`${API}/bookings/${id}/status`, {
         method: 'PATCH',
         body: JSON.stringify({ status })
       });
       loadBookings();
+    }
+
+    async function confirmCancel() {
+      closeModal();
+      await apiFetch(`${API}/bookings/${pendingCancelId}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: 'cancelled' })
+      });
+      pendingCancelId = null;
+      loadBookings();
+    }
+
+    function closeModal() {
+      document.getElementById('cancelModal').style.display = 'none';
     }
 
     // ── SERVICES ──
@@ -1572,6 +1613,7 @@
       loadServices();
     }
   </script>
+
 </body>
 
 </html>
