@@ -1560,6 +1560,7 @@
       const data = await res.json();
       localStorage.setItem('master_slug', data.slug);
       localStorage.setItem('master_name', data.name);
+      localStorage.setItem('master_timezone', data.timezone || 'Europe/Moscow');
       masterSlug = data.slug;
     }
 
@@ -1676,6 +1677,19 @@
       renderWeekCalendar();
       renderDayBookings();
     }
+    const weekCal = document.querySelector('.week-calendar');
+    let touchStartX = 0;
+
+    weekCal.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    weekCal.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        changeWeek(diff > 0 ? 1 : -1);
+      }
+    });
 
     function renderDayBookings() {
       const dateStr = toDateStr(selectedDate);
@@ -1714,7 +1728,8 @@
 
       el.innerHTML = dayBookings.map(b => {
         const dt = new Date(b.datetime_start);
-        const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+        const tz = localStorage.getItem('master_timezone') || 'Europe/Moscow';
+        const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: tz });
         const actions = b.status !== 'cancelled' ? `
           ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
           <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
@@ -1815,7 +1830,8 @@
       }
 
       const slug = localStorage.getItem('master_slug');
-      const datetimeStart = `${date}T${time}:00+03:00`;
+      const datetimeStart = new Date(`${date}T${time}`).toISOString();
+
 
       try {
         const res = await fetch(`${API}/book/${slug}`, {

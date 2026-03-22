@@ -15,6 +15,7 @@ from schemas.public import (
 )
 from schemas.service import ServiceResponse
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 import uuid
 
 router = APIRouter(tags=["public"])
@@ -113,11 +114,16 @@ async def get_slots(
 
     # генерируем все слоты на день
     slots = []
-    current = datetime.combine(target_date.date(), schedule.start_time).replace(
-        tzinfo=timezone.utc
+    master_tz = ZoneInfo(master.timezone or "Europe/Moscow")
+    current = (
+        datetime.combine(target_date.date(), schedule.start_time)
+        .replace(tzinfo=master_tz)
+        .astimezone(timezone.utc)
     )
-    end_of_day = datetime.combine(target_date.date(), schedule.end_time).replace(
-        tzinfo=timezone.utc
+    end_of_day = (
+        datetime.combine(target_date.date(), schedule.end_time)
+        .replace(tzinfo=master_tz)
+        .astimezone(timezone.utc)
     )
     duration = timedelta(minutes=service.duration)
 
@@ -126,11 +132,15 @@ async def get_slots(
         current += duration
 
     # получаем уже занятые записи на этот день
-    day_start = datetime.combine(target_date.date(), schedule.start_time).replace(
-        tzinfo=timezone.utc
+    day_start = (
+        datetime.combine(target_date.date(), schedule.start_time)
+        .replace(tzinfo=master_tz)
+        .astimezone(timezone.utc)
     )
-    day_end = datetime.combine(target_date.date(), schedule.end_time).replace(
-        tzinfo=timezone.utc
+    day_end = (
+        datetime.combine(target_date.date(), schedule.end_time)
+        .replace(tzinfo=master_tz)
+        .astimezone(timezone.utc)
     )
 
     result = await db.execute(
@@ -214,7 +224,11 @@ async def create_booking(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Мастер не работает в этот день",
         )
-    start_time = data.datetime_start.replace(tzinfo=None).time()
+    master_tz = ZoneInfo(master.timezone or "Europe/Moscow")
+
+    local_dt = data.datetime_start.astimezone(master_tz)
+
+    start_time = local_dt.time()
     if start_time < schedule.start_time or start_time >= schedule.end_time:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

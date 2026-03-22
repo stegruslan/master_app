@@ -6,6 +6,7 @@ from utils.validators import validate_phone_number
 class MasterPublicResponse(BaseModel):
     name: str
     slug: str
+    timezone: str = "Europe/Moscow"
 
     model_config = ConfigDict(from_attributes=True)
 
