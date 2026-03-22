@@ -1815,7 +1815,7 @@
       }
 
       const slug = localStorage.getItem('master_slug');
-      const datetimeStart = `${date}T${time}:00`;
+      const datetimeStart = `${date}T${time}:00+03:00`;
 
       try {
         const res = await fetch(`${API}/book/${slug}`, {
