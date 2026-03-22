@@ -257,7 +257,8 @@
       color: var(--text-muted);
     }
 
-    .field input {
+    .field input,
+    .field select {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 2px;
@@ -268,15 +269,22 @@
       color: var(--text);
       outline: none;
       transition: border-color 0.2s, background 0.2s;
+      width: 100%;
     }
 
-    .field input:focus {
+    .field input:focus,
+    .field select:focus {
       border-color: var(--gold);
       background: rgba(201, 168, 76, 0.04);
     }
 
     .field input::placeholder {
       color: var(--text-muted);
+    }
+
+    .field select option {
+      background: var(--surface2);
+      color: var(--text);
     }
 
     .btn-primary {
@@ -562,29 +570,131 @@
       font-size: 14px;
     }
 
-    /* BOOKINGS */
-    .bookings-filters {
-      display: flex;
-      gap: 8px;
+    /* ── WEEK CALENDAR ── */
+    .week-calendar {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      padding: 20px 24px;
       margin-bottom: 24px;
-      flex-wrap: wrap;
     }
 
-    .filter-btn {
+    .week-calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .week-label {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .week-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .week-nav-btn {
       background: none;
       border: 1px solid var(--border2);
       color: var(--text-muted);
-      padding: 8px 16px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
       transition: all 0.2s;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .filter-btn.active {
+    .week-nav-btn:hover {
       border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .week-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .week-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 4px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .week-day:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .week-day.active {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .week-day.today .week-day-num {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .week-day-name {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .week-day-num {
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .week-day-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+    }
+
+    .week-day.has-bookings .week-day-dot {
+      opacity: 1;
+    }
+
+    /* ── DAY BOOKINGS ── */
+    .day-bookings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .day-bookings-title {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .day-bookings-title span {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .day-revenue {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
       color: var(--gold);
     }
 
@@ -656,6 +766,19 @@
       color: var(--text-muted);
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border2);
+    }
+
+    .next-booking-hint {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .next-booking-hint strong {
+      color: var(--gold);
+      font-weight: 400;
     }
 
     /* SERVICES */
@@ -854,6 +977,49 @@
       color: var(--gold);
     }
 
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+      animation: fadeUp 0.2s ease;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+
+    .modal-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
     @media (max-width: 900px) {
       .schedule-day {
         grid-template-columns: 1fr;
@@ -866,8 +1032,6 @@
     }
 
     @media (max-width: 768px) {
-
-      /* AUTH */
       .auth-layout {
         grid-template-columns: 1fr;
       }
@@ -880,7 +1044,6 @@
         padding: 32px 20px;
       }
 
-      /* CABINET */
       .cabinet {
         flex-direction: column;
       }
@@ -894,12 +1057,10 @@
       }
 
       .section-title {
-        font-family: 'DM Sans', sans-serif;
         font-size: 28px;
         font-weight: 300;
       }
 
-      /* нижняя навигация */
       .mobile-nav {
         display: flex !important;
         position: fixed;
@@ -943,8 +1104,6 @@
         font-family: 'DM Sans', sans-serif;
       }
 
-
-
       .mobile-nav-item.active {
         color: var(--gold);
       }
@@ -953,7 +1112,6 @@
         font-size: 20px;
       }
 
-      /* карточки на мобиле */
       .booking-card {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -972,7 +1130,6 @@
         grid-template-columns: 1fr;
       }
 
-      /* ссылка мастера */
       .mobile-link-box {
         display: block !important;
         background: var(--surface2);
@@ -995,6 +1152,18 @@
         color: var(--gold);
         word-break: break-all;
         margin-bottom: 8px;
+      }
+
+      .week-days {
+        gap: 2px;
+      }
+
+      .week-day {
+        padding: 8px 2px;
+      }
+
+      .week-day-num {
+        font-size: 14px;
       }
     }
 
@@ -1039,7 +1208,6 @@
 
     <div class="panel-right">
       <div class="form-container">
-        <!-- мобильная шапка -->
         <div class="mobile-auth-header">
           <div class="logo" style="margin-bottom:8px">SEANSA</div>
           <div style="font-size:13px;color:var(--text-muted);margin-bottom:32px">Платформа для специалистов</div>
@@ -1123,7 +1291,6 @@
     </div>
 
     <div class="cabinet-main">
-
       <div class="mobile-link-box" style="display:none" id="mobileLinkBox">
         <div class="mobile-link-label">Ссылка для записи</div>
         <div class="mobile-link-url" id="mobileLinkUrl">—</div>
@@ -1133,13 +1300,28 @@
       <!-- Записи -->
       <div class="section active" id="sectionBookings">
         <div class="section-header">
-          <div class="section-title">Мои записи</div>
+          <div class="section-title">Мои записи <span id="bookingsCount"
+              style="font-size:16px;color:var(--gold);font-weight:300"></span></div>
+          <button class="btn-outline" onclick="openAddBookingModal()">+ Добавить</button>
         </div>
-        <div class="bookings-filters">
-          <button class="filter-btn active" onclick="filterBookings('all', this)">Все</button>
-          <button class="filter-btn" onclick="filterBookings('pending', this)">Ожидают</button>
-          <button class="filter-btn" onclick="filterBookings('confirmed', this)">Подтверждены</button>
-          <button class="filter-btn" onclick="filterBookings('cancelled', this)">Отменены</button>
+
+        <!-- Мини-календарь на неделю -->
+        <div class="week-calendar">
+          <div class="week-calendar-header">
+            <div class="week-label" id="weekLabel">—</div>
+            <div class="week-nav">
+              <button class="week-nav-btn" onclick="changeWeek(-1)">‹</button>
+              <button class="week-nav-btn" onclick="changeWeek(0)">•</button>
+              <button class="week-nav-btn" onclick="changeWeek(1)">›</button>
+            </div>
+          </div>
+          <div class="week-days" id="weekDays"></div>
+        </div>
+
+        <!-- Записи на выбранный день -->
+        <div class="day-bookings-header">
+          <div class="day-bookings-title" id="dayBookingsTitle">Загрузка...</div>
+
         </div>
         <div class="bookings-list" id="bookingsList">
           <div class="loading">Загрузка...</div>
@@ -1182,10 +1364,7 @@
           <div class="loading">Загрузка...</div>
         </div>
       </div>
-
-
     </div>
-
 
     <!-- Нижняя навигация -->
     <nav class="mobile-nav" style="display:none">
@@ -1220,24 +1399,58 @@
         Выйти
       </button>
     </nav>
+
     <!-- Модалка подтверждения отмены -->
-    <div id="cancelModal"
-      style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center">
-      <div
-        style="background:var(--surface);border:1px solid var(--border);padding:40px;max-width:360px;width:90%;text-align:center;animation:fadeUp 0.2s ease">
+    <div id="cancelModal" class="modal-overlay">
+      <div class="modal-box" style="text-align:center">
         <div
           style="width:48px;height:48px;border:1px solid rgba(192,80,74,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:20px">
           ✕</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;margin-bottom:12px">Отменить
-          запись?</div>
+        <div class="modal-title">Отменить запись?</div>
         <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:32px">Вы уверены что хотите
           отменить запись? Это действие нельзя отменить.</div>
         <button class="btn-danger"
           style="width:100%;padding:14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px"
           onclick="confirmCancel()">Да, отменить</button>
-        <button onclick="closeModal()"
+        <button onclick="closeModal('cancelModal')"
           style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Нет,
           оставить</button>
+      </div>
+    </div>
+
+    <!-- Модалка добавления записи -->
+    <div id="addBookingModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-title">Новая запись</div>
+        <div class="modal-fields">
+          <div class="field">
+            <label>Имя клиента</label>
+            <input type="text" id="abName" placeholder="Анна Иванова">
+          </div>
+          <div class="field">
+            <label>Телефон</label>
+            <input type="tel" id="abPhone" placeholder="+79991234567" oninput="formatPhone(this)">
+          </div>
+          <div class="field">
+            <label>Услуга</label>
+            <select id="abService"></select>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Дата</label>
+              <input type="date" id="abDate">
+            </div>
+            <div class="field">
+              <label>Время</label>
+              <input type="time" id="abTime">
+            </div>
+          </div>
+          <div class="error-msg" id="abError"></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-primary" style="margin-top:0" onclick="createManualBooking()">Сохранить</button>
+          <button class="btn-outline" onclick="closeModal('addBookingModal')">Отмена</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1245,50 +1458,40 @@
   <script>
     const API = '';
     const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    const DAYS_SHORT = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     let accessToken = localStorage.getItem('access_token');
     let masterSlug = localStorage.getItem('master_slug');
-    let masterName = localStorage.getItem('master_name');
     let allBookings = [];
+    let selectedDate = new Date();
+    let weekOffset = 0;
+    let pendingCancelId = null;
+    let cachedServices = [];
 
     if (accessToken) showCabinet();
 
-    // ── API FETCH с обработкой 401 ──
+    // ── API FETCH ──
     async function apiFetch(url, options = {}) {
       const res = await fetch(url, {
         ...options,
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-          ...options.headers
-        }
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json', ...options.headers }
       });
 
       if (res.status === 401) {
         const refreshToken = localStorage.getItem('refresh_token');
         if (!refreshToken) { localStorage.clear(); location.reload(); return null; }
-
         const refreshRes = await fetch(`${API}/auth/refresh`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refresh_token: refreshToken })
         });
-
         if (!refreshRes.ok) { localStorage.clear(); location.reload(); return null; }
-
         const data = await refreshRes.json();
         accessToken = data.access_token;
         localStorage.setItem('access_token', data.access_token);
-
         return fetch(url, {
           ...options,
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-            ...options.headers
-          }
+          headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json', ...options.headers }
         });
       }
-
       return res;
     }
 
@@ -1358,7 +1561,6 @@
       localStorage.setItem('master_slug', data.slug);
       localStorage.setItem('master_name', data.name);
       masterSlug = data.slug;
-      masterName = data.name;
     }
 
     // ── CABINET ──
@@ -1393,6 +1595,142 @@
 
     function logout() { localStorage.clear(); location.reload(); }
 
+    // ── MODALS ──
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    // ── WEEK CALENDAR ──
+    function getWeekStart(offset) {
+      const now = new Date();
+      const day = now.getDay();
+      const diff = (day === 0 ? -6 : 1 - day); // пн = начало недели
+      const monday = new Date(now);
+      monday.setDate(now.getDate() + diff + offset * 7);
+      monday.setHours(0, 0, 0, 0);
+      return monday;
+    }
+
+    function toDateStr(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function renderWeekCalendar() {
+      const weekStart = getWeekStart(weekOffset);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+
+      const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+      const startLabel = `${weekStart.getDate()} ${months[weekStart.getMonth()]}`;
+      const endLabel = `${weekEnd.getDate()} ${months[weekEnd.getMonth()]}`;
+      document.getElementById('weekLabel').textContent = `${startLabel} — ${endLabel}`;
+
+      const today = toDateStr(new Date());
+      const selectedStr = toDateStr(selectedDate);
+
+      const bookingsByDate = {};
+      allBookings.forEach(b => {
+        if (b.status === 'cancelled') return;
+        const d = b.datetime_start.substring(0, 10);
+        if (!bookingsByDate[d]) bookingsByDate[d] = 0;
+        bookingsByDate[d]++;
+      });
+
+      const container = document.getElementById('weekDays');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 7; i++) {
+        const day = new Date(weekStart);
+        day.setDate(weekStart.getDate() + i);
+        const dateStr = toDateStr(day);
+        const isToday = dateStr === today;
+        const isSelected = dateStr === selectedStr;
+        const hasBookings = !!bookingsByDate[dateStr];
+
+        const el = document.createElement('div');
+        el.className = 'week-day' + (isToday ? ' today' : '') + (isSelected ? ' active' : '') + (hasBookings ? ' has-bookings' : '');
+        el.innerHTML = `
+          <div class="week-day-name">${DAYS_SHORT[i]}</div>
+          <div class="week-day-num">${day.getDate()}</div>
+          <div class="week-day-dot"></div>
+        `;
+        el.onclick = () => {
+          selectedDate = day;
+          renderWeekCalendar();
+          renderDayBookings();
+        };
+        container.appendChild(el);
+      }
+    }
+
+    function changeWeek(direction) {
+      if (direction === 0) {
+        weekOffset = 0;
+        selectedDate = new Date();
+      } else {
+        weekOffset += direction;
+      }
+      renderWeekCalendar();
+      renderDayBookings();
+    }
+
+    function renderDayBookings() {
+      const dateStr = toDateStr(selectedDate);
+      const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+      const label = `${selectedDate.getDate()} ${months[selectedDate.getMonth()]}`;
+
+      const dayBookings = allBookings.filter(b => {
+        if (b.status === 'cancelled') return false;
+        return b.datetime_start.substring(0, 10) === dateStr;
+      });
+
+
+      document.getElementById('dayBookingsTitle').innerHTML = `Записи на <span>${label}</span>`;
+
+
+      const el = document.getElementById('bookingsList');
+
+      if (!dayBookings.length) {
+        // Ищем ближайшую запись
+        const future = allBookings
+          .filter(b => b.status !== 'cancelled' && b.datetime_start > dateStr)
+          .sort((a, b) => a.datetime_start.localeCompare(b.datetime_start));
+
+        if (future.length) {
+          const next = new Date(future[0].datetime_start);
+          const nextLabel = `${next.getDate()} ${months[next.getMonth()]}`;
+          el.innerHTML = `<div class="next-booking-hint" style="font-size:16px;padding:24px 0">Записей нет.<br><br>Ближайшая запись: <strong style="cursor:pointer;color:var(--gold);text-decoration:underline;font-weight:400" onclick="jumpToDate('${toDateStr(new Date(future[0].datetime_start))}')">${nextLabel}</strong></div>`;
+        } else {
+          el.innerHTML = '<div class="empty-state">Записей пока нет</div>';
+        }
+        return;
+      }
+
+      const statusCls = { pending: 'status-pending', confirmed: 'status-confirmed', cancelled: 'status-cancelled' };
+      const statusLbl = { pending: 'Ожидает', confirmed: 'Подтверждена', cancelled: 'Отменена' };
+
+      el.innerHTML = dayBookings.map(b => {
+        const dt = new Date(b.datetime_start);
+        const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+        const actions = b.status !== 'cancelled' ? `
+          ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
+          <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
+        return `<div class="booking-card">
+          <div>
+            <div class="booking-client">${b.client_name}</div>
+            <div class="booking-meta"><span>${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
+          </div>
+          <div class="booking-actions">
+            <span class="status-badge ${statusCls[b.status]}">${statusLbl[b.status]}</span>
+            ${actions}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
     // ── BOOKINGS ──
     async function loadBookings() {
       document.getElementById('bookingsList').innerHTML = '<div class="loading">Загрузка...</div>';
@@ -1400,47 +1738,24 @@
         const res = await apiFetch(`${API}/bookings/`);
         if (!res) return;
         allBookings = await res.json();
-        renderBookings(allBookings.filter(b => b.status !== 'cancelled'));
-      } catch (e) { document.getElementById('bookingsList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
+
+        const upcoming = allBookings.filter(b => b.status !== 'cancelled' && new Date(b.datetime_start) >= new Date());
+        const count = upcoming.length;
+        document.getElementById('bookingsCount').textContent = count > 0 ? `(${count})` : '';
+
+        renderWeekCalendar();
+        renderDayBookings();
+      } catch (e) {
+        document.getElementById('bookingsList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>';
+      }
     }
 
-    function renderBookings(list) {
-      const el = document.getElementById('bookingsList');
-      if (!list.length) { el.innerHTML = '<div class="empty-state">Записей пока нет</div>'; return; }
-      const statusCls = { pending: 'status-pending', confirmed: 'status-confirmed', cancelled: 'status-cancelled' };
-      const statusLbl = { pending: 'Ожидает', confirmed: 'Подтверждена', cancelled: 'Отменена' };
-      el.innerHTML = list.map(b => {
-        const dt = new Date(b.datetime_start);
-        const dateStr = dt.toLocaleDateString('ru', { day: 'numeric', month: 'long' });
-        const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-        const actions = b.status !== 'cancelled' ? `
-        ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
-        <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
-        return `<div class="booking-card">
-        <div>
-          <div class="booking-client">${b.client_name}</div>
-          <div class="booking-meta"><span>${dateStr}, ${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
-        </div>
-        <div class="booking-actions">
-          <span class="status-badge ${statusCls[b.status]}">${statusLbl[b.status]}</span>
-          ${actions}
-        </div>
-      </div>`;
-      }).join('');
-    }
 
-    function filterBookings(status, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderBookings(status === 'all' ? allBookings : allBookings.filter(b => b.status === status));
-    }
-
-    let pendingCancelId = null;
 
     async function updateStatus(id, status) {
       if (status === 'cancelled') {
         pendingCancelId = id;
-        document.getElementById('cancelModal').style.display = 'flex';
+        document.getElementById('cancelModal').classList.add('show');
         return;
       }
       await apiFetch(`${API}/bookings/${id}/status`, {
@@ -1451,7 +1766,7 @@
     }
 
     async function confirmCancel() {
-      closeModal();
+      closeModal('cancelModal');
       await apiFetch(`${API}/bookings/${pendingCancelId}/status`, {
         method: 'PATCH',
         body: JSON.stringify({ status: 'cancelled' })
@@ -1460,8 +1775,72 @@
       loadBookings();
     }
 
-    function closeModal() {
-      document.getElementById('cancelModal').style.display = 'none';
+    // ── ADD BOOKING MANUALLY ──
+    async function openAddBookingModal() {
+      // Загружаем услуги если ещё не загружены
+      if (!cachedServices.length) {
+        const res = await apiFetch(`${API}/services/`);
+        if (res) cachedServices = await res.json();
+      }
+
+      const select = document.getElementById('abService');
+      select.innerHTML = cachedServices
+        .filter(s => s.is_active !== false)
+        .map(s => `<option value="${s.id}" data-duration="${s.duration}">${s.name} (${s.duration} мин)</option>`)
+        .join('');
+
+      // Ставим текущую выбранную дату
+      document.getElementById('abDate').value = toDateStr(selectedDate);
+      document.getElementById('abTime').value = '09:00';
+      document.getElementById('abName').value = '';
+      document.getElementById('abPhone').value = '';
+      document.getElementById('abError').classList.remove('show');
+
+      document.getElementById('addBookingModal').classList.add('show');
+    }
+
+    async function createManualBooking() {
+      const name = document.getElementById('abName').value.trim();
+      const phone = document.getElementById('abPhone').value.trim();
+      const serviceId = document.getElementById('abService').value;
+      const date = document.getElementById('abDate').value;
+      const time = document.getElementById('abTime').value;
+      const errEl = document.getElementById('abError');
+      errEl.classList.remove('show');
+
+      if (!name || !phone || !serviceId || !date || !time) {
+        errEl.textContent = 'Заполните все поля';
+        errEl.classList.add('show');
+        return;
+      }
+
+      const slug = localStorage.getItem('master_slug');
+      const datetimeStart = `${date}T${time}:00`;
+
+      try {
+        const res = await fetch(`${API}/book/${slug}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: parseInt(serviceId),
+            datetime_start: datetimeStart,
+            client_name: name,
+            client_phone: phone,
+            client_email: ''
+          })
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.detail || 'Ошибка создания записи');
+        }
+        closeModal('addBookingModal');
+        // Переходим на выбранную дату
+        selectedDate = new Date(date + 'T12:00:00');
+        loadBookings();
+      } catch (e) {
+        errEl.textContent = e.message;
+        errEl.classList.add('show');
+      }
     }
 
     // ── SERVICES ──
@@ -1471,29 +1850,30 @@
         const res = await apiFetch(`${API}/services/`);
         if (!res) return;
         const services = await res.json();
+        cachedServices = services;
         const el = document.getElementById('servicesList');
         if (!services.length) { el.innerHTML = '<div class="empty-state">Услуг пока нет — нажмите «+ Добавить»</div>'; return; }
         el.innerHTML = services.map(s => `
-  <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
-    <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
-      <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id},'${s.name}',${s.duration},${s.price})">Изменить</button>
-      <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
-    </div>
-  </div>
-  <div class="add-service-form" id="edit-form-${s.id}">
-    <div class="section-label">Редактирование</div>
-    <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
-    <div class="form-row">
-      <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
-      <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
-    </div>
-    <div style="display:flex;gap:10px">
-      <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
-      <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
-    </div>
-  </div>`).join('');
+          <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
+            <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
+              <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id},'${s.name}',${s.duration},${s.price})">Изменить</button>
+              <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
+            </div>
+          </div>
+          <div class="add-service-form" id="edit-form-${s.id}">
+            <div class="section-label">Редактирование</div>
+            <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
+            <div class="form-row">
+              <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
+              <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
+              <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
+            </div>
+          </div>`).join('');
       } catch (e) { document.getElementById('servicesList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
     }
 
@@ -1509,10 +1889,7 @@
       errEl.classList.remove('show');
       if (!name || !duration || !price) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
       try {
-        const res = await apiFetch(`${API}/services/`, {
-          method: 'POST',
-          body: JSON.stringify({ name, duration, price })
-        });
+        const res = await apiFetch(`${API}/services/`, { method: 'POST', body: JSON.stringify({ name, duration, price }) });
         if (!res.ok) throw new Error('Ошибка создания');
         document.getElementById('svcName').value = '';
         document.getElementById('svcDuration').value = '';
@@ -1528,6 +1905,21 @@
       loadServices();
     }
 
+    function editService(id) {
+      document.querySelectorAll('[id^="edit-form-"]').forEach(f => f.classList.remove('show'));
+      document.getElementById(`edit-form-${id}`).classList.add('show');
+    }
+
+    async function updateService(id) {
+      const name = document.getElementById(`edit-name-${id}`).value.trim();
+      const duration = parseInt(document.getElementById(`edit-duration-${id}`).value);
+      const price = parseInt(document.getElementById(`edit-price-${id}`).value);
+      if (!name || !duration || !price) { alert('Заполните все поля'); return; }
+      await apiFetch(`${API}/services/${id}`, { method: 'PUT', body: JSON.stringify({ name, duration, price }) });
+      document.getElementById(`edit-form-${id}`).classList.remove('show');
+      loadServices();
+    }
+
     // ── SCHEDULE ──
     async function loadSchedule() {
       document.getElementById('scheduleList').innerHTML = '<div class="loading">Загрузка...</div>';
@@ -1540,20 +1932,20 @@
           const start = day.start_time ? day.start_time.substring(0, 5) : '09:00';
           const end = day.end_time ? day.end_time.substring(0, 5) : '18:00';
           return `<div class="schedule-day ${day.is_working ? '' : 'day-off'}" id="day-${day.weekday}">
-          <div class="day-name">${DAYS[day.weekday]}</div>
-          <div class="time-inputs">
-            <input class="time-input" type="time" value="${start}" id="start-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
-            <span class="time-sep">—</span>
-            <input class="time-input" type="time" value="${end}" id="end-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <label class="toggle">
-              <input type="checkbox" ${day.is_working ? 'checked' : ''} onchange="toggleDay(${day.weekday},this.checked)">
-              <span class="toggle-slider"></span>
-            </label>
-            <button class="btn-save" id="saveBtn-${day.weekday}" onclick="saveDay(${day.weekday})">Сохранить</button>
-          </div>
-        </div>`;
+            <div class="day-name">${DAYS[day.weekday]}</div>
+            <div class="time-inputs">
+              <input class="time-input" type="time" value="${start}" id="start-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+              <span class="time-sep">—</span>
+              <input class="time-input" type="time" value="${end}" id="end-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <label class="toggle">
+                <input type="checkbox" ${day.is_working ? 'checked' : ''} onchange="toggleDay(${day.weekday},this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+              <button class="btn-save" id="saveBtn-${day.weekday}" onclick="saveDay(${day.weekday})">Сохранить</button>
+            </div>
+          </div>`;
         }).join('');
       } catch (e) { document.getElementById('scheduleList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
     }
@@ -1570,14 +1962,13 @@
       const end = document.getElementById(`end-${weekday}`).value;
       const btn = document.getElementById(`saveBtn-${weekday}`);
       try {
-        await apiFetch(`${API}/schedule/${weekday}`, {
-          method: 'PUT',
-          body: JSON.stringify({ start_time: start, end_time: end, is_working: isWorking })
-        });
+        await apiFetch(`${API}/schedule/${weekday}`, { method: 'PUT', body: JSON.stringify({ start_time: start, end_time: end, is_working: isWorking }) });
         btn.textContent = 'Сохранено ✓'; btn.style.color = 'var(--gold)';
         setTimeout(() => { btn.textContent = 'Сохранить'; btn.style.color = ''; }, 2000);
       } catch (e) { alert('Ошибка сохранения'); }
     }
+
+    // ── UTILS ──
     function formatPhone(input) {
       let val = input.value.replace(/\D/g, '');
       if (val.startsWith('8')) val = '7' + val.slice(1);
@@ -1585,32 +1976,29 @@
       else if (val && !val.startsWith('+')) val = '+' + val;
       input.value = val;
     }
+
     function togglePassword(inputId, btn) {
       const input = document.getElementById(inputId);
-      if (input.type === 'password') {
-        input.type = 'text';
-        btn.textContent = '🙈';
-      } else {
-        input.type = 'password';
-        btn.textContent = '👁';
-      }
+      if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+      else { input.type = 'password'; btn.textContent = '👁'; }
     }
-    function editService(id, name, duration, price) {
-      document.querySelectorAll('[id^="edit-form-"]').forEach(f => f.classList.remove('show'));
-      document.getElementById(`edit-form-${id}`).classList.add('show');
-    }
+    function jumpToDate(dateStr) {
+      const date = new Date(dateStr + 'T12:00:00');
+      selectedDate = date;
 
-    async function updateService(id) {
-      const name = document.getElementById(`edit-name-${id}`).value.trim();
-      const duration = parseInt(document.getElementById(`edit-duration-${id}`).value);
-      const price = parseInt(document.getElementById(`edit-price-${id}`).value);
-      if (!name || !duration || !price) { alert('Заполните все поля'); return; }
-      await apiFetch(`${API}/services/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ name, duration, price })
-      });
-      document.getElementById(`edit-form-${id}`).classList.remove('show');
-      loadServices();
+      // Вычисляем на какой неделе находится эта дата
+      const today = new Date();
+      const day = today.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      const thisMonday = new Date(today);
+      thisMonday.setDate(today.getDate() + diff);
+      thisMonday.setHours(0, 0, 0, 0);
+
+      const diffDays = Math.round((date - thisMonday) / (1000 * 60 * 60 * 24));
+      weekOffset = Math.floor(diffDays / 7);
+
+      renderWeekCalendar();
+      renderDayBookings();
     }
   </script>
 
