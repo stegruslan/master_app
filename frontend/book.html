@@ -986,7 +986,7 @@
         container.innerHTML = `<div class="slots-grid">
         ${slots.map((s, i) => {
           const time = new Date(s.datetime_start).toLocaleTimeString('ru', {
-            hour: '2-digit', minute: '2-digit', timeZone: 'UTC'
+            hour: '2-digit', minute: '2-digit', timeZone: master.timezone || 'Europe/Moscow'
           });
           return `<button class="slot-btn" id="slot-${i}" onclick="selectSlot('${s.datetime_start}', ${i})">${time}</button>`;
         }).join('')}
@@ -1006,7 +1006,7 @@
     function renderSummary() {
       const dt = new Date(selectedSlot);
       const dateStr = dt.toLocaleDateString('ru', { day: 'numeric', month: 'long' });
-      const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+      const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: master.timezone || 'Europe/Moscow' });
       document.getElementById('bookingSummary').innerHTML = `
       <div class="summary-row"><span class="summary-label">Услуга</span><span class="summary-value">${selectedService.name}</span></div>
       <div class="summary-row"><span class="summary-label">Дата</span><span class="summary-value">${dateStr}</span></div>
@@ -1042,7 +1042,7 @@
     function showSuccess(booking, name) {
       const dt = new Date(booking.datetime_start);
       const dateStr = dt.toLocaleDateString('ru', { day: 'numeric', month: 'long' });
-      const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+      const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: master.timezone || 'Europe/Moscow' });
 
       document.getElementById('successDesc').textContent =
         `${name}, вы записаны ${dateStr} в ${timeStr} на услугу «${selectedService.name}»`;

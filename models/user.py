@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from core.database import Base
 
+
 class Master(Base):
     __tablename__ = "masters"
 
@@ -13,8 +14,11 @@ class Master(Base):
     email = Column(String, unique=True, index=True, nullable=True)
     slug = Column(String, unique=True, index=True, nullable=False)
     is_active = Column(Boolean, default=True)
+    timezone = Column(String, nullable=False, server_default="Europe/Moscow")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True),server_default=func.now(), onupdate=func.now()) 
+    updated_at = Column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
 
     services = relationship("Service", back_populates="master")
     subscription = relationship("Subscription", back_populates="master")
