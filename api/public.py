@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, and_
+from sqlalchemy import select
 from core.database import get_db
 from core.logging import get_logger
 from models.user import Master
@@ -233,7 +233,7 @@ async def create_booking(
         )
     )
 
-    if result.scalar_one_or_none():
+    if result.scalars().first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Это время уже занято"
         )
