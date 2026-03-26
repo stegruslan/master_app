@@ -8,7 +8,7 @@ from core.logging import get_logger
 from models.user import Master
 from models.booking import Booking
 from models.service import Service
-from schemas.booking import BookingResponse, BookingStatusUpdate
+from schemas.booking import BookingResponse, BookingStatusUpdate, BookingNotesUpdate
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 logger = get_logger(__name__)
@@ -91,5 +91,30 @@ async def update_booking_status(
     logger.info(
         f"Мастер {master.phone} изменил статус записи {booking_id} на {data.status}"
     )
+
+    return booking
+
+
+@router.patch("/{booking_id}/notes", response_model=BookingResponse)
+async def update_booking_notes(
+    booking_id: int,
+    data: BookingNotesUpdate,
+    master: Master = Depends(get_current_master),
+    db: AsyncSession = Depends(get_db),
+):
+    """Обновить заметку к записи."""
+    result = await db.execute(
+        select(Booking).where(Booking.id == booking_id, Booking.master_id == master.id)
+    )
+
+    booking = result.scalar_one_or_none()
+
+    if booking is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Запись не найдена"
+        )
+    booking.notes = data.notes
+    await db.commit()
+    await db.refresh(booking)
 
     return booking

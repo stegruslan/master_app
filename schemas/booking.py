@@ -13,9 +13,14 @@ class BookingResponse(BaseModel):
     created_at: datetime
     service_id: int
     service_name: str | None = None
+    notes: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class BookingStatusUpdate(BaseModel):
     status: str  # confirmed / cancelled (Подтверждение / отмена записи)
+
+
+class BookingNotesUpdate(BaseModel):
+    notes: str | None = None
