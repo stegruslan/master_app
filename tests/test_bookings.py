@@ -83,3 +83,40 @@ async def test_cancel_booking_by_token(
 
     res = await client.get(f"/cancel/{cancel_token}")
     assert res.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_update_booking_notes(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    booking_res = await client.post(
+        f"/book/{slug}",
+        json={
+            "client_name": "Тест Клиент",
+            "client_phone": "+79991234568",
+            "service_id": service_id,
+            "datetime_start": "2026-06-10T09:00:00+00:00",
+        },
+    )
+    assert booking_res.status_code == 200
+    booking_id = booking_res.json()["id"]
+
+    res = await client.patch(
+        f"/bookings/{booking_id}/notes",
+        json={"notes": "Аллергия на гель"},
+        headers=auth_headers,
+    )
+    assert res.status_code == 200
+    assert res.json()["notes"] == "Аллергия на гель"
+
+    res = await client.patch(
+        f"/bookings/{booking_id}/notes",
+        json={"notes": None},
+        headers=auth_headers,
+    )
+    assert res.status_code == 200
+    assert res.json()["notes"] is None

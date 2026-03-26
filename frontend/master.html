@@ -1734,15 +1734,25 @@
           ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
           <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
         return `<div class="booking-card">
-          <div>
-            <div class="booking-client">${b.client_name}</div>
-            <div class="booking-meta"><span>${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
-          </div>
-          <div class="booking-actions">
-            <span class="status-badge ${statusCls[b.status]}">${statusLbl[b.status]}</span>
-            ${actions}
-          </div>
-        </div>`;
+  <div style="flex:1">
+    <div class="booking-client">${b.client_name}</div>
+    <div class="booking-meta"><span>${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
+    <div class="booking-notes" id="notes-display-${b.id}">
+      ${b.notes ? `<div style="font-size:13px;color:var(--text-muted);margin-top:8px;cursor:pointer" onclick="editNotes(${b.id})">📝 ${b.notes}</div>` : `<button style="background:none;border:none;color:var(--text-muted);font-size:11px;cursor:pointer;padding:4px 0;margin-top:4px" onclick="editNotes(${b.id})">+ заметка</button>`}
+    </div>
+    <div id="notes-edit-${b.id}" style="display:none;margin-top:8px">
+      <textarea id="notes-input-${b.id}" style="width:100%;background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:8px;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;rows:2" placeholder="Добавить заметку...">${b.notes || ''}</textarea>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="btn-save" onclick="saveNotes(${b.id})">Сохранить</button>
+        <button class="btn-outline" style="padding:6px 12px;font-size:11px" onclick="cancelEditNotes(${b.id}, '${(b.notes || '').replace(/'/g, "\\'")}')">Отмена</button>
+      </div>
+    </div>
+  </div>
+  <div class="booking-actions">
+    <span class="status-badge ${statusCls[b.status]}">${statusLbl[b.status]}</span>
+    ${actions}
+  </div>
+</div>`;
       }).join('');
     }
 
@@ -2015,6 +2025,26 @@
 
       renderWeekCalendar();
       renderDayBookings();
+    }
+    function editNotes(id) {
+      document.getElementById(`notes-display-${id}`).style.display = 'none';
+      document.getElementById(`notes-edit-${id}`).style.display = 'block';
+      document.getElementById(`notes-input-${id}`).focus();
+    }
+
+    function cancelEditNotes(id, original) {
+      document.getElementById(`notes-display-${id}`).style.display = 'block';
+      document.getElementById(`notes-edit-${id}`).style.display = 'none';
+      document.getElementById(`notes-input-${id}`).value = original;
+    }
+
+    async function saveNotes(id) {
+      const notes = document.getElementById(`notes-input-${id}`).value.trim();
+      await apiFetch(`${API}/bookings/${id}/notes`, {
+        method: 'PATCH',
+        body: JSON.stringify({ notes: notes || null })
+      });
+      loadBookings();
     }
   </script>
 
