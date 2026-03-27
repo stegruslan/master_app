@@ -68,3 +68,21 @@ async def test_refresh_token(client, registered_master, master_data):
     res = await client.post("/auth/refresh", json={"refresh_token": refresh_token})
     assert res.status_code == 200
     assert "access_token" in res.json()
+
+
+@pytest.mark.asyncio
+async def test_register_invalid_phone_no_plus(client):
+    res = await client.post(
+        "/auth/register",
+        json={"name": "Тест", "phone": "9525447085", "password": "password123"},
+    )
+    assert res.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_register_invalid_phone_format(client):
+    res = await client.post(
+        "/auth/register",
+        json={"name": "Тест", "phone": "abc123", "password": "password123"},
+    )
+    assert res.status_code == 422

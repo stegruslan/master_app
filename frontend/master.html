@@ -1508,7 +1508,16 @@
       e.preventDefault();
       const btn = document.getElementById('loginBtn');
       const errEl = document.getElementById('loginError');
-      btn.disabled = true; btn.textContent = '...'; errEl.classList.remove('show');
+      btn.disabled = true;
+      const phone = document.getElementById('loginPhone').value;
+      if (!phone.startsWith('+7') && !phone.startsWith('+8')) {
+        errEl.textContent = 'Введите номер в формате +7XXXXXXXXXX';
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Войти';
+        return;
+      }
+      btn.textContent = '...'; errEl.classList.remove('show');
       try {
         const res = await fetch(`${API}/auth/login`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1530,7 +1539,16 @@
       const btn = document.getElementById('registerBtn');
       const errEl = document.getElementById('registerError');
       const succEl = document.getElementById('registerSuccess');
-      btn.disabled = true; btn.textContent = '...';
+      btn.disabled = true;
+      const phone = document.getElementById('regPhone').value;
+      if (!phone.startsWith('+7') && !phone.startsWith('+8')) {
+        errEl.textContent = 'Введите номер в формате +7XXXXXXXXXX';
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Создать аккаунт';
+        return;
+        btn.textContent = '...';
+      }
       errEl.classList.remove('show'); succEl.classList.remove('show');
       try {
         const res = await fetch(`${API}/auth/register`, {
