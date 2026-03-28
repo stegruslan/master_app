@@ -24,3 +24,6 @@ class Master(Base):
     subscription = relationship("Subscription", back_populates="master")
     schedules = relationship("WorkSchedule", back_populates="master")
     bookings = relationship("Booking", back_populates="master")
+    schedule_exceptions = relationship(
+        "ScheduleException", back_populates="master", cascade="all, delete-orphan"
+    )
