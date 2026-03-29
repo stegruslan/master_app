@@ -7,6 +7,7 @@ from models.user import Master
 from models.service import Service
 from models.schedule import WorkSchedule
 from models.booking import Booking
+from models.schedule_exception import ScheduleException
 from schemas.public import (
     MasterPublicResponse,
     SlotResponse,
@@ -112,6 +113,28 @@ async def get_slots(
     if schedule is None or not schedule.is_working:
         return []
 
+    # проверка  исключения на конкретную дату
+    target_date_only = target_date.date()
+    exc_result = await db.execute(
+        select(ScheduleException).where(
+            ScheduleException.master_id == master.id,
+            ScheduleException.date == target_date_only,
+        )
+    )
+    exceptions = exc_result.scalars().all()
+
+    # если весь день выходной — возвращаем пустой список
+
+    if any(e.type == "dayoff" for e in exceptions):
+        return []
+
+    # собираем заблокированные промежутки (перерывы)
+    blocked_ranges = [
+        (e.start_time, e.end_time)
+        for e in exceptions
+        if e.type == "block" and e.start_time and e.end_time
+    ]
+
     # генерируем все слоты на день
     slots = []
     master_tz = ZoneInfo(master.timezone or "Europe/Moscow")
@@ -172,6 +195,15 @@ async def get_slots(
             if slot_start < booking_end and slot_end > booking_start:
                 is_busy = True
                 break
+        # проверяем перерывы
+        if not is_busy and blocked_ranges:
+            slot_start_local = slot_start.astimezone(master_tz).time()
+            slot_end_local = slot_end.astimezone(master_tz).time()
+
+            for block_start, block_end in blocked_ranges:
+                if slot_start_local < block_end and slot_end_local > block_start:
+                    is_busy = True
+                    break
         if not is_busy:
             free_slots.append(
                 SlotResponse(datetime_start=slot_start, datetime_end=slot_end)
@@ -261,6 +293,7 @@ async def create_booking(
         datetime_start=data.datetime_start,
         datetime_end=datetime_end,
         cancel_token=str(uuid.uuid4()),
+        notes=data.notes,
     )
 
     db.add(booking)

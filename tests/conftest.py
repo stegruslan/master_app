@@ -71,8 +71,9 @@ async def master_with_service(client, auth_headers):
 
 @pytest_asyncio.fixture
 async def master_with_schedule(client, auth_headers):
-    await client.put(
-        "/schedule/0",
-        json={"start_time": "09:00", "end_time": "18:00", "is_working": True},
-        headers=auth_headers,
-    )
+    for weekday in range(7):
+        await client.put(
+            f"/schedule/{weekday}",
+            json={"start_time": "09:00", "end_time": "18:00", "is_working": True},
+            headers=auth_headers,
+        )

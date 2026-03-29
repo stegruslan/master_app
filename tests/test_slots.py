@@ -80,3 +80,98 @@ async def test_get_master_public(client, auth_headers):
 async def test_get_master_not_found(client):
     res = await client.get("/book/nonexistent-slug")
     assert res.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_slots_dayoff_exception(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    """Если на дату стоит dayoff — слотов нет."""
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    # ставим выходной на 2026-06-10
+    res = await client.post(
+        "/schedule/exceptions/toggle",
+        json={"date": "2026-06-10", "type": "dayoff"},
+        headers=auth_headers,
+    )
+    assert res.status_code == 200
+
+    # слотов быть не должно
+    slots_res = await client.get(
+        f"/book/{slug}/slots?service_id={service_id}&date=2026-06-10"
+    )
+    assert slots_res.status_code == 200
+    assert slots_res.json() == []
+
+
+@pytest.mark.asyncio
+async def test_slots_dayoff_toggle_removes(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    """Toggle дважды — выходной снимается, слоты появляются снова."""
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    # ставим выходной
+    await client.post(
+        "/schedule/exceptions/toggle",
+        json={"date": "2026-06-11", "type": "dayoff"},
+        headers=auth_headers,
+    )
+
+    # снимаем выходной
+    await client.post(
+        "/schedule/exceptions/toggle",
+        json={"date": "2026-06-11", "type": "dayoff"},
+        headers=auth_headers,
+    )
+
+    # слоты должны вернуться
+    slots_res = await client.get(
+        f"/book/{slug}/slots?service_id={service_id}&date=2026-06-11"
+    )
+    assert slots_res.status_code == 200
+    assert len(slots_res.json()) > 0
+
+
+@pytest.mark.asyncio
+async def test_slots_block_exception(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    # сначала считаем сколько слотов без блокировки
+    slots_before_res = await client.get(
+        f"/book/{slug}/slots?service_id={service_id}&date=2026-06-12"
+    )
+    slots_before_count = len(slots_before_res.json())
+
+    # блокируем 09:00-11:00 по Москве = 2 слота (duration=60 мин)
+    res = await client.post(
+        "/schedule/exceptions",
+        json={
+            "date": "2026-06-12",
+            "type": "block",
+            "start_time": "09:00:00",
+            "end_time": "11:00:00",
+        },
+        headers=auth_headers,
+    )
+    assert res.status_code == 200
+
+    slots_res = await client.get(
+        f"/book/{slug}/slots?service_id={service_id}&date=2026-06-12"
+    )
+    slots = slots_res.json()
+    print("slots_before_count:", slots_before_count)
+    print("slots after block:", slots)
+    print("block res:", res.json())
+
+    # должно быть ровно на 2 слота меньше
+    assert len(slots) == slots_before_count - 2
