@@ -39,55 +39,6 @@ async def get_schedule(
     return result.scalars().all()
 
 
-@router.put("/{weekday}", response_model=ScheduleResponce)
-async def update_schedule(
-    weekday: int,
-    data: ScheduleUpdate,
-    master: Master = Depends(get_current_master),
-    db: AsyncSession = Depends(get_db),
-):
-    """Обновить расписание на конкретный день недели (0=Пн, 6=Вс)."""
-
-    if weekday not in WEEKDAYS:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Неверный день недели. Используй 0-6",
-        )
-    result = await db.execute(
-        select(WorkSchedule).where(
-            WorkSchedule.master_id == master.id, WorkSchedule.weekday == weekday
-        )
-    )
-
-    schedule = result.scalar_one_or_none()
-
-    if schedule is None:
-        schedule = WorkSchedule(
-            master_id=master.id,
-            weekday=weekday,
-            start_time=time.fromisoformat(data.start_time),
-            end_time=time.fromisoformat(data.end_time),
-            is_working=data.is_working,
-        )
-
-        db.add(schedule)
-
-    else:
-        schedule.start_time = time.fromisoformat(data.start_time)
-        schedule.end_time = time.fromisoformat(data.end_time)
-        schedule.is_working = data.is_working
-
-    await db.commit()
-    await db.refresh(schedule)
-
-    logger.info(
-        f"Мастер {master.phone} обновил расписание: "
-        f"{WEEKDAYS[weekday]} {data.start_time}-{data.end_time}"
-    )
-
-    return schedule
-
-
 @router.get("/exceptions", response_model=list[ScheduleExceptionOut])
 async def get_exceptions(
     master: Master = Depends(get_current_master), db: AsyncSession = Depends(get_db)
@@ -140,6 +91,27 @@ async def toggle_dayoff(
     return new_exc
 
 
+@router.post("/exceptions", response_model=ScheduleExceptionOut)
+async def create_exception(
+    data: ScheduleExceptionCreate,
+    master: Master = Depends(get_current_master),
+    db: AsyncSession = Depends(get_db),
+):
+    """Создать исключение (перерыв type=block)."""
+    new_exc = ScheduleException(
+        master_id=master.id,
+        date=data.date,
+        type=data.type,
+        start_time=data.start_time,
+        end_time=data.end_time,
+    )
+    db.add(new_exc)
+    await db.commit()
+    await db.refresh(new_exc)
+    logger.info(f"Мастер {master.phone} добавил исключение {data.type} на {data.date}")
+    return new_exc
+
+
 @router.delete("/exceptions/{exception_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_exception(
     exception_id: int,
@@ -164,22 +136,50 @@ async def delete_exception(
     logger.info(f"Мастер {master.phone} удалил исключение id={exception_id}")
 
 
-@router.post("/exceptions", response_model=ScheduleExceptionOut)
-async def create_exception(
-    data: ScheduleExceptionCreate,
+@router.put("/{weekday}", response_model=ScheduleResponce)
+async def update_schedule(
+    weekday: int,
+    data: ScheduleUpdate,
     master: Master = Depends(get_current_master),
     db: AsyncSession = Depends(get_db),
 ):
-    """Создать исключение (перерыв type=block)."""
-    new_exc = ScheduleException(
-        master_id=master.id,
-        date=data.date,
-        type=data.type,
-        start_time=data.start_time,
-        end_time=data.end_time,
+    """Обновить расписание на конкретный день недели (0=Пн, 6=Вс)."""
+
+    if weekday not in WEEKDAYS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Неверный день недели. Используй 0-6",
+        )
+    result = await db.execute(
+        select(WorkSchedule).where(
+            WorkSchedule.master_id == master.id, WorkSchedule.weekday == weekday
+        )
     )
-    db.add(new_exc)
+
+    schedule = result.scalar_one_or_none()
+
+    if schedule is None:
+        schedule = WorkSchedule(
+            master_id=master.id,
+            weekday=weekday,
+            start_time=time.fromisoformat(data.start_time),
+            end_time=time.fromisoformat(data.end_time),
+            is_working=data.is_working,
+        )
+
+        db.add(schedule)
+
+    else:
+        schedule.start_time = time.fromisoformat(data.start_time)
+        schedule.end_time = time.fromisoformat(data.end_time)
+        schedule.is_working = data.is_working
+
     await db.commit()
-    await db.refresh(new_exc)
-    logger.info(f"Мастер {master.phone} добавил исключение {data.type} на {data.date}")
-    return new_exc
+    await db.refresh(schedule)
+
+    logger.info(
+        f"Мастер {master.phone} обновил расписание: "
+        f"{WEEKDAYS[weekday]} {data.start_time}-{data.end_time}"
+    )
+
+    return schedule

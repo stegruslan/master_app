@@ -22,6 +22,7 @@ class BookingCreate(BaseModel):
     client_email: str | None = None
     service_id: int
     datetime_start: datetime
+    notes: str | None = None
 
     @field_validator("client_phone")
     @classmethod

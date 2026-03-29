@@ -691,13 +691,6 @@
       font-weight: 400;
     }
 
-    .day-revenue {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 300;
-      color: var(--gold);
-    }
-
     .bookings-list {
       display: flex;
       flex-direction: column;
@@ -975,6 +968,254 @@
     .btn-save:hover {
       border-color: var(--gold);
       color: var(--gold);
+    }
+
+    /* SCHEDULE CALENDAR */
+    .schedule-calendar-block {
+      margin-top: 32px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      padding: 24px;
+      max-width: 480px;
+    }
+
+    .schedule-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 8px;
+    }
+
+    .sched-cal-grid-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .sched-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .sched-cal-day {
+      height: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      position: relative;
+      gap: 2px;
+    }
+
+    .sched-cal-day:hover:not(.sched-cal-empty):not(.sched-cal-past) {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .sched-cal-day.sched-cal-today {
+      font-weight: 500;
+      border-color: var(--border);
+    }
+
+    .sched-cal-day.sched-cal-today span:first-child {
+      color: var(--gold);
+    }
+
+    .sched-cal-day.sched-cal-selected {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .sched-cal-day.sched-cal-dayoff {
+      color: var(--error);
+    }
+
+    .sched-cal-day.sched-cal-dayoff span:first-child {
+      color: var(--error);
+    }
+
+    .sched-cal-day.sched-cal-past {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .sched-cal-day.sched-cal-empty {
+      cursor: default;
+    }
+
+    .sched-cal-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* DAY VIEW */
+    .sched-day-header {
+      margin: 24px 0 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border2);
+    }
+
+    .sched-day-slot {
+      padding: 14px 16px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .sched-day-slot.slot-booking {
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+    }
+
+    .sched-day-slot.slot-free {
+      border: 1px dashed rgba(201, 168, 76, 0.25);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .sched-day-slot.slot-free:hover {
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .sched-day-slot.slot-block {
+      border: 1px solid rgba(192, 80, 74, 0.2);
+      background: rgba(192, 80, 74, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slot-free-time {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 2px;
+    }
+
+    .slot-free-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .btn-remove-break {
+      background: none;
+      border: none;
+      color: var(--error);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 4px 8px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-remove-break:hover {
+      opacity: 1;
+    }
+
+    /* BOTTOM SHEET */
+    .bottom-sheet-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 500;
+    }
+
+    .bottom-sheet-overlay.show {
+      display: block;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      z-index: 501;
+      padding: 0 0 32px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .bottom-sheet.show {
+      transform: translateY(0);
+    }
+
+    .bottom-sheet-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border2);
+    }
+
+    .bottom-sheet-tabs {
+      display: flex;
+      background: var(--surface2);
+      border-radius: 6px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .bottom-sheet-tab {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 6px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .bottom-sheet-tab.active {
+      background: var(--surface3);
+      color: var(--text);
+    }
+
+    .bottom-sheet-content {
+      padding: 20px 20px 0;
+    }
+
+    .bs-btn-cancel {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .bs-btn-done {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 6px;
     }
 
     /* MODAL */
@@ -1270,7 +1511,7 @@
         </div>
         <div class="nav-item" onclick="showSection('schedule', this)">
           <span class="nav-item-icon" style="color:#ffffff">🗓</span>
-          <span>График</span>
+          <span>Расписание</span>
         </div>
         <a href="https://t.me/stegruslan" target="_blank" class="nav-item" style="text-decoration:none">
           <span class="nav-item-icon">
@@ -1304,8 +1545,6 @@
               style="font-size:16px;color:var(--gold);font-weight:300"></span></div>
           <button class="btn-outline" onclick="openAddBookingModal()">+ Добавить</button>
         </div>
-
-        <!-- Мини-календарь на неделю -->
         <div class="week-calendar">
           <div class="week-calendar-header">
             <div class="week-label" id="weekLabel">—</div>
@@ -1317,11 +1556,8 @@
           </div>
           <div class="week-days" id="weekDays"></div>
         </div>
-
-        <!-- Записи на выбранный день -->
         <div class="day-bookings-header">
           <div class="day-bookings-title" id="dayBookingsTitle">Загрузка...</div>
-
         </div>
         <div class="bookings-list" id="bookingsList">
           <div class="loading">Загрузка...</div>
@@ -1358,98 +1594,163 @@
       <!-- Расписание -->
       <div class="section" id="sectionSchedule">
         <div class="section-header">
-          <div class="section-title">График</div>
+          <div class="section-title">Расписание</div>
         </div>
+
+        <!-- Рабочие часы по дням недели -->
         <div class="schedule-list" id="scheduleList">
           <div class="loading">Загрузка...</div>
         </div>
-      </div>
-    </div>
 
-    <!-- Нижняя навигация -->
-    <nav class="mobile-nav" style="display:none">
-      <button class="mobile-nav-item active" onclick="showSection('bookings', this)">
-        <span class="mobile-nav-item-icon">📋</span>
-        Записи
-      </button>
-      <button class="mobile-nav-item" onclick="showSection('services', this)">
-        <span class="mobile-nav-item-icon">⭐</span>
-        Услуги
-      </button>
-      <button class="mobile-nav-item" onclick="showSection('schedule', this)">
-        <span class="mobile-nav-item-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z" />
-          </svg>
-        </span>
-        График
-      </button>
-      <a href="https://t.me/stegruslan" target="_blank" class="mobile-nav-item" style="text-decoration:none">
-        <span class="mobile-nav-item-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#29b6f6">
-            <path
-              d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
-          </svg>
-        </span>
-        <span style="color:#29b6f6">Поддержка</span>
-      </a>
-      <button class="mobile-nav-item" onclick="logout()">
-        <span class="mobile-nav-item-icon">✕</span>
-        Выйти
-      </button>
-    </nav>
+        <!-- Месячный календарь -->
+        <div class="schedule-calendar-block">
+          <div class="schedule-cal-header">
+            <button class="week-nav-btn" onclick="changeSchedMonth(-1)">‹</button>
+            <div id="schedMonthLabel" style="font-size:15px;color:var(--text);padding:0 16px"></div>
+            <button class="week-nav-btn" onclick="changeSchedMonth(1)">›</button>
+          </div>
 
-    <!-- Модалка подтверждения отмены -->
-    <div id="cancelModal" class="modal-overlay">
-      <div class="modal-box" style="text-align:center">
-        <div
-          style="width:48px;height:48px;border:1px solid rgba(192,80,74,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:20px">
-          ✕</div>
-        <div class="modal-title">Отменить запись?</div>
-        <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:32px">Вы уверены что хотите
-          отменить запись? Это действие нельзя отменить.</div>
-        <button class="btn-danger"
-          style="width:100%;padding:14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px"
-          onclick="confirmCancel()">Да, отменить</button>
-        <button onclick="closeModal('cancelModal')"
-          style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Нет,
-          оставить</button>
-      </div>
-    </div>
+          <div class="sched-cal-grid-header">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+          </div>
+          <div class="sched-cal-grid" id="schedCalGrid"></div>
 
-    <!-- Модалка добавления записи -->
-    <div id="addBookingModal" class="modal-overlay">
-      <div class="modal-box">
-        <div class="modal-title">Новая запись</div>
-        <div class="modal-fields">
-          <div class="field">
-            <label>Имя клиента</label>
-            <input type="text" id="abName" placeholder="Анна Иванова">
-          </div>
-          <div class="field">
-            <label>Телефон</label>
-            <input type="tel" id="abPhone" placeholder="+79991234567" oninput="formatPhone(this)">
-          </div>
-          <div class="field">
-            <label>Услуга</label>
-            <select id="abService"></select>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label>Дата</label>
-              <input type="date" id="abDate">
+          <!-- Дневной вид -->
+          <div id="schedDayView" style="display:none">
+            <div class="sched-day-header">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+                <div id="schedDayTitle" style="font-size:17px;color:var(--text);font-weight:400"></div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span style="font-size:13px;color:var(--text-muted)">Рабочий день</span>
+                  <label class="toggle">
+                    <input type="checkbox" id="schedDayToggle" onchange="handleDayToggle(this.checked)">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="field">
-              <label>Время</label>
-              <input type="time" id="abTime">
-            </div>
+            <div id="schedDayList"></div>
           </div>
-          <div class="error-msg" id="abError"></div>
         </div>
-        <div class="modal-actions">
-          <button class="btn-primary" style="margin-top:0" onclick="createManualBooking()">Сохранить</button>
-          <button class="btn-outline" onclick="closeModal('addBookingModal')">Отмена</button>
+      </div>
+
+      <!-- Нижняя навигация -->
+      <nav class="mobile-nav" style="display:none">
+        <button class="mobile-nav-item active" onclick="showSection('bookings', this)">
+          <span class="mobile-nav-item-icon">📋</span>
+          Записи
+        </button>
+        <button class="mobile-nav-item" onclick="showSection('services', this)">
+          <span class="mobile-nav-item-icon">⭐</span>
+          Услуги
+        </button>
+        <button class="mobile-nav-item" onclick="showSection('schedule', this)">
+          <span class="mobile-nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z" />
+            </svg>
+          </span>
+          Расписание
+        </button>
+        <a href="https://t.me/stegruslan" target="_blank" class="mobile-nav-item" style="text-decoration:none">
+          <span class="mobile-nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#29b6f6">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
+            </svg>
+          </span>
+          <span style="color:#29b6f6">Поддержка</span>
+        </a>
+        <button class="mobile-nav-item" onclick="logout()">
+          <span class="mobile-nav-item-icon">✕</span>
+          Выйти
+        </button>
+      </nav>
+
+      <!-- Модалка подтверждения отмены -->
+      <div id="cancelModal" class="modal-overlay">
+        <div class="modal-box" style="text-align:center">
+          <div
+            style="width:48px;height:48px;border:1px solid rgba(192,80,74,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:20px">
+            ✕</div>
+          <div class="modal-title">Отменить запись?</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:32px">Вы уверены что хотите
+            отменить запись? Это действие нельзя отменить.</div>
+          <button class="btn-danger"
+            style="width:100%;padding:14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px"
+            onclick="confirmCancel()">Да, отменить</button>
+          <button onclick="closeModal('cancelModal')"
+            style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Нет,
+            оставить</button>
+        </div>
+      </div>
+
+      <!-- Модалка добавления записи -->
+      <div id="addBookingModal" class="modal-overlay">
+        <div class="modal-box">
+          <div class="modal-title">Новая запись</div>
+          <div class="modal-fields">
+            <div class="field"><label>Имя клиента</label><input type="text" id="abName" placeholder="Анна Иванова">
+            </div>
+            <div class="field"><label>Телефон</label><input type="tel" id="abPhone" placeholder="+79991234567"
+                oninput="formatPhone(this)"></div>
+            <div class="field"><label>Услуга</label><select id="abService"></select></div>
+            <div class="form-row">
+              <div class="field"><label>Дата</label><input type="date" id="abDate"></div>
+              <div class="field"><label>Время</label><input type="time" id="abTime"></div>
+            </div>
+            <div class="error-msg" id="abError"></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-primary" style="margin-top:0" onclick="createManualBooking()">Сохранить</button>
+            <button class="btn-outline" onclick="closeModal('addBookingModal')">Отмена</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom sheet: создать запись или перерыв -->
+    <div class="bottom-sheet-overlay" id="bsOverlay" onclick="closeBottomSheet()"></div>
+    <div class="bottom-sheet" id="bottomSheet">
+      <div class="bottom-sheet-bar">
+        <button class="bs-btn-cancel" onclick="closeBottomSheet()">Отмена</button>
+        <div class="bottom-sheet-tabs">
+          <button class="bottom-sheet-tab active" id="bsTabBooking" onclick="switchBsTab('booking')">Запись</button>
+          <button class="bottom-sheet-tab" id="bsTabBreak" onclick="switchBsTab('break')">Перерыв</button>
+        </div>
+        <button class="bs-btn-done" onclick="saveBottomSheet()">Готово</button>
+      </div>
+
+      <!-- Форма записи -->
+      <div class="bottom-sheet-content" id="bsBookingForm">
+        <div class="modal-fields" style="margin-bottom:0">
+          <div class="field"><label>Имя клиента</label><input type="text" id="bsName" placeholder="Анна Иванова"></div>
+          <div class="field"><label>Телефон</label><input type="tel" id="bsPhone" placeholder="+79991234567"
+              oninput="formatPhone(this)"></div>
+          <div class="field"><label>Услуга</label><select id="bsService"></select></div>
+          <div class="form-row">
+            <div class="field"><label>Дата</label><input type="date" id="bsDate" readonly></div>
+            <div class="field"><label>Время</label><input type="time" id="bsTime"></div>
+          </div>
+          <div class="field">
+            <label>Заметка</label>
+            <textarea id="bsNotes" placeholder="Необязательно"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:2px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:var(--text);outline:none;resize:none;height:72px;transition:border-color 0.2s"
+              onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+          </div>
+          <div class="error-msg" id="bsBookingError"></div>
+        </div>
+      </div>
+
+      <!-- Форма перерыва -->
+      <div class="bottom-sheet-content" id="bsBreakForm" style="display:none">
+        <div class="modal-fields" style="margin-bottom:0">
+          <div class="form-row">
+            <div class="field"><label>Начало</label><input type="time" id="bsBreakStart"></div>
+            <div class="field"><label>Конец</label><input type="time" id="bsBreakEnd"></div>
+          </div>
+          <div class="error-msg" id="bsBreakError"></div>
         </div>
       </div>
     </div>
@@ -1547,7 +1848,6 @@
         btn.disabled = false;
         btn.textContent = 'Создать аккаунт';
         return;
-        btn.textContent = '...';
       }
       errEl.classList.remove('show'); succEl.classList.remove('show');
       try {
@@ -1614,7 +1914,6 @@
 
     function logout() { localStorage.clear(); location.reload(); }
 
-    // ── MODALS ──
     function closeModal(id) {
       document.getElementById(id).classList.remove('show');
     }
@@ -1623,7 +1922,7 @@
     function getWeekStart(offset) {
       const now = new Date();
       const day = now.getDay();
-      const diff = (day === 0 ? -6 : 1 - day); // пн = начало недели
+      const diff = (day === 0 ? -6 : 1 - day);
       const monday = new Date(now);
       monday.setDate(now.getDate() + diff + offset * 7);
       monday.setHours(0, 0, 0, 0);
@@ -1676,37 +1975,25 @@
           <div class="week-day-num">${day.getDate()}</div>
           <div class="week-day-dot"></div>
         `;
-        el.onclick = () => {
-          selectedDate = day;
-          renderWeekCalendar();
-          renderDayBookings();
-        };
+        el.onclick = () => { selectedDate = day; renderWeekCalendar(); renderDayBookings(); };
         container.appendChild(el);
       }
     }
 
     function changeWeek(direction) {
-      if (direction === 0) {
-        weekOffset = 0;
-        selectedDate = new Date();
-      } else {
-        weekOffset += direction;
-      }
+      if (direction === 0) { weekOffset = 0; selectedDate = new Date(); }
+      else { weekOffset += direction; }
       renderWeekCalendar();
       renderDayBookings();
     }
+
     const weekCal = document.querySelector('.week-calendar');
     let touchStartX = 0;
 
-    weekCal.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    });
-
+    weekCal.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
     weekCal.addEventListener('touchend', e => {
       const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        changeWeek(diff > 0 ? 1 : -1);
-      }
+      if (Math.abs(diff) > 50) changeWeek(diff > 0 ? 1 : -1);
     });
 
     function renderDayBookings() {
@@ -1719,14 +2006,11 @@
         return b.datetime_start.substring(0, 10) === dateStr;
       });
 
-
       document.getElementById('dayBookingsTitle').innerHTML = `Записи на <span>${label}</span>`;
-
 
       const el = document.getElementById('bookingsList');
 
       if (!dayBookings.length) {
-        // Ищем ближайшую запись
         const future = allBookings
           .filter(b => b.status !== 'cancelled' && b.datetime_start > dateStr)
           .sort((a, b) => a.datetime_start.localeCompare(b.datetime_start));
@@ -1783,8 +2067,7 @@
         allBookings = await res.json();
 
         const upcoming = allBookings.filter(b => b.status !== 'cancelled' && new Date(b.datetime_start) >= new Date());
-        const count = upcoming.length;
-        document.getElementById('bookingsCount').textContent = count > 0 ? `(${count})` : '';
+        document.getElementById('bookingsCount').textContent = upcoming.length > 0 ? `(${upcoming.length})` : '';
 
         renderWeekCalendar();
         renderDayBookings();
@@ -1793,34 +2076,25 @@
       }
     }
 
-
-
     async function updateStatus(id, status) {
       if (status === 'cancelled') {
         pendingCancelId = id;
         document.getElementById('cancelModal').classList.add('show');
         return;
       }
-      await apiFetch(`${API}/bookings/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status })
-      });
+      await apiFetch(`${API}/bookings/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
       loadBookings();
     }
 
     async function confirmCancel() {
       closeModal('cancelModal');
-      await apiFetch(`${API}/bookings/${pendingCancelId}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status: 'cancelled' })
-      });
+      await apiFetch(`${API}/bookings/${pendingCancelId}/status`, { method: 'PATCH', body: JSON.stringify({ status: 'cancelled' }) });
       pendingCancelId = null;
       loadBookings();
     }
 
     // ── ADD BOOKING MANUALLY ──
     async function openAddBookingModal() {
-      // Загружаем услуги если ещё не загружены
       if (!cachedServices.length) {
         const res = await apiFetch(`${API}/services/`);
         if (res) cachedServices = await res.json();
@@ -1832,13 +2106,11 @@
         .map(s => `<option value="${s.id}" data-duration="${s.duration}">${s.name} (${s.duration} мин)</option>`)
         .join('');
 
-      // Ставим текущую выбранную дату
       document.getElementById('abDate').value = toDateStr(selectedDate);
       document.getElementById('abTime').value = '09:00';
       document.getElementById('abName').value = '';
       document.getElementById('abPhone').value = '';
       document.getElementById('abError').classList.remove('show');
-
       document.getElementById('addBookingModal').classList.add('show');
     }
 
@@ -1860,30 +2132,22 @@
       const slug = localStorage.getItem('master_slug');
       const datetimeStart = new Date(`${date}T${time}`).toISOString();
 
-
       try {
         const res = await fetch(`${API}/book/${slug}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            service_id: parseInt(serviceId),
-            datetime_start: datetimeStart,
-            client_name: name,
-            client_phone: phone,
-            client_email: ''
-          })
+          body: JSON.stringify({ service_id: parseInt(serviceId), datetime_start: datetimeStart, client_name: name, client_phone: phone, client_email: '' })
         });
         if (!res.ok) {
           const data = await res.json();
           throw new Error(data.detail || 'Ошибка создания записи');
         }
         closeModal('addBookingModal');
-        // Переходим на выбранную дату
         selectedDate = new Date(date + 'T12:00:00');
         loadBookings();
       } catch (e) {
-        errEl.textContent = e.message;
-        errEl.classList.add('show');
+        document.getElementById('abError').textContent = e.message;
+        document.getElementById('abError').classList.add('show');
       }
     }
 
@@ -1902,7 +2166,7 @@
             <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
             <div style="display:flex;align-items:center;gap:8px">
               <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
-              <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id},'${s.name}',${s.duration},${s.price})">Изменить</button>
+              <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id})">Изменить</button>
               <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
             </div>
           </div>
@@ -1921,9 +2185,7 @@
       } catch (e) { document.getElementById('servicesList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
     }
 
-    function toggleAddService() {
-      document.getElementById('addServiceForm').classList.toggle('show');
-    }
+    function toggleAddService() { document.getElementById('addServiceForm').classList.toggle('show'); }
 
     async function createService() {
       const name = document.getElementById('svcName').value.trim();
@@ -1940,7 +2202,7 @@
         document.getElementById('svcPrice').value = '';
         document.getElementById('addServiceForm').classList.remove('show');
         loadServices();
-      } catch (e) { errEl.textContent = e.message; errEl.classList.add('show'); }
+      } catch (e) { document.getElementById('svcError').textContent = e.message; document.getElementById('svcError').classList.add('show'); }
     }
 
     async function deleteService(id) {
@@ -1965,35 +2227,6 @@
     }
 
     // ── SCHEDULE ──
-    async function loadSchedule() {
-      document.getElementById('scheduleList').innerHTML = '<div class="loading">Загрузка...</div>';
-      try {
-        const res = await apiFetch(`${API}/schedule/`);
-        if (!res) return;
-        const schedule = await res.json();
-        const el = document.getElementById('scheduleList');
-        el.innerHTML = schedule.map(day => {
-          const start = day.start_time ? day.start_time.substring(0, 5) : '09:00';
-          const end = day.end_time ? day.end_time.substring(0, 5) : '18:00';
-          return `<div class="schedule-day ${day.is_working ? '' : 'day-off'}" id="day-${day.weekday}">
-            <div class="day-name">${DAYS[day.weekday]}</div>
-            <div class="time-inputs">
-              <input class="time-input" type="time" value="${start}" id="start-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
-              <span class="time-sep">—</span>
-              <input class="time-input" type="time" value="${end}" id="end-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <label class="toggle">
-                <input type="checkbox" ${day.is_working ? 'checked' : ''} onchange="toggleDay(${day.weekday},this.checked)">
-                <span class="toggle-slider"></span>
-              </label>
-              <button class="btn-save" id="saveBtn-${day.weekday}" onclick="saveDay(${day.weekday})">Сохранить</button>
-            </div>
-          </div>`;
-        }).join('');
-      } catch (e) { document.getElementById('scheduleList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
-    }
-
     function toggleDay(weekday, isWorking) {
       document.getElementById(`day-${weekday}`).classList.toggle('day-off', !isWorking);
       document.getElementById(`start-${weekday}`).disabled = !isWorking;
@@ -2012,7 +2245,412 @@
       } catch (e) { alert('Ошибка сохранения'); }
     }
 
+    // ── SCHEDULE CALENDAR ──
+    let schedMonthOffset = 0;
+    let schedSelectedDate = null;
+    let schedSelectedDateStr = null;
+    let schedExceptions = [];
+    let scheduleData = [];
+    let bsCurrentTab = 'booking';
+    let bsDateStr = null;
+    let bsStartTime = null;
+    let bsEndTime = null;
+
+    async function loadSchedule() {
+      document.getElementById('scheduleList').innerHTML = '<div class="loading">Загрузка...</div>';
+      try {
+        const [schedRes, excRes, bookRes] = await Promise.all([
+          apiFetch(`${API}/schedule/`),
+          apiFetch(`${API}/schedule/exceptions`),
+          apiFetch(`${API}/bookings/`)
+        ]);
+        if (!schedRes || !excRes || !bookRes) return;
+
+        scheduleData = await schedRes.json();
+        schedExceptions = await excRes.json();
+        allBookings = await bookRes.json();
+
+        renderScheduleList(scheduleData);
+        renderSchedCalendar();
+
+        if (schedSelectedDateStr) renderSchedDayView(schedSelectedDateStr);
+      } catch (e) {
+        document.getElementById('scheduleList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>';
+      }
+    }
+
+    function renderScheduleList(schedule) {
+      const el = document.getElementById('scheduleList');
+      el.innerHTML = schedule.map(day => {
+        const start = day.start_time ? day.start_time.substring(0, 5) : '09:00';
+        const end = day.end_time ? day.end_time.substring(0, 5) : '18:00';
+        return `<div class="schedule-day ${day.is_working ? '' : 'day-off'}" id="day-${day.weekday}">
+          <div class="day-name">${DAYS[day.weekday]}</div>
+          <div class="time-inputs">
+            <input class="time-input" type="time" value="${start}" id="start-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+            <span class="time-sep">—</span>
+            <input class="time-input" type="time" value="${end}" id="end-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <label class="toggle">
+              <input type="checkbox" ${day.is_working ? 'checked' : ''} onchange="toggleDay(${day.weekday},this.checked)">
+              <span class="toggle-slider"></span>
+            </label>
+            <button class="btn-save" id="saveBtn-${day.weekday}" onclick="saveDay(${day.weekday})">Сохранить</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderSchedCalendar() {
+      const now = new Date();
+      const target = new Date(now.getFullYear(), now.getMonth() + schedMonthOffset, 1);
+      const year = target.getFullYear();
+      const month = target.getMonth();
+
+      const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+      document.getElementById('schedMonthLabel').textContent = `${monthNames[month]} ${year}`;
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startOffset = (firstDay.getDay() + 6) % 7;
+
+      const todayStr = toDateStr(new Date());
+      const tz = localStorage.getItem('master_timezone') || 'Europe/Moscow';
+
+      const dayoffDates = new Set(schedExceptions.filter(e => e.type === 'dayoff').map(e => e.date));
+
+      const bookingDates = new Set();
+      allBookings.forEach(b => {
+        if (b.status === 'cancelled') return;
+        const dt = new Date(b.datetime_start);
+        bookingDates.add(dt.toLocaleDateString('sv', { timeZone: tz }));
+      });
+
+      const grid = document.getElementById('schedCalGrid');
+      grid.innerHTML = '';
+
+      for (let i = 0; i < startOffset; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'sched-cal-day sched-cal-empty';
+        grid.appendChild(empty);
+      }
+
+      for (let d = 1; d <= lastDay.getDate(); d++) {
+        const dateObj = new Date(year, month, d);
+        const dateStr = toDateStr(dateObj);
+        const isPast = dateStr < todayStr;
+        const isDayoff = dayoffDates.has(dateStr) || (() => {
+          const weekday = (dateObj.getDay() + 6) % 7; // пн=0, вс=6
+          const daySched = scheduleData.find(s => s.weekday === weekday);
+          return daySched && !daySched.is_working;
+        })();
+        const hasBookings = bookingDates.has(dateStr);
+        const isToday = dateStr === todayStr;
+        const isSelected = dateStr === schedSelectedDateStr;
+
+        const el = document.createElement('div');
+        el.className = 'sched-cal-day' +
+          (isPast ? ' sched-cal-past' : '') +
+          (isDayoff ? ' sched-cal-dayoff' : '') +
+          (isToday ? ' sched-cal-today' : '') +
+          (isSelected ? ' sched-cal-selected' : '');
+
+        el.innerHTML = `<span>${d}</span>${hasBookings ? '<div class="sched-cal-dot"></div>' : ''}`;
+
+        if (!isPast) {
+          el.onclick = () => {
+            schedSelectedDate = dateObj;
+            schedSelectedDateStr = dateStr;
+            renderSchedCalendar();
+            renderSchedDayView(dateStr);
+            setTimeout(() => {
+              document.getElementById('schedDayView').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 50);
+          };
+        }
+
+        grid.appendChild(el);
+      }
+    }
+
+    function renderSchedDayView(dateStr) {
+      const dayView = document.getElementById('schedDayView');
+      dayView.style.display = 'block';
+
+      const monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+      const d = new Date(dateStr + 'T12:00:00');
+      document.getElementById('schedDayTitle').textContent = `${d.getDate()} ${monthNames[d.getMonth()]}`;
+
+      const isDayoff = schedExceptions.some(e => e.date === dateStr && e.type === 'dayoff');
+      const toggle = document.getElementById('schedDayToggle');
+      toggle.checked = !isDayoff;
+      toggle.dataset.date = dateStr;
+
+      const dayList = document.getElementById('schedDayList');
+
+      if (isDayoff) {
+        dayList.innerHTML = `<div class="sched-day-slot slot-block" style="justify-content:center;color:var(--text-muted)">Выходной день — запись недоступна</div>`;
+        return;
+      }
+
+      const weekday = d.getDay() === 0 ? 6 : d.getDay() - 1;
+      const daySchedule = scheduleData.find(s => s.weekday === weekday);
+
+      if (!daySchedule || !daySchedule.is_working) {
+        dayList.innerHTML = `<div class="sched-day-slot slot-block" style="justify-content:center;color:var(--text-muted)">Нерабочий день по расписанию</div>`;
+        return;
+      }
+
+      const tz = localStorage.getItem('master_timezone') || 'Europe/Moscow';
+
+      const dayBookings = allBookings.filter(b => {
+        if (b.status === 'cancelled') return false;
+        const dt = new Date(b.datetime_start);
+        return dt.toLocaleDateString('sv', { timeZone: tz }) === dateStr;
+      }).sort((a, b) => a.datetime_start.localeCompare(b.datetime_start));
+
+      const dayBlocks = schedExceptions.filter(e => e.date === dateStr && e.type === 'block');
+
+      const startMin = toMinutes(daySchedule.start_time.substring(0, 5));
+      const endMin = toMinutes(daySchedule.end_time.substring(0, 5));
+
+      const busyBlocks = [];
+
+      dayBookings.forEach(b => {
+        const st = new Date(b.datetime_start);
+        const en = new Date(b.datetime_end);
+        const stStr = st.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: tz });
+        const enStr = en.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: tz });
+        busyBlocks.push({
+          type: 'booking',
+          startMin: toMinutes(stStr),
+          endMin: toMinutes(enStr),
+          timeLabel: `${stStr} — ${enStr}`,
+          name: b.client_name,
+          service: b.service_name || '',
+          phone: b.client_phone
+        });
+      });
+
+      dayBlocks.forEach(bl => {
+        busyBlocks.push({
+          type: 'block',
+          id: bl.id,
+          startMin: toMinutes(bl.start_time.substring(0, 5)),
+          endMin: toMinutes(bl.end_time.substring(0, 5)),
+          timeLabel: `${bl.start_time.substring(0, 5)} — ${bl.end_time.substring(0, 5)}`
+        });
+      });
+
+      busyBlocks.sort((a, b) => a.startMin - b.startMin);
+
+      let html = '';
+      let cursor = startMin;
+
+      busyBlocks.forEach(block => {
+        if (block.startMin > cursor) {
+          const freeStart = minutesToTime(cursor);
+          const freeEnd = minutesToTime(block.startMin);
+          const dur = block.startMin - cursor;
+          html += `<div class="sched-day-slot slot-free" onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')">
+            <div class="slot-free-time">${freeStart} — создать запись или перерыв</div>
+            <div class="slot-free-label">свободно: ${formatDuration(dur)}</div>
+          </div>`;
+        }
+
+        if (block.type === 'booking') {
+          html += `<div class="sched-day-slot slot-booking">
+            <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">${block.timeLabel}</div>
+            <div style="font-size:15px;font-weight:400;margin-bottom:2px">${block.name}</div>
+            <div style="font-size:13px;color:var(--text-muted)">${block.service} · ${block.phone}</div>
+          </div>`;
+        } else {
+          html += `<div class="sched-day-slot slot-block">
+            <div>
+              <div style="font-size:13px;margin-bottom:2px">${block.timeLabel}</div>
+              <div style="font-size:12px;opacity:0.7">Перерыв</div>
+            </div>
+            <button class="btn-remove-break" onclick="removeBlock(${block.id},'${dateStr}')">Удалить</button>
+          </div>`;
+        }
+
+        cursor = block.endMin;
+      });
+
+      if (cursor < endMin) {
+        const freeStart = minutesToTime(cursor);
+        const freeEnd = minutesToTime(endMin);
+        const dur = endMin - cursor;
+        html += `<div class="sched-day-slot slot-free" onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')">
+          <div class="slot-free-time">${freeStart} — создать запись или перерыв</div>
+          <div class="slot-free-label">свободно: ${formatDuration(dur)}</div>
+        </div>`;
+      }
+
+      if (!html) {
+        html = `<div style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:13px">День полностью занят</div>`;
+      }
+
+      dayList.innerHTML = html;
+    }
+
+    async function handleDayToggle(isWorking) {
+      const dateStr = document.getElementById('schedDayToggle').dataset.date;
+      await apiFetch(`${API}/schedule/exceptions/toggle`, {
+        method: 'POST',
+        body: JSON.stringify({ date: dateStr, type: 'dayoff' })
+      });
+      const excRes = await apiFetch(`${API}/schedule/exceptions`);
+      schedExceptions = await excRes.json();
+      renderSchedCalendar();
+      renderSchedDayView(dateStr);
+    }
+
+    async function removeBlock(exceptionId, dateStr) {
+      await apiFetch(`${API}/schedule/exceptions/${exceptionId}`, { method: 'DELETE' });
+      const excRes = await apiFetch(`${API}/schedule/exceptions`);
+      schedExceptions = await excRes.json();
+      renderSchedCalendar();
+      renderSchedDayView(dateStr);
+    }
+
+    function changeSchedMonth(dir) {
+      schedMonthOffset += dir;
+      renderSchedCalendar();
+    }
+
+    // ── BOTTOM SHEET ──
+    async function openBottomSheet(dateStr, startTime, endTime) {
+      bsDateStr = dateStr;
+      bsStartTime = startTime;
+      bsEndTime = endTime;
+
+      if (!cachedServices.length) {
+        const res = await apiFetch(`${API}/services/`);
+        if (res) cachedServices = await res.json();
+      }
+
+      document.getElementById('bsService').innerHTML = cachedServices
+        .filter(s => s.is_active !== false)
+        .map(s => `<option value="${s.id}">${s.name} (${s.duration} мин)</option>`)
+        .join('');
+
+      document.getElementById('bsDate').value = dateStr;
+      document.getElementById('bsTime').value = startTime;
+      document.getElementById('bsName').value = '';
+      document.getElementById('bsPhone').value = '';
+      document.getElementById('bsNotes').value = '';
+      document.getElementById('bsBreakStart').value = startTime;
+      document.getElementById('bsBreakEnd').value = endTime;
+      document.getElementById('bsBookingError').classList.remove('show');
+      document.getElementById('bsBreakError').classList.remove('show');
+
+      switchBsTab('booking');
+
+      document.getElementById('bsOverlay').classList.add('show');
+      document.getElementById('bottomSheet').classList.add('show');
+    }
+
+    function closeBottomSheet() {
+      document.getElementById('bsOverlay').classList.remove('show');
+      document.getElementById('bottomSheet').classList.remove('show');
+    }
+
+    function switchBsTab(tab) {
+      bsCurrentTab = tab;
+      document.getElementById('bsTabBooking').classList.toggle('active', tab === 'booking');
+      document.getElementById('bsTabBreak').classList.toggle('active', tab === 'break');
+      document.getElementById('bsBookingForm').style.display = tab === 'booking' ? 'block' : 'none';
+      document.getElementById('bsBreakForm').style.display = tab === 'break' ? 'block' : 'none';
+    }
+
+    async function saveBottomSheet() {
+      if (bsCurrentTab === 'booking') await saveBsBooking();
+      else await saveBsBreak();
+    }
+
+    async function saveBsBooking() {
+      const name = document.getElementById('bsName').value.trim();
+      const phone = document.getElementById('bsPhone').value.trim();
+      const serviceId = document.getElementById('bsService').value;
+      const date = document.getElementById('bsDate').value;
+      const time = document.getElementById('bsTime').value;
+      const notes = document.getElementById('bsNotes').value.trim();
+      const errEl = document.getElementById('bsBookingError');
+      errEl.classList.remove('show');
+
+      if (!name || !phone || !serviceId || !date || !time) {
+        errEl.textContent = 'Заполните все поля';
+        errEl.classList.add('show');
+        return;
+      }
+
+      const slug = localStorage.getItem('master_slug');
+      const datetimeStart = new Date(`${date}T${time}`).toISOString();
+
+      try {
+        const res = await fetch(`${API}/book/${slug}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ service_id: parseInt(serviceId), datetime_start: datetimeStart, client_name: name, client_phone: phone, client_email: '', notes: notes || null })
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.detail || 'Ошибка создания записи');
+        }
+        closeBottomSheet();
+        await loadSchedule();
+      } catch (e) {
+        document.getElementById('bsBookingError').textContent = e.message;
+        document.getElementById('bsBookingError').classList.add('show');
+      }
+    }
+
+    async function saveBsBreak() {
+      const start = document.getElementById('bsBreakStart').value;
+      const end = document.getElementById('bsBreakEnd').value;
+      const errEl = document.getElementById('bsBreakError');
+      errEl.classList.remove('show');
+
+      if (start >= end) {
+        errEl.textContent = 'Время начала должно быть раньше конца';
+        errEl.classList.add('show');
+        return;
+      }
+
+      try {
+        await apiFetch(`${API}/schedule/exceptions`, {
+          method: 'POST',
+          body: JSON.stringify({ date: bsDateStr, type: 'block', start_time: start + ':00', end_time: end + ':00' })
+        });
+        closeBottomSheet();
+        await loadSchedule();
+      } catch (e) {
+        document.getElementById('bsBreakError').textContent = 'Ошибка сохранения';
+        document.getElementById('bsBreakError').classList.add('show');
+      }
+    }
+
     // ── UTILS ──
+    function toMinutes(timeStr) {
+      const [h, m] = timeStr.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    function minutesToTime(mins) {
+      const h = String(Math.floor(mins / 60)).padStart(2, '0');
+      const m = String(mins % 60).padStart(2, '0');
+      return `${h}:${m}`;
+    }
+
+    function formatDuration(mins) {
+      if (mins < 60) return `${mins} мин`;
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return m ? `${h} ч ${m} мин` : `${h} ч`;
+    }
+
     function formatPhone(input) {
       let val = input.value.replace(/\D/g, '');
       if (val.startsWith('8')) val = '7' + val.slice(1);
@@ -2026,24 +2664,22 @@
       if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
       else { input.type = 'password'; btn.textContent = '👁'; }
     }
+
     function jumpToDate(dateStr) {
       const date = new Date(dateStr + 'T12:00:00');
       selectedDate = date;
-
-      // Вычисляем на какой неделе находится эта дата
       const today = new Date();
       const day = today.getDay();
       const diff = day === 0 ? -6 : 1 - day;
       const thisMonday = new Date(today);
       thisMonday.setDate(today.getDate() + diff);
       thisMonday.setHours(0, 0, 0, 0);
-
       const diffDays = Math.round((date - thisMonday) / (1000 * 60 * 60 * 24));
       weekOffset = Math.floor(diffDays / 7);
-
       renderWeekCalendar();
       renderDayBookings();
     }
+
     function editNotes(id) {
       document.getElementById(`notes-display-${id}`).style.display = 'none';
       document.getElementById(`notes-edit-${id}`).style.display = 'block';
@@ -2058,10 +2694,7 @@
 
     async function saveNotes(id) {
       const notes = document.getElementById(`notes-input-${id}`).value.trim();
-      await apiFetch(`${API}/bookings/${id}/notes`, {
-        method: 'PATCH',
-        body: JSON.stringify({ notes: notes || null })
-      });
+      await apiFetch(`${API}/bookings/${id}/notes`, { method: 'PATCH', body: JSON.stringify({ notes: notes || null }) });
       loadBookings();
     }
   </script>

@@ -293,6 +293,7 @@ async def create_booking(
         datetime_start=data.datetime_start,
         datetime_end=datetime_end,
         cancel_token=str(uuid.uuid4()),
+        notes=data.notes,
     )
 
     db.add(booking)
