@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     ADMIN_SECRET_KEY: str
 
     DEBUG: bool = False
+    ALLOWED_ORIGINS: list[str] = ["*"]
 
     @computed_field
     @property
