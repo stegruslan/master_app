@@ -20,6 +20,21 @@
     :root {
       --gold: #c9a84c;
       --gold-light: #e8c97a;
+      --gold-dim: rgba(201, 168, 76, 0.12);
+      --bg: #f8f7f5;
+      --surface: #ffffff;
+      --surface2: #f8f7f5;
+      --surface3: #f0ede8;
+      --border: rgba(201, 168, 76, 0.25);
+      --border2: rgba(0, 0, 0, 0.07);
+      --text: #1a1a1a;
+      --text-muted: #9a9080;
+      --error: #c0504a;
+    }
+
+    [data-theme="dark"] {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
       --gold-dim: rgba(201, 168, 76, 0.15);
       --bg: #0d0d0d;
       --surface: #141414;
@@ -39,6 +54,8 @@
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
+      font-weight: 400;
+      font-size: 16px;
     }
 
     body::before {
@@ -399,9 +416,9 @@
 
     .sidebar-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 400;
-      letter-spacing: 0.15em;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gold);
       padding: 0 28px 32px;
@@ -415,16 +432,18 @@
 
     .sidebar-master-greeting {
       font-size: 10px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .sidebar-master-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 300;
+      font-size: 24px;
+      font-weight: 550;
+      letter-spacing: 0.02em;
+      color: var(--text);
     }
 
     .sidebar-nav {
@@ -449,7 +468,7 @@
 
     .nav-item:hover {
       color: var(--text);
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--surface2);
     }
 
     .nav-item.active {
@@ -479,7 +498,7 @@
     }
 
     .sidebar-link-url {
-      font-size: 11px;
+      font-size: 14px;
       color: var(--gold);
       word-break: break-all;
       margin-bottom: 8px;
@@ -715,7 +734,7 @@
 
     .booking-client {
       font-size: 19px;
-      font-weight: 400;
+      font-weight: 500;
       margin-bottom: 6px;
     }
 
@@ -751,8 +770,8 @@
 
     .status-confirmed {
       color: #4a7c59;
-      background: rgba(74, 124, 89, 0.1);
-      border: 1px solid rgba(74, 124, 89, 0.3);
+      background: transparent;
+      border: 1px solid #4a7c59;
     }
 
     .status-cancelled {
@@ -803,7 +822,7 @@
 
     .service-card-name {
       font-size: 18px;
-      font-weight: 400;
+      font-weight: 500;
       margin-bottom: 3px;
     }
 
@@ -872,7 +891,7 @@
 
     .day-name {
       font-size: 17px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .time-inputs {
@@ -1011,7 +1030,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 500;
       border-radius: 2px;
       cursor: pointer;
       border: 1px solid transparent;
@@ -1044,12 +1064,13 @@
     }
 
     .sched-cal-day.sched-cal-dayoff span:first-child {
-      color: var(--error);
+      color: #e05555;
+      font-weight: 600;
     }
 
     .sched-cal-day.sched-cal-past {
-      opacity: 0.3;
-      cursor: default;
+      opacity: 0.5;
+      cursor: pointer;
     }
 
     .sched-cal-day.sched-cal-empty {
@@ -1261,6 +1282,29 @@
       gap: 10px;
     }
 
+    .week-day.past {
+      opacity: 0.4;
+    }
+
+    .week-day.dayoff .week-day-num {
+      color: #e05555;
+    }
+
+    .week-day.dayoff .week-day-name {
+      color: #e05555;
+      opacity: 0.7;
+    }
+
+    .week-day-num {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .week-day-name {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
     @media (max-width: 900px) {
       .schedule-day {
         grid-template-columns: 1fr;
@@ -1389,7 +1433,7 @@
       }
 
       .mobile-link-url {
-        font-size: 12px;
+        font-size: 14px;
         color: var(--gold);
         word-break: break-all;
         margin-bottom: 8px;
@@ -1416,6 +1460,22 @@
       .mobile-auth-header {
         display: block;
       }
+    }
+
+    .profile-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      font-size: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border2);
+      transition: background 0.15s;
+      color: var(--text);
+    }
+
+    .profile-menu-item:hover {
+      background: var(--surface2);
     }
   </style>
 </head>
@@ -1510,30 +1570,28 @@
           <span class="nav-item-icon">⭐</span> Услуги
         </div>
         <div class="nav-item" onclick="showSection('schedule', this)">
-          <span class="nav-item-icon" style="color:#ffffff">🗓</span>
+          <span class="nav-item-icon">🗓</span>
           <span>Расписание</span>
         </div>
-        <a href="https://t.me/stegruslan" target="_blank" class="nav-item" style="text-decoration:none">
-          <span class="nav-item-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#29b6f6">
-              <path
-                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
-            </svg>
-          </span>
-          <span style="color:#29b6f6">Поддержка</span>
-        </a>
+        <div class="nav-item" onclick="showSection('profile', this)">
+          <span class="nav-item-icon">👤</span>
+          <span>Профиль</span>
+        </div>
       </div>
       <div class="sidebar-link-box">
-        <div class="sidebar-link-label">Ссылка для записи</div>
+        <div class="sidebar-link-label">Публичная ссылка для записи</div>
         <div class="sidebar-link-url" id="sidebarLink">—</div>
         <button class="btn-copy" onclick="copyLink()">Скопировать</button>
       </div>
-      <button class="btn-logout" onclick="logout()">Выйти</button>
+      <button class="btn-logout" id="themeToggleBtn" onclick="toggleTheme()"
+        style="display:flex;align-items:center;gap:8px;">
+        <span id="themeIcon">🌙</span> <span id="themeLabel">Тёмная тема</span>
+      </button>
     </div>
 
     <div class="cabinet-main">
       <div class="mobile-link-box" style="display:none" id="mobileLinkBox">
-        <div class="mobile-link-label">Ссылка для записи</div>
+        <div class="mobile-link-label">Ваша ссылка для записи</div>
         <div class="mobile-link-url" id="mobileLinkUrl">—</div>
         <button class="btn-copy" onclick="copyLink()">Скопировать</button>
       </div>
@@ -1597,41 +1655,155 @@
           <div class="section-title">Расписание</div>
         </div>
 
-        <!-- Рабочие часы по дням недели -->
-        <div class="schedule-list" id="scheduleList">
-          <div class="loading">Загрузка...</div>
-        </div>
 
-        <!-- Месячный календарь -->
-        <div class="schedule-calendar-block">
-          <div class="schedule-cal-header">
-            <button class="week-nav-btn" onclick="changeSchedMonth(-1)">‹</button>
-            <div id="schedMonthLabel" style="font-size:15px;color:var(--text);padding:0 16px"></div>
-            <button class="week-nav-btn" onclick="changeSchedMonth(1)">›</button>
-          </div>
 
-          <div class="sched-cal-grid-header">
-            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
-          </div>
-          <div class="sched-cal-grid" id="schedCalGrid"></div>
+        <!-- Месячный календарь по центру -->
+        <div style="display:flex;justify-content:center;">
+          <div class="schedule-calendar-block" style="width:100%;max-width:560px;">
+            <div class="schedule-cal-header">
+              <button class="week-nav-btn" onclick="changeSchedMonth(-1)">‹</button>
+              <div id="schedMonthLabel" style="font-size:15px;color:var(--text);padding:0 16px"></div>
+              <button class="week-nav-btn" onclick="changeSchedMonth(1)">›</button>
+            </div>
 
-          <!-- Дневной вид -->
-          <div id="schedDayView" style="display:none">
-            <div class="sched-day-header">
-              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-                <div id="schedDayTitle" style="font-size:17px;color:var(--text);font-weight:400"></div>
-                <div style="display:flex;align-items:center;gap:10px">
-                  <span style="font-size:13px;color:var(--text-muted)">Рабочий день</span>
-                  <label class="toggle">
-                    <input type="checkbox" id="schedDayToggle" onchange="handleDayToggle(this.checked)">
-                    <span class="toggle-slider"></span>
-                  </label>
+            <div class="sched-cal-grid-header">
+              <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="sched-cal-grid" id="schedCalGrid"></div>
+
+            <!-- Дневной вид -->
+            <div id="schedDayView" style="display:none">
+              <div class="sched-day-header">
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+                  <div id="schedDayTitle" style="font-size:17px;color:var(--text);font-weight:400"></div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:13px;color:var(--text-muted)">Рабочий день</span>
+                    <label class="toggle">
+                      <input type="checkbox" id="schedDayToggle" onchange="handleDayToggle(this.checked)">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
+              <div id="schedDayList"></div>
             </div>
-            <div id="schedDayList"></div>
           </div>
         </div>
+      </div>
+
+      <!-- Профиль -->
+      <div class="section" id="sectionProfile">
+
+        <!-- Список пунктов профиля -->
+        <div id="profileMenu">
+          <div class="section-header">
+            <div class="section-title">Профиль</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
+            <div class="profile-menu-item" onclick="openProfilePage('schedule')">
+              <span>🗓 График работы</span>
+              <span style="color:var(--text-muted);">›</span>
+            </div>
+            <div class="profile-menu-item" onclick="openProfilePage('account')">
+              <span>👤 Настройки аккаунта</span>
+              <span style="color:var(--text-muted);">›</span>
+            </div>
+            <div class="profile-menu-item" onclick="openProfilePage('subscription')">
+              <span>💳 Подписка</span>
+              <span style="color:var(--text-muted);">›</span>
+            </div>
+            <div class="profile-menu-item" style="border-bottom:none;">
+              <a href="https://t.me/stegruslan" target="_blank"
+                style="text-decoration:none;color:#29b6f6;display:flex;align-items:center;gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="#29b6f6">
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
+                </svg>
+                Поддержка
+              </a>
+              <span></span>
+            </div>
+          </div>
+          <div
+            style="margin-top:12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
+            <div class="profile-menu-item" style="border-bottom:none;" onclick="toggleTheme()">
+              <span><span id="themeIconMobile">🌙</span> <span id="themeLabelMobile">Тёмная тема</span></span>
+              <span style="color:var(--text-muted);">›</span>
+            </div>
+          </div>
+          <div
+            style="margin-top:12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
+            <div class="profile-menu-item" style="border-bottom:none;color:var(--error);" onclick="openLogoutModal()">
+              <span>Выйти из аккаунта</span>
+              <span style="color:var(--error);">›</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- График работы -->
+        <div id="profilePageSchedule" style="display:none">
+          <div class="section-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button onclick="closeProfilePage()"
+                style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--text-muted);padding:0;">‹</button>
+              <div class="section-title">График работы</div>
+            </div>
+          </div>
+          <div class="schedule-list" id="profileScheduleList">
+            <div class="loading">Загрузка...</div>
+          </div>
+        </div>
+
+        <!-- Настройки аккаунта -->
+        <div id="profilePageAccount" style="display:none">
+          <div class="section-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button onclick="closeProfilePage()"
+                style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--text-muted);padding:0;">‹</button>
+              <div class="section-title">Настройки аккаунта</div>
+            </div>
+          </div>
+          <div
+            style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+            <div class="field"><label>Имя</label><input type="text" id="profileName" placeholder="Ваше имя"></div>
+            <div class="field"><label>Телефон</label><input type="tel" id="profilePhone" disabled
+                style="opacity:0.5;cursor:not-allowed;"></div>
+            <div class="field"><label>Email</label><input type="email" id="profileEmail"
+                placeholder="email@example.com"></div>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px"
+                onclick="saveProfile()">Сохранить</button>
+              <div class="error-msg" id="profileError"></div>
+              <div id="profileSuccess" style="display:none;font-size:13px;color:var(--gold);">Сохранено ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подписка -->
+        <div id="profilePageSubscription" style="display:none">
+          <div class="section-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button onclick="closeProfilePage()"
+                style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--text-muted);padding:0;">‹</button>
+              <div class="section-title">Подписка</div>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:400;margin-bottom:6px;">Бесплатный план</div>
+                <div style="font-size:13px;color:var(--text-muted);">До 3 услуг · Базовое расписание</div>
+              </div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);">Free</div>
+            </div>
+            <div style="padding-top:20px;border-top:1px solid var(--border2);">
+              <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Pro — неограниченные услуги,
+                перерывы, статистика</div>
+              <button class="btn-outline" style="padding:10px 20px;">Перейти на Pro →</button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Нижняя навигация -->
@@ -1653,18 +1825,9 @@
           </span>
           Расписание
         </button>
-        <a href="https://t.me/stegruslan" target="_blank" class="mobile-nav-item" style="text-decoration:none">
-          <span class="mobile-nav-item-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#29b6f6">
-              <path
-                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
-            </svg>
-          </span>
-          <span style="color:#29b6f6">Поддержка</span>
-        </a>
-        <button class="mobile-nav-item" onclick="logout()">
-          <span class="mobile-nav-item-icon">✕</span>
-          Выйти
+        <button class="mobile-nav-item" onclick="showSection('profile', this)">
+          <span class="mobile-nav-item-icon">👤</span>
+          Профиль
         </button>
       </nav>
 
@@ -1683,6 +1846,21 @@
           <button onclick="closeModal('cancelModal')"
             style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Нет,
             оставить</button>
+        </div>
+      </div>
+      <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box" style="text-align:center">
+          <div
+            style="width:48px;height:48px;border:1px solid rgba(192,80,74,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:20px">
+            👤</div>
+          <div class="modal-title">Выйти из аккаунта?</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:32px">Вы будете
+            перенаправлены на страницу входа.</div>
+          <button class="btn-danger"
+            style="width:100%;padding:14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px"
+            onclick="logout()">Да, выйти</button>
+          <button onclick="closeModal('logoutModal')"
+            style="background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:8px">Отмена</button>
         </div>
       </div>
 
@@ -1902,14 +2080,17 @@
       if (name === 'bookings') loadBookings();
       if (name === 'services') loadServices();
       if (name === 'schedule') loadSchedule();
+      if (name === 'profile') closeProfilePage();
     }
 
     function copyLink() {
       const slug = localStorage.getItem('master_slug');
       navigator.clipboard.writeText(`${window.location.origin}/book?master=${slug}`);
-      const btn = document.querySelector('.btn-copy');
-      btn.textContent = 'Скопировано ✓'; btn.style.color = 'var(--gold)';
-      setTimeout(() => { btn.textContent = 'Скопировать'; btn.style.color = ''; }, 2000);
+      document.querySelectorAll('.btn-copy').forEach(btn => {
+        btn.textContent = 'Скопировано ✓';
+        btn.style.color = 'var(--gold)';
+        setTimeout(() => { btn.textContent = 'Скопировать'; btn.style.color = ''; }, 2000);
+      });
     }
 
     function logout() { localStorage.clear(); location.reload(); }
@@ -1959,6 +2140,7 @@
 
       const container = document.getElementById('weekDays');
       container.innerHTML = '';
+      const dayoffDates = new Set(schedExceptions.filter(e => e.type === 'dayoff').map(e => e.date));
 
       for (let i = 0; i < 7; i++) {
         const day = new Date(weekStart);
@@ -1968,8 +2150,18 @@
         const isSelected = dateStr === selectedStr;
         const hasBookings = !!bookingsByDate[dateStr];
 
+        const isPastDay = dateStr < today && !isToday;
+        const weekday = (day.getDay() + 6) % 7;
+        const daySched = scheduleData.find(s => s.weekday === weekday);
+        const isDayoffWeek = (daySched && !daySched.is_working) || dayoffDates.has(dateStr);
+
         const el = document.createElement('div');
-        el.className = 'week-day' + (isToday ? ' today' : '') + (isSelected ? ' active' : '') + (hasBookings ? ' has-bookings' : '');
+        el.className = 'week-day' +
+          (isToday ? ' today' : '') +
+          (isSelected ? ' active' : '') +
+          (hasBookings ? ' has-bookings' : '') +
+          (isPastDay ? ' past' : '') +
+          (isDayoffWeek && !isPastDay ? ' dayoff' : '');
         el.innerHTML = `
           <div class="week-day-name">${DAYS_SHORT[i]}</div>
           <div class="week-day-num">${day.getDate()}</div>
@@ -2032,7 +2224,8 @@
         const dt = new Date(b.datetime_start);
         const tz = localStorage.getItem('master_timezone') || 'Europe/Moscow';
         const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: tz });
-        const actions = b.status !== 'cancelled' ? `
+        const isPastBooking = dateStr < toDateStr(new Date());
+        const actions = !isPastBooking && b.status !== 'cancelled' ? `
           ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
           <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
         return `<div class="booking-card">
@@ -2062,9 +2255,16 @@
     async function loadBookings() {
       document.getElementById('bookingsList').innerHTML = '<div class="loading">Загрузка...</div>';
       try {
-        const res = await apiFetch(`${API}/bookings/`);
-        if (!res) return;
-        allBookings = await res.json();
+        const [bookRes, excRes, schedRes] = await Promise.all([
+          apiFetch(`${API}/bookings/`),
+          apiFetch(`${API}/schedule/exceptions`),
+          apiFetch(`${API}/schedule/`),
+        ]);
+        if (!bookRes || !excRes || !schedRes) return;
+
+        allBookings = await bookRes.json();
+        schedExceptions = await excRes.json();
+        scheduleData = await schedRes.json();
 
         const upcoming = allBookings.filter(b => b.status !== 'cancelled' && new Date(b.datetime_start) >= new Date());
         document.getElementById('bookingsCount').textContent = upcoming.length > 0 ? `(${upcoming.length})` : '';
@@ -2257,7 +2457,6 @@
     let bsEndTime = null;
 
     async function loadSchedule() {
-      document.getElementById('scheduleList').innerHTML = '<div class="loading">Загрузка...</div>';
       try {
         const [schedRes, excRes, bookRes] = await Promise.all([
           apiFetch(`${API}/schedule/`),
@@ -2270,7 +2469,6 @@
         schedExceptions = await excRes.json();
         allBookings = await bookRes.json();
 
-        renderScheduleList(scheduleData);
         renderSchedCalendar();
 
         if (schedSelectedDateStr) renderSchedDayView(schedSelectedDateStr);
@@ -2358,23 +2556,23 @@
 
         el.innerHTML = `<span>${d}</span>${hasBookings ? '<div class="sched-cal-dot"></div>' : ''}`;
 
-        if (!isPast) {
-          el.onclick = () => {
-            schedSelectedDate = dateObj;
-            schedSelectedDateStr = dateStr;
-            renderSchedCalendar();
-            renderSchedDayView(dateStr);
-            setTimeout(() => {
-              document.getElementById('schedDayView').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 50);
-          };
-        }
+
+        el.onclick = () => {
+          schedSelectedDate = dateObj;
+          schedSelectedDateStr = dateStr;
+          renderSchedCalendar();
+          renderSchedDayView(dateStr, isPast);
+          setTimeout(() => {
+            document.getElementById('schedDayView').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 50);
+        };
+
 
         grid.appendChild(el);
       }
     }
 
-    function renderSchedDayView(dateStr) {
+    function renderSchedDayView(dateStr, isPast = false) {
       const dayView = document.getElementById('schedDayView');
       dayView.style.display = 'block';
 
@@ -2386,6 +2584,8 @@
       const toggle = document.getElementById('schedDayToggle');
       toggle.checked = !isDayoff;
       toggle.dataset.date = dateStr;
+      toggle.disabled = isPast;
+      toggle.style.opacity = isPast ? '0.5' : '1';
 
       const dayList = document.getElementById('schedDayList');
 
@@ -2453,8 +2653,8 @@
           const freeStart = minutesToTime(cursor);
           const freeEnd = minutesToTime(block.startMin);
           const dur = block.startMin - cursor;
-          html += `<div class="sched-day-slot slot-free" onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')">
-            <div class="slot-free-time">${freeStart} — создать запись или перерыв</div>
+          html += `<div class="sched-day-slot slot-free" ${!isPast ? `onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')"` : 'style="cursor:default"'}>
+            <div class="slot-free-time">${freeStart}${!isPast ? ' — создать запись или перерыв' : ''}</div>
             <div class="slot-free-label">свободно: ${formatDuration(dur)}</div>
           </div>`;
         }
@@ -2482,8 +2682,8 @@
         const freeStart = minutesToTime(cursor);
         const freeEnd = minutesToTime(endMin);
         const dur = endMin - cursor;
-        html += `<div class="sched-day-slot slot-free" onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')">
-          <div class="slot-free-time">${freeStart} — создать запись или перерыв</div>
+        html += `<div class="sched-day-slot slot-free" ${!isPast ? `onclick="openBottomSheet('${dateStr}','${freeStart}','${freeEnd}')"` : 'style="cursor:default"'}>
+          <div class="slot-free-time">${freeStart}${!isPast ? ' — создать запись или перерыв' : ''}</div>
           <div class="slot-free-label">свободно: ${formatDuration(dur)}</div>
         </div>`;
       }
@@ -2519,6 +2719,20 @@
       schedMonthOffset += dir;
       renderSchedCalendar();
     }
+    // Свайп по календарю расписания
+    const schedCal = document.querySelector('.schedule-calendar-block');
+    let schedTouchStartX = 0;
+
+    schedCal.addEventListener('touchstart', e => {
+      schedTouchStartX = e.touches[0].clientX;
+    });
+
+    schedCal.addEventListener('touchend', e => {
+      const diff = schedTouchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        changeSchedMonth(diff > 0 ? 1 : -1);
+      }
+    });
 
     // ── BOTTOM SHEET ──
     async function openBottomSheet(dateStr, startTime, endTime) {
@@ -2696,6 +2910,138 @@
       const notes = document.getElementById(`notes-input-${id}`).value.trim();
       await apiFetch(`${API}/bookings/${id}/notes`, { method: 'PATCH', body: JSON.stringify({ notes: notes || null }) });
       loadBookings();
+    }
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        document.getElementById('themeIcon').textContent = '🌙';
+        document.getElementById('themeLabel').textContent = 'Тёмная тема';
+        document.getElementById('themeIconMobile').textContent = '🌙';
+        document.getElementById('themeLabelMobile').textContent = 'Тёмная тема';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        document.getElementById('themeIcon').textContent = '☀️';
+        document.getElementById('themeLabel').textContent = 'Светлая тема';
+        document.getElementById('themeIconMobile').textContent = '☀️';
+        document.getElementById('themeLabelMobile').textContent = 'Светлая тема';
+      }
+    }
+
+    // Применяем сохранённую тему при загрузке
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').textContent = '☀️';
+        document.getElementById('themeLabel').textContent = 'Светлая тема';
+        document.getElementById('themeIconMobile').textContent = '☀️';
+        document.getElementById('themeLabelMobile').textContent = 'Светлая тема';
+      }
+    })();
+    function openProfilePage(page) {
+      document.getElementById('profileMenu').style.display = 'none';
+      document.getElementById('profilePageSchedule').style.display = 'none';
+      document.getElementById('profilePageAccount').style.display = 'none';
+      document.getElementById('profilePageSubscription').style.display = 'none';
+
+      if (page === 'schedule') {
+        document.getElementById('profilePageSchedule').style.display = 'block';
+        loadProfileSchedule();
+      } else if (page === 'account') {
+        document.getElementById('profilePageAccount').style.display = 'block';
+        loadProfileAccount();
+      } else if (page === 'subscription') {
+        document.getElementById('profilePageSubscription').style.display = 'block';
+      }
+    }
+
+    function closeProfilePage() {
+      document.getElementById('profileMenu').style.display = 'block';
+      document.getElementById('profilePageSchedule').style.display = 'none';
+      document.getElementById('profilePageAccount').style.display = 'none';
+      document.getElementById('profilePageSubscription').style.display = 'none';
+    }
+
+    async function loadProfileSchedule() {
+      const schedRes = await apiFetch(`${API}/schedule/`);
+      if (!schedRes) return;
+      const schedule = await schedRes.json();
+      const el = document.getElementById('profileScheduleList');
+      el.innerHTML = schedule.map(day => {
+        const start = day.start_time ? day.start_time.substring(0, 5) : '09:00';
+        const end = day.end_time ? day.end_time.substring(0, 5) : '18:00';
+        return `<div class="schedule-day ${day.is_working ? '' : 'day-off'}" id="profile-day-${day.weekday}">
+      <div class="day-name">${DAYS[day.weekday]}</div>
+      <div class="time-inputs">
+        <input class="time-input" type="time" value="${start}" id="profile-start-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+        <span class="time-sep">—</span>
+        <input class="time-input" type="time" value="${end}" id="profile-end-${day.weekday}" ${day.is_working ? '' : 'disabled'}>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <label class="toggle">
+          <input type="checkbox" ${day.is_working ? 'checked' : ''} onchange="toggleProfileDay(${day.weekday},this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+        <button class="btn-save" id="profile-saveBtn-${day.weekday}" onclick="saveProfileDay(${day.weekday})">Сохранить</button>
+      </div>
+    </div>`;
+      }).join('');
+    }
+
+    async function loadProfileAccount() {
+      const res = await apiFetch(`${API}/master/me`);
+      if (!res) return;
+      const data = await res.json();
+      document.getElementById('profileName').value = data.name || '';
+      document.getElementById('profilePhone').value = data.phone || '';
+      document.getElementById('profileEmail').value = data.email || '';
+    }
+
+    function toggleProfileDay(weekday, isWorking) {
+      document.getElementById(`profile-day-${weekday}`).classList.toggle('day-off', !isWorking);
+      document.getElementById(`profile-start-${weekday}`).disabled = !isWorking;
+      document.getElementById(`profile-end-${weekday}`).disabled = !isWorking;
+    }
+
+    async function saveProfileDay(weekday) {
+      const isWorking = document.querySelector(`#profile-day-${weekday} input[type=checkbox]`).checked;
+      const start = document.getElementById(`profile-start-${weekday}`).value;
+      const end = document.getElementById(`profile-end-${weekday}`).value;
+      const btn = document.getElementById(`profile-saveBtn-${weekday}`);
+      try {
+        await apiFetch(`${API}/schedule/${weekday}`, { method: 'PUT', body: JSON.stringify({ start_time: start, end_time: end, is_working: isWorking }) });
+        btn.textContent = 'Сохранено ✓'; btn.style.color = 'var(--gold)';
+        setTimeout(() => { btn.textContent = 'Сохранить'; btn.style.color = ''; }, 2000);
+      } catch (e) { alert('Ошибка сохранения'); }
+    }
+
+    async function saveProfile() {
+      const name = document.getElementById('profileName').value.trim();
+      const email = document.getElementById('profileEmail').value.trim();
+      const errEl = document.getElementById('profileError');
+      const succEl = document.getElementById('profileSuccess');
+      errEl.classList.remove('show');
+      succEl.style.display = 'none';
+
+      if (!name) { errEl.textContent = 'Имя не может быть пустым'; errEl.classList.add('show'); return; }
+
+      try {
+        const res = await apiFetch(`${API}/master/me`, {
+          method: 'PUT',
+          body: JSON.stringify({ name, email: email || null })
+        });
+        if (!res.ok) throw new Error('Ошибка сохранения');
+        localStorage.setItem('master_name', name);
+        document.getElementById('sidebarName').textContent = name;
+        succEl.style.display = 'block';
+        setTimeout(() => { succEl.style.display = 'none'; }, 2000);
+      } catch (e) { errEl.textContent = e.message; errEl.classList.add('show'); }
+    }
+    function openLogoutModal() {
+      document.getElementById('logoutModal').classList.add('show');
     }
   </script>
 
