@@ -150,9 +150,10 @@ async def get_slots(
     )
     duration = timedelta(minutes=service.duration)
 
+    step = timedelta(minutes=10)
     while current + duration <= end_of_day:
         slots.append((current, current + duration))
-        current += duration
+        current += step
 
     # получаем уже занятые записи на этот день
     day_start = (

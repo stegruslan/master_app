@@ -30,8 +30,6 @@ async def update_me(
         master.name = data.name
     if data.email is not None:
         master.email = data.email
-    if data.phone is not None:
-        master.phone = data.phone
 
     await db.commit()
     await db.refresh(master)

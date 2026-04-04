@@ -173,5 +173,13 @@ async def test_slots_block_exception(
     print("slots after block:", slots)
     print("block res:", res.json())
 
-    # должно быть ровно на 2 слота меньше
-    assert len(slots) == slots_before_count - 2
+    # блокируем 09:00-11:00 по Москве (06:00-08:00 UTC)
+    # шаг 10 минут, убирается 12 слотов
+    assert len(slots) == slots_before_count - 12
+
+    # ни один слот не должен начинаться в заблокированном промежутке (06:00-08:00 UTC = 09:00-11:00 Moscow)
+    for slot in slots:
+        slot_time = slot["datetime_start"][11:16]  # HH:MM UTC
+        assert not ("06:00" <= slot_time < "08:00"), (
+            f"Слот {slot_time} попал в заблокированный промежуток"
+        )
