@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str
     ADMIN_SECRET_KEY: str
 
+    RESEND_API_KEY: str = ""
+
     DEBUG: bool = False
     ALLOWED_ORIGINS: list[str] = ["*"]
 

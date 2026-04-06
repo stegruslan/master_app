@@ -41,11 +41,19 @@ async def generate_slug(name: str, db: AsyncSession) -> str:
 
 @router.post("/register", response_model=MasterResponse)
 async def register(data: MasterRegister, db: AsyncSession = Depends(get_db)):
+    # проверка телефона
     result = await db.execute(select(Master).where(Master.phone == data.phone))
     if result.scalar_one_or_none():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Мастер с таким телефоном уже существует",
+        )
+    # проверка email
+    result = await db.execute(select(Master).where(Master.email == data.email))
+    if result.scalar_one_or_none():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Мастер с таким email уже существует",
         )
 
     slug = await generate_slug(data.name, db)
@@ -55,6 +63,7 @@ async def register(data: MasterRegister, db: AsyncSession = Depends(get_db)):
         phone=data.phone,
         password_hash=hash_password(data.password),
         slug=slug,
+        email=data.email,
     )
     db.add(master)
     await db.commit()

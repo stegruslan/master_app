@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, EmailStr
 from utils.validators import validate_phone_number, validate_password
 
 
@@ -6,6 +6,7 @@ class MasterRegister(BaseModel):
     name: str
     phone: str
     password: str
+    email: EmailStr
 
     @field_validator("phone")
     @classmethod

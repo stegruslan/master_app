@@ -27,3 +27,6 @@ class Master(Base):
     schedule_exceptions = relationship(
         "ScheduleException", back_populates="master", cascade="all, delete-orphan"
     )
+    password_reset_tokens = relationship(
+        "PasswordResetToken", back_populates="master", cascade="all, delete-orphan"
+    )
