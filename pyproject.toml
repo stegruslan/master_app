@@ -17,6 +17,7 @@ dependencies = [
     "passlib>=1.7.4",
     "phonenumbers>=9.0.24",
     "pydantic-settings>=2.13.0",
+    "pydantic[email]>=2.12.5",
     "pytest>=9.0.2",
     "pytest-asyncio>=1.3.0",
     "python-jose>=3.5.0",
