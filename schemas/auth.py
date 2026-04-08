@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, EmailStr
 from utils.validators import validate_phone_number, validate_password
 
 
@@ -6,6 +6,7 @@ class MasterRegister(BaseModel):
     name: str
     phone: str
     password: str
+    email: EmailStr
 
     @field_validator("phone")
     @classmethod
@@ -36,3 +37,17 @@ class TokenResponse(BaseModel):
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
+
+    @field_validator("new_password")
+    @classmethod
+    def check_password(cls, v):
+        return validate_password(v)

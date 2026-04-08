@@ -1531,6 +1531,10 @@
             </div>
           </div>
           <button type="submit" class="btn-primary" id="loginBtn">Войти</button>
+          <a href="/reset"
+            style="display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--text-muted);text-decoration:none;"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-muted)'">Забыли
+            пароль?</a>
         </form>
         <form class="form" id="registerForm" onsubmit="handleRegister(event)">
           <div class="error-msg" id="registerError"></div>
@@ -1539,6 +1543,8 @@
           </div>
           <div class="field"><label>Телефон</label><input type="tel" id="regPhone" placeholder="+79991234567"
               oninput="formatPhone(this)" required></div>
+          <div class="field"><label>Email</label><input type="email" id="regEmail" placeholder="example@mail.ru"
+              required></div>
           <div class="field">
             <label>Пароль</label>
             <div style="position:relative">
@@ -2031,7 +2037,7 @@
       try {
         const res = await fetch(`${API}/auth/register`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: document.getElementById('regName').value, phone: document.getElementById('regPhone').value, password: document.getElementById('regPassword').value })
+          body: JSON.stringify({ name: document.getElementById('regName').value, phone: document.getElementById('regPhone').value, password: document.getElementById('regPassword').value, email: document.getElementById('regEmail').value })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || 'Ошибка регистрации');
