@@ -25,9 +25,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install "email-validator>=2.3.0"
+        run: pip install -r requirements.txt
 
       - name: Run pytest
         run: python -m pytest --tb=short

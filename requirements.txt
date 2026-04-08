@@ -172,5 +172,3 @@ wcwidth==0.6.0
     # via prompt-toolkit
 wtforms==3.1.2
     # via sqladmin
-email-validator>=2.3.0
-pydantic[email]>=2.12.5
