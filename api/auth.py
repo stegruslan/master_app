@@ -22,6 +22,20 @@ from schemas.auth import (
 from schemas.master import MasterResponse
 from slugify import slugify
 from datetime import time
+from schemas.auth import (
+    MasterRegister,
+    MasterLogin,
+    TokenResponse,
+    RefreshTokenRequest,
+    ForgotPasswordRequest,
+    ResetPasswordRequest,
+)
+from models.password_reset import PasswordResetToken
+from utils.email import send_password_reset_email
+from datetime import time, datetime, timedelta, timezone
+import secrets
+from core.config import settings
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 logger = get_logger(__name__)
@@ -151,3 +165,88 @@ async def refresh_token(data: RefreshTokenRequest, db: AsyncSession = Depends(ge
 
     logger.info(f"Мастер обновил токен: {master.phone}")
     return TokenResponse(access_token=access_token, refresh_token=refresh_token)
+
+
+@router.post("/forgot-password")
+async def forgot_password(
+    data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)
+):
+    """Запросить сброс пароля — отправляет письмо на email."""
+    result = await db.execute(select(Master).where(Master.email == data.email))
+    master = result.scalar_one_or_none()
+
+    if not master:
+        # Не раскрываем существует ли email — всегда отвечаем одинаково
+        return {"detail": "Если email зарегистрирован — письмо отправлено"}
+
+    # Инвалидируем старые токены
+    old_tokens = await db.execute(
+        select(PasswordResetToken).where(
+            PasswordResetToken.master_id == master.id,
+            PasswordResetToken.used == False,
+        )
+    )
+
+    for token in old_tokens.scalars().all():
+        token.used = True
+
+    # Создаём новый токен
+    token = secrets.token_urlsafe(32)
+    expires_at = datetime.now(timezone.utc) + timedelta(hours=1)
+
+    reset_token = PasswordResetToken(
+        master_id=master.id,
+        token=token,
+        expires_at=expires_at,
+    )
+
+    db.add(reset_token)
+    await db.commit()
+
+    reset_url = f"{settings.FRONTEND_URL}/reset?token={token}"
+    await send_password_reset_email(master.email, reset_url)
+
+    logger.info(f"Запрос сброса пароля для: {master.email}")
+    return {"detail": "Если email зарегистрирован — письмо отправлено"}
+
+
+@router.post("/reset-password")
+async def reset_password(
+    data: ResetPasswordRequest, db: AsyncSession = Depends(get_db)
+):
+    """Сбросить пароль по токену из письма."""
+    result = await db.execute(
+        select(PasswordResetToken).where(
+            PasswordResetToken.token == data.token, PasswordResetToken.used == False
+        )
+    )
+
+    reset_token = result.scalar_one_or_none()
+
+    if not reset_token:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Недействительная или уже использованная ссылка",
+        )
+
+    expires_at = reset_token.expires_at
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    if expires_at < datetime.now(timezone.utc):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ссылка истекла. Запросите новую.",
+        )
+
+    # Меняем пароль
+    result = await db.execute(select(Master).where(Master.id == reset_token.master_id))
+    master = result.scalar_one()
+    master.password_hash = hash_password(data.new_password)
+
+    # Помечаем токен использованным
+    reset_token.used = True
+
+    await db.commit()
+
+    logger.info(f"Пароль сброшен для мастера id={master.id}")
+    return {"detail": "Пароль успешно изменён"}

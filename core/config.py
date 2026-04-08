@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     ADMIN_SECRET_KEY: str
 
     RESEND_API_KEY: str = ""
+    FRONTEND_URL: str = "https://seansa.ru"
 
     DEBUG: bool = False
     ALLOWED_ORIGINS: list[str] = ["*"]

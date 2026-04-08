@@ -38,8 +38,19 @@ async def client():
 
 
 @pytest_asyncio.fixture
+async def db_session():
+    async with async_session_test() as session:
+        yield session
+
+
+@pytest_asyncio.fixture
 async def master_data():
-    return {"name": "Тест Мастер", "phone": "+79991234567", "password": "testpass123"}
+    return {
+        "name": "Тест Мастер",
+        "phone": "+79991234567",
+        "password": "testpass123",
+        "email": "test@example.com",
+    }
 
 
 @pytest_asyncio.fixture

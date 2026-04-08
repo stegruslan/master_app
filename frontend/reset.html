@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Восстановление пароля — Seansa</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --bg: #f8f7f5;
+            --surface: #ffffff;
+            --border: rgba(201, 168, 76, 0.25);
+            --border2: rgba(0, 0, 0, 0.07);
+            --text: #1a1a1a;
+            --text-muted: #9a9080;
+            --error: #c0504a;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 0.5px solid var(--border2);
+            border-radius: 12px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .field input {
+            background: var(--bg);
+            border: 1px solid var(--border2);
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .field input:focus {
+            border-color: var(--gold);
+        }
+
+        .field input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error-msg {
+            font-size: 13px;
+            color: var(--error);
+            padding: 10px 14px;
+            background: rgba(192, 80, 74, 0.08);
+            border: 1px solid rgba(192, 80, 74, 0.2);
+            border-radius: 6px;
+            display: none;
+            margin-top: 12px;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        .success-msg {
+            font-size: 14px;
+            color: #3d7a4e;
+            padding: 14px;
+            background: #edf6f0;
+            border: 1px solid #b8ddc4;
+            border-radius: 6px;
+            display: none;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--gold);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <div class="card">
+            <div class="logo">SEANSA</div>
+
+            <!-- Форма ввода email -->
+            <div id="emailForm">
+                <h1>Забыли пароль?</h1>
+                <p class="subtitle">Введите email указанный при регистрации — мы отправим ссылку для восстановления.</p>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" id="emailInput" placeholder="example@mail.ru">
+                </div>
+                <button class="btn-primary" id="emailBtn" onclick="submitEmail()">Отправить ссылку</button>
+                <div class="error-msg" id="emailError"></div>
+                <div class="success-msg" id="emailSuccess">
+                    Письмо отправлено! Проверьте почту и перейдите по ссылке в письме.
+                </div>
+                <a href="/app" class="back-link">← Вернуться ко входу</a>
+            </div>
+
+            <!-- Форма нового пароля -->
+            <div id="resetForm" style="display:none">
+                <h1>Новый пароль</h1>
+                <p class="subtitle">Придумайте новый пароль для вашего аккаунта.</p>
+                <div class="field">
+                    <label>Новый пароль</label>
+                    <input type="password" id="newPassword" placeholder="Минимум 6 символов">
+                </div>
+                <div class="field">
+                    <label>Повторите пароль</label>
+                    <input type="password" id="confirmPassword" placeholder="Повторите пароль">
+                </div>
+                <button class="btn-primary" id="resetBtn" onclick="submitReset()">Сохранить пароль</button>
+                <div class="error-msg" id="resetError"></div>
+                <div class="success-msg" id="resetSuccess">
+                    Пароль успешно изменён! <a href="/app" style="color:#3d7a4e;">Войти</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const API = '';
+        const token = new URLSearchParams(window.location.search).get('token');
+
+        // Если есть токен в URL — показываем форму нового пароля
+        if (token) {
+            document.getElementById('emailForm').style.display = 'none';
+            document.getElementById('resetForm').style.display = 'block';
+        }
+
+        async function submitEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            const btn = document.getElementById('emailBtn');
+            const errEl = document.getElementById('emailError');
+            const succEl = document.getElementById('emailSuccess');
+
+            errEl.classList.remove('show');
+            succEl.classList.remove('show');
+
+            if (!email) {
+                errEl.textContent = 'Введите email';
+                errEl.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                await fetch(`${API}/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                // Всегда показываем успех — не раскрываем существует ли email
+                succEl.classList.add('show');
+                btn.style.display = 'none';
+            } catch (e) {
+                errEl.textContent = 'Ошибка. Попробуйте позже.';
+                errEl.classList.add('show');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Отправить ссылку';
+            }
+        }
+
+        async function submitReset() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const btn = document.getElementById('resetBtn');
+            const errEl = document.getElementById('resetError');
+            const succEl = document.getElementById('resetSuccess');
+
+            errEl.classList.remove('show');
+            succEl.classList.remove('show');
+
+            if (!newPassword || !confirmPassword) {
+                errEl.textContent = 'Заполните все поля';
+                errEl.classList.add('show');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                errEl.textContent = 'Пароли не совпадают';
+                errEl.classList.add('show');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                errEl.textContent = 'Пароль должен быть не менее 6 символов';
+                errEl.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                const res = await fetch(`${API}/auth/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, new_password: newPassword })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.detail || 'Ошибка сброса пароля');
+                }
+
+                succEl.classList.add('show');
+                btn.style.display = 'none';
+            } catch (e) {
+                errEl.textContent = e.message;
+                errEl.classList.add('show');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Сохранить пароль';
+            }
+        }
+    </script>
+</body>
+
+</html>
