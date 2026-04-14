@@ -18,18 +18,18 @@
     }
 
     :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: rgba(201, 168, 76, 0.1);
-      --bg: #f7f4f0;
+      --gold: #6C63FF;
+      --gold-light: #9B95FF;
+      --gold-dim: rgba(108, 99, 255, 0.1);
+      --bg: #f8f7f5;
       --surface: #ffffff;
-      --surface2: #f0ece6;
-      --border: rgba(0, 0, 0, 0.08);
-      --border-gold: rgba(201, 168, 76, 0.3);
-      --text: #1a1714;
-      --text-muted: #9a918a;
+      --surface2: #f8f7f5;
+      --border: rgba(0, 0, 0, 0.07);
+      --border-gold: rgba(108, 99, 255, 0.25);
+      --text: #1a1a1a;
+      --text-muted: #9a9080;
       --error: #c0504a;
-      --success: #4a7c59;
+      --success: #4CAF50;
     }
 
     html,
@@ -82,7 +82,7 @@
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold-dim), rgba(201, 168, 76, 0.3));
+      background: linear-gradient(135deg, var(--gold-dim), rgba(108, 99, 255, 0.2));
       border: 1px solid var(--border-gold);
       display: flex;
       align-items: center;
@@ -92,6 +92,7 @@
       font-size: 28px;
       color: var(--gold);
     }
+
 
     .master-name {
       font-family: 'Cormorant Garamond', serif;
@@ -133,7 +134,7 @@
     }
 
     .step.done {
-      color: var(--text-muted);
+      color: #4caf7d;
     }
 
     .step-num {
@@ -155,9 +156,20 @@
     }
 
     .step.done .step-num {
-      background: var(--text-muted);
-      border-color: var(--text-muted);
+      background: #4caf7d;
+      border-color: #4caf7d;
       color: white;
+      font-size: 0;
+    }
+
+    .step.done .step-num::after {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg) translate(1px, -1px);
     }
 
     .step-line {
@@ -171,11 +183,11 @@
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 20px;
       width: 100%;
       max-width: 520px;
       overflow: hidden;
-      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
       animation: fadeUp 0.5s ease 0.15s both;
     }
 
@@ -229,7 +241,7 @@
       justify-content: space-between;
       padding: 18px 20px;
       border: 1px solid var(--border);
-      border-radius: 3px;
+      border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s;
       background: var(--surface);
@@ -262,9 +274,9 @@
     }
 
     .service-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 300;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--gold);
       white-space: nowrap;
     }
@@ -283,9 +295,9 @@
     }
 
     .cal-month {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 300;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
       text-transform: capitalize;
     }
 
@@ -294,7 +306,7 @@
       border: 1px solid var(--border);
       width: 34px;
       height: 34px;
-      border-radius: 2px;
+      border-radius: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -329,7 +341,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 2px;
+      border-radius: 10px;
       font-size: 15px;
       cursor: pointer;
       transition: all 0.15s;
@@ -371,11 +383,11 @@
     .slot-btn {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 10px;
       padding: 12px 6px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 300;
+      font-size: 15px;
+      font-weight: 400;
       color: var(--text);
       cursor: pointer;
       transition: all 0.15s;
@@ -424,18 +436,20 @@
     .field input {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 12px;
       padding: 14px 16px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 300;
+      font-size: 15px;
+      font-weight: 400;
       color: var(--text);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
     }
 
     .field input:focus {
       border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
     }
 
     .field input::placeholder {
@@ -446,7 +460,7 @@
     .summary {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 3px;
+      border-radius: 14px;
       padding: 18px 20px;
       display: flex;
       flex-direction: column;
@@ -471,27 +485,31 @@
     /* Buttons */
     .btn-primary {
       width: 100%;
-      background: var(--text);
-      color: var(--bg);
+      background: var(--gold);
+      color: #fff;
       border: none;
-      padding: 16px;
+      padding: 15px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
       margin-top: 8px;
+      border-radius: 12px;
     }
 
     .btn-primary:hover {
-      background: #333;
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
     }
 
     .btn-primary:disabled {
       opacity: 0.4;
       cursor: not-allowed;
+      transform: none;
     }
 
     .btn-back {
@@ -516,22 +534,23 @@
     .btn-next {
       width: 100%;
       background: none;
-      border: 1px solid var(--text);
-      color: var(--text);
-      padding: 15px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 14px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s;
       margin-top: 16px;
+      border-radius: 12px;
     }
 
     .btn-next:hover {
-      background: var(--text);
-      color: var(--bg);
+      background: var(--gold);
+      color: #fff;
     }
 
     .btn-next:disabled {
@@ -809,27 +828,36 @@
 
       <div id="stepSuccess" style="display:none">
         <div class="success-card">
-          <div class="success-icon">✓</div>
+          <div
+            style="width:48px;height:48px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <polyline points="4,12 9,17 20,6" stroke="#4caf7d" stroke-width="2.2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
           <div class="success-title">Вы записаны!</div>
           <div class="success-desc" id="successDesc">—</div>
 
           <div
-            style="width:100%;background:#fff8ee;border:1px solid rgba(201,168,76,0.4);border-radius:4px;padding:16px 20px;text-align:left">
+            style="width:100%;background:#f4f3ff;border:1px solid rgba(108,99,255,0.15);border-radius:12px;padding:18px 20px;text-align:left;margin-top:8px;">
             <div
-              style="font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">
-              ⚠ Сохраните ссылку для отмены</div>
-            <div style="font-size:15px;color:var(--text-muted);margin-bottom:12px;line-height:1.5">Если захотите
-              отменить запись — она понадобится. После закрытия страницы восстановить её можно только через мастера.
+              style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px;">
+              Сохраните ссылку для отмены
+            </div>
+            <div style="font-size:14px;color:var(--text-muted);margin-bottom:14px;line-height:1.6;">
+              Если захотите отменить запись — она понадобится. После закрытия страницы восстановить её можно только
+              через мастера.
             </div>
             <div id="cancelLinkBox"
-              style="font-size:12px;color:var(--text-muted);word-break:break-all;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:10px 14px;margin-bottom:10px;line-height:1.5">
+              style="font-size:12px;color:var(--text-muted);word-break:break-all;background:#ffffff;border:1px solid rgba(108,99,255,0.15);border-radius:8px;padding:10px 14px;margin-bottom:12px;line-height:1.6;">
             </div>
             <button onclick="copyCancelLink()" id="btnCopyCancel"
-              style="width:100%;background:none;color:var(--gold);border:1px solid rgba(201,168,76,0.4);padding:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;margin-top:4px;transition:all 0.2s;">
+              style="width:100%;background:var(--gold);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;"
+              onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
               Скопировать ссылку
             </button>
             <a href="https://t.me/stegruslan" target="_blank"
-              style="display:flex;align-items:center;gap:8px;justify-content:center;font-size:13px;color:var(--text-muted);text-decoration:none;margin-top:8px;transition:color 0.2s"
+              style="display:flex;align-items:center;gap:8px;justify-content:center;font-size:13px;color:var(--text-muted);text-decoration:none;margin-top:12px;transition:color 0.2s;"
               onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-muted)'">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path
@@ -839,7 +867,8 @@
             </a>
           </div>
 
-          <div id="masterContactBox" style="width:100%;text-align:center;font-size:14px;color:var(--text-muted)"></div>
+          <div id="masterContactBox"
+            style="width:100%;text-align:center;font-size:14px;color:var(--text-muted);margin-top:12px;"></div>
         </div>
       </div>
     </div>

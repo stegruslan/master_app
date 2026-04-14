@@ -18,14 +18,14 @@
     }
 
     :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: rgba(201, 168, 76, 0.12);
+      --gold: #6C63FF;
+      --gold-light: #9B95FF;
+      --gold-dim: rgba(108, 99, 255, 0.12);
       --bg: #f8f7f5;
       --surface: #ffffff;
       --surface2: #f8f7f5;
       --surface3: #f0ede8;
-      --border: rgba(201, 168, 76, 0.25);
+      --border: rgba(108, 99, 255, 0.25);
       --border2: rgba(0, 0, 0, 0.07);
       --text: #1a1a1a;
       --text-muted: #9a9080;
@@ -33,19 +33,109 @@
     }
 
     [data-theme="dark"] {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: rgba(201, 168, 76, 0.15);
-      --bg: #0d0d0d;
-      --surface: #141414;
-      --surface2: #1c1c1c;
-      --surface3: #222222;
-      --border: rgba(201, 168, 76, 0.2);
+      --gold: #6C63FF;
+      --gold-light: #9B95FF;
+      --gold-dim: rgba(108, 99, 255, 0.15);
+      --bg: #1A1F27;
+      --surface: #101722;
+      --surface2: #151B2A;
+      --surface3: #1C2333;
+      --border: rgba(255, 255, 255, 0.05);
       --border2: rgba(255, 255, 255, 0.06);
       --text: #f0ece4;
-      --text-muted: #6b6560;
+      --text-muted: #6b6580;
       --error: #c0504a;
+      --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
+
+    .hero-card {
+      background: linear-gradient(135deg, #6C63FF, #9B95FF);
+      border-radius: 16px;
+      padding: 20px 20px 16px;
+      margin-bottom: 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-effect {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q25 30 50 50 Q75 70 100 50' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='1'/%3E%3Cpath d='M0 65 Q25 45 50 65 Q75 85 100 65' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3Cpath d='M0 35 Q25 15 50 35 Q75 55 100 35' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: cover, 100px 100px;
+      pointer-events: none;
+    }
+
+    [data-theme="dark"] .hero-bg-effect {
+      opacity: 1;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 255, 255, 0.1) 0%, transparent 60%),
+        repeating-linear-gradient(-45deg,
+          transparent,
+          transparent 20px,
+          rgba(255, 255, 255, 0.03) 20px,
+          rgba(255, 255, 255, 0.03) 21px);
+    }
+
+    [data-theme="dark"] .hero-card {
+      background: linear-gradient(135deg, #2d2b55, #3d3a7a);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+    }
+
+    .hero-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .stat-num {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-link {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      position: relative;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      opacity: 1;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .hero-actions {
+      position: relative;
+    }
+
+
+
+    [data-theme="dark"] .profile-icon-wrap svg {
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+
+
+
+
 
     html,
     body {
@@ -63,8 +153,8 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 50% at 70% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 50% at 70% 20%, rgba(108, 99, 255, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(108, 99, 255, 0.05) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -148,26 +238,14 @@
       background: var(--gold);
     }
 
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(42px, 5vw, 72px);
-      font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      margin-bottom: 24px;
-    }
+
 
     .hero-title em {
       font-style: italic;
       color: var(--gold-light);
     }
 
-    .hero-desc {
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--text-muted);
-      max-width: 340px;
-    }
+
 
     .stats {
       display: flex;
@@ -269,35 +347,39 @@
 
     .field label {
       font-size: 11px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .field input,
     .field select {
       background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
+      border: 1px solid var(--border2);
+      border-radius: 12px;
       padding: 14px 16px;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--text);
       outline: none;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
       width: 100%;
     }
 
     .field input:focus,
     .field select:focus {
       border-color: var(--gold);
-      background: rgba(201, 168, 76, 0.04);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+      background: var(--surface2);
     }
 
     .field input::placeholder {
       color: var(--text-muted);
     }
+
+
 
     .field select option {
       background: var(--surface2);
@@ -306,27 +388,31 @@
 
     .btn-primary {
       background: var(--gold);
-      color: #0d0d0d;
+      color: #fff;
       border: none;
-      padding: 16px;
+      padding: 14px 24px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
       margin-top: 8px;
       width: 100%;
+      border-radius: 12px;
     }
 
     .btn-primary:hover {
       background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
     }
 
     .btn-primary:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+      transform: none;
     }
 
     .btn-outline {
@@ -335,11 +421,13 @@
       color: var(--text-muted);
       padding: 10px 18px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.15em;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s;
+      border-radius: 10px;
     }
 
     .btn-outline:hover {
@@ -347,19 +435,24 @@
       color: var(--gold);
     }
 
+
+
     .btn-danger {
       background: none;
       border: 1px solid rgba(192, 80, 74, 0.3);
       color: var(--error);
       padding: 8px 14px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      border-radius: 10px;
     }
 
     .btn-danger:hover {
       background: rgba(192, 80, 74, 0.1);
+      border-color: var(--error);
     }
 
     .error-msg {
@@ -481,43 +574,22 @@
       font-size: 15px;
     }
 
-    .sidebar-link-box {
-      margin: 0 16px 16px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 14px;
-    }
 
-    .sidebar-link-label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
 
-    .sidebar-link-url {
-      font-size: 14px;
-      color: var(--gold);
-      word-break: break-all;
-      margin-bottom: 8px;
-    }
-
-    .btn-copy {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 6px 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    .hero-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
       cursor: pointer;
-      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .btn-copy:hover {
+    .hero-btn:hover {
       border-color: var(--gold);
       color: var(--gold);
     }
@@ -755,23 +827,24 @@
     }
 
     .status-badge {
-      font-size: 10px;
-      letter-spacing: 0.15em;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 2px;
+      padding: 6px 12px;
+      border-radius: 10px;
     }
 
     .status-pending {
       color: var(--gold);
       background: var(--gold-dim);
-      border: 1px solid rgba(201, 168, 76, 0.3);
+      border: 1px solid rgba(108, 99, 255, 0.3);
     }
 
     .status-confirmed {
-      color: #4a7c59;
-      background: transparent;
-      border: 1px solid #4a7c59;
+      color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
     }
 
     .status-cancelled {
@@ -779,6 +852,8 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border2);
     }
+
+
 
     .next-booking-hint {
       text-align: center;
@@ -802,18 +877,20 @@
     }
 
     .service-card {
-      background: var(--surface2);
+      background: var(--surface);
       border: 1px solid var(--border2);
-      border-radius: 2px;
-      padding: 18px 24px;
+      border-radius: 16px;
+      padding: 18px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
+      margin-bottom: 10px;
     }
 
     .service-card:hover {
-      border-color: var(--border);
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(108, 99, 255, 0.1);
     }
 
     .service-card.inactive {
@@ -821,35 +898,36 @@
     }
 
     .service-card-name {
-      font-size: 18px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 3px;
     }
 
     .service-card-meta {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
-    .service-card-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px;
-      font-weight: 300;
+    /* .service-card-price {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--gold);
-      margin-right: 16px;
+      margin-right: 12px;
       white-space: nowrap;
-    }
+    } */
 
     .add-service-form {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 24px;
       display: none;
       flex-direction: column;
       gap: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
+
 
     .add-service-form.show {
       display: flex;
@@ -978,10 +1056,12 @@
       padding: 8px 16px;
       font-family: 'DM Sans', sans-serif;
       font-size: 11px;
-      letter-spacing: 0.1em;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s;
+      border-radius: 10px;
     }
 
     .btn-save:hover {
@@ -1110,7 +1190,7 @@
     }
 
     .sched-day-slot.slot-free:hover {
-      background: rgba(201, 168, 76, 0.04);
+      background: rgba(108, 99, 255, 0.04);
     }
 
     .sched-day-slot.slot-block {
@@ -1150,11 +1230,13 @@
     }
 
     /* BOTTOM SHEET */
+
     .bottom-sheet-overlay {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 500;
     }
 
@@ -1168,13 +1250,15 @@
       left: 0;
       right: 0;
       background: var(--surface);
-      border-top: 1px solid var(--border);
+      border-top: none;
+      border-radius: 24px 24px 0 0;
       z-index: 501;
-      padding: 0 0 32px;
+      padding: 0 0 40px;
       transform: translateY(100%);
-      transition: transform 0.3s ease;
-      max-height: 80vh;
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.3);
     }
 
     .bottom-sheet.show {
@@ -1187,12 +1271,29 @@
       justify-content: space-between;
       padding: 16px 20px;
       border-bottom: 1px solid var(--border2);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      border-radius: 24px 24px 0 0;
     }
+
+    .bottom-sheet-bar::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 4px;
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
 
     .bottom-sheet-tabs {
       display: flex;
       background: var(--surface2);
-      border-radius: 6px;
+      border-radius: 10px;
       padding: 3px;
       gap: 2px;
     }
@@ -1203,15 +1304,17 @@
       color: var(--text-muted);
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
-      padding: 6px 16px;
+      font-weight: 500;
+      padding: 7px 18px;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 8px;
       transition: all 0.2s;
     }
 
     .bottom-sheet-tab.active {
-      background: var(--surface3);
+      background: var(--surface);
       color: var(--text);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
     .bottom-sheet-content {
@@ -1229,22 +1332,31 @@
     }
 
     .bs-btn-done {
-      background: none;
+      background: var(--gold);
       border: none;
-      color: var(--gold);
+      color: #fff;
       font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      padding: 6px;
+      padding: 8px 18px;
+      border-radius: 10px;
+      transition: all 0.2s;
     }
+
+    .bs-btn-done:hover {
+      background: var(--gold-light);
+    }
+
+
 
     /* MODAL */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
@@ -1256,18 +1368,20 @@
 
     .modal-box {
       background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 40px;
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 32px;
       max-width: 420px;
       width: 90%;
-      animation: fadeUp 0.2s ease;
+      animation: fadeUp 0.25s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
     .modal-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 300;
-      margin-bottom: 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
 
     .modal-fields {
@@ -1391,6 +1505,18 @@
 
       .mobile-nav-item.active {
         color: var(--gold);
+        position: relative;
+      }
+
+      .mobile-nav-item.active::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: var(--gold);
+        border-radius: 0 0 2px 2px;
       }
 
       .mobile-nav-item-icon {
@@ -1416,7 +1542,7 @@
       }
 
       .mobile-link-box {
-        display: block !important;
+        display: none;
         background: var(--surface2);
         border: 1px solid var(--border);
         border-radius: 2px;
@@ -1570,37 +1696,61 @@
       </div>
       <div class="sidebar-nav">
         <div class="nav-item active" onclick="showSection('bookings', this)">
-          <span class="nav-item-icon">📋</span> Мои записи
+          <span class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </span>
+          <span>Мои записи</span>
         </div>
         <div class="nav-item" onclick="showSection('services', this)">
-          <span class="nav-item-icon">⭐</span> Услуги
+          <span class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </span>
+          <span>Услуги</span>
         </div>
         <div class="nav-item" onclick="showSection('schedule', this)">
-          <span class="nav-item-icon">🗓</span>
+          <span class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </span>
           <span>Расписание</span>
         </div>
         <div class="nav-item" onclick="showSection('profile', this)">
-          <span class="nav-item-icon">👤</span>
+          <span class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </span>
           <span>Профиль</span>
         </div>
       </div>
-      <div class="sidebar-link-box">
-        <div class="sidebar-link-label">Публичная ссылка для записи</div>
-        <div class="sidebar-link-url" id="sidebarLink">—</div>
-        <button class="btn-copy" onclick="copyLink()">Скопировать</button>
-      </div>
-      <button class="btn-logout" id="themeToggleBtn" onclick="toggleTheme()"
-        style="display:flex;align-items:center;gap:8px;">
-        <span id="themeIcon">🌙</span> <span id="themeLabel">Тёмная тема</span>
-      </button>
+
+
     </div>
 
     <div class="cabinet-main">
       <div class="mobile-link-box" style="display:none" id="mobileLinkBox">
         <div class="mobile-link-label">Ваша ссылка для записи</div>
         <div class="mobile-link-url" id="mobileLinkUrl">—</div>
-        <button class="btn-copy" onclick="copyLink()">Скопировать</button>
+        <button class="hero-btn" onclick="copyLink()">Скопировать</button>
       </div>
+
 
       <!-- Записи -->
       <div class="section active" id="sectionBookings">
@@ -1705,43 +1855,135 @@
           <div class="section-header">
             <div class="section-title">Профиль</div>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
-            <div class="profile-menu-item" onclick="openProfilePage('schedule')">
-              <span>🗓 График работы</span>
-              <span style="color:var(--text-muted);">›</span>
+
+          <!-- Карточка ссылки для записи -->
+          <div class="hero-card">
+
+            <div class="hero-bg-effect"></div>
+
+            <div class="hero-title" style="font-size:11px;">
+              Ваша ссылка для записи
             </div>
-            <div class="profile-menu-item" onclick="openProfilePage('account')">
-              <span>👤 Настройки аккаунта</span>
-              <span style="color:var(--text-muted);">›</span>
+
+            <div class="hero-link" id="profileLinkText" style="font-size:15px;">
+              seansa.ru/book/...
             </div>
-            <div class="profile-menu-item" onclick="openProfilePage('subscription')">
-              <span>💳 Подписка</span>
-              <span style="color:var(--text-muted);">›</span>
+
+            <div class="hero-desc" style="font-size:11px;margin-bottom:14px;">
+              Делитесь ссылкой, чтобы клиенты могли записываться к вам онлайн
             </div>
-            <div class="profile-menu-item" style="border-bottom:none;">
-              <a href="https://t.me/stegruslan" target="_blank"
-                style="text-decoration:none;color:#29b6f6;display:flex;align-items:center;gap:8px;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="#29b6f6">
-                  <path
-                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z" />
+
+            <div class="hero-actions">
+              <button onclick="copyLink()" class="hero-btn">
+                📋 Скопировать
+              </button>
+            </div>
+
+          </div>
+          <!-- <div
+            style="background:linear-gradient(135deg,#6C63FF,#9B95FF);border-radius:16px;padding:20px;margin-bottom:16px;color:#fff;position:relative;overflow:hidden;">
+            <div style="font-size:11px;letter-spacing:0.08em;opacity:0.8;margin-bottom:6px;text-transform:uppercase;">
+              Ваша ссылка для записи</div>
+            <div style="font-size:15px;font-weight:500;margin-bottom:4px;" id="profileLinkText">seansa.ru/book/...</div>
+            <div style="font-size:12px;opacity:0.7;margin-bottom:16px;">Делитесь ссылкой, чтобы клиенты могли
+              записываться к вам онлайн</div>
+            <div style="display:flex;gap:10px;">
+              <button onclick="copyLink()" class="btn-copy"
+                style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+                📋 Скопировать
+              </button>
+            </div>
+          </div> -->
+
+          <!-- Сетка 2x2 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div onclick="openProfilePage('schedule')"
+              style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(108,99,255,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
-                Поддержка
-              </a>
-              <span></span>
+              </div>
+              <div style="font-weight:600;font-size:14px;margin-bottom:4px;">График работы</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.4;">Настройте время и доступные слоты
+              </div>
             </div>
-          </div>
-          <div
-            style="margin-top:12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
-            <div class="profile-menu-item" style="border-bottom:none;" onclick="toggleTheme()">
-              <span><span id="themeIconMobile">🌙</span> <span id="themeLabelMobile">Тёмная тема</span></span>
-              <span style="color:var(--text-muted);">›</span>
+            <div onclick="openProfilePage('account')"
+              style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(41,182,246,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#29b6f6" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <div style="font-weight:600;font-size:14px;margin-bottom:4px;">Настройки аккаунта</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.4;">Личные данные, уведомления</div>
             </div>
+            <div onclick="openProfilePage('subscription')"
+              style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(76,175,80,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#4CAF50;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" />
+                  <line x1="1" y1="10" x2="23" y2="10" />
+                </svg>
+              </div>
+              <div style="font-weight:600;font-size:14px;margin-bottom:4px;">Подписка</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.4;">Управление тарифом</div>
+            </div>
+            <a href="https://t.me/stegruslan" target="_blank"
+              style="text-decoration:none;background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;display:block;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(255,152,0,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#FF9800;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <div style="font-weight:600;font-size:14px;margin-bottom:4px;color:var(--text);">Поддержка</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.4;">Мы всегда рядом</div>
+            </a>
           </div>
-          <div
-            style="margin-top:12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;">
-            <div class="profile-menu-item" style="border-bottom:none;color:var(--error);" onclick="openLogoutModal()">
-              <span>Выйти из аккаунта</span>
-              <span style="color:var(--error);">›</span>
+
+          <!-- Тёмная тема и Выйти -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div onclick="toggleTheme()"
+              style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(108,99,255,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                <span id="themeIconMobile" style="font-size:22px;">🌙</span>
+              </div>
+              <div style="font-weight:600;font-size:14px;margin-bottom:8px;"><span id="themeLabelMobile">Тёмная
+                  тема</span></div>
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <div id="themeToggleSwitch"
+                  style="width:36px;height:20px;background:var(--border2);border-radius:10px;position:relative;transition:background 0.2s;">
+                  <div id="themeToggleKnob"
+                    style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div onclick="openLogoutModal()"
+              style="background:var(--surface);border:1px solid rgba(192,80,74,0.15);border-radius:16px;padding:20px;cursor:pointer;transition:background 0.15s;text-align:center;">
+              <div class="profile-icon-wrap"
+                style="width:48px;height:48px;background:rgba(192,80,74,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c0504a" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </div>
+              <div style="font-weight:600;font-size:14px;color:var(--error);">Выйти из аккаунта</div>
             </div>
           </div>
         </div>
@@ -1794,45 +2036,71 @@
               <div class="section-title">Подписка</div>
             </div>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:28px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-              <div>
-                <div style="font-size:18px;font-weight:400;margin-bottom:6px;">Бесплатный план</div>
-                <div style="font-size:13px;color:var(--text-muted);">До 3 услуг · Базовое расписание</div>
-              </div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);">Free</div>
+          <div style="text-align:center;padding:60px 20px;">
+            <div
+              style="width:64px;height:64px;background:var(--gold-dim);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
             </div>
-            <div style="padding-top:20px;border-top:1px solid var(--border2);">
-              <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Pro — неограниченные услуги,
-                перерывы, статистика</div>
-              <button class="btn-outline" style="padding:10px 20px;">Перейти на Pro →</button>
-            </div>
+            <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Скоро</div>
+            <div style="font-size:14px;color:var(--text-muted);line-height:1.6;max-width:280px;margin:0 auto;">
+              Управление подпиской и тарифами появится в ближайшем обновлении</div>
           </div>
         </div>
 
       </div>
 
       <!-- Нижняя навигация -->
+      <!-- Нижняя навигация -->
       <nav class="mobile-nav" style="display:none">
         <button class="mobile-nav-item active" onclick="showSection('bookings', this)">
-          <span class="mobile-nav-item-icon">📋</span>
+          <span class="mobile-nav-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </span>
           Записи
         </button>
         <button class="mobile-nav-item" onclick="showSection('services', this)">
-          <span class="mobile-nav-item-icon">⭐</span>
+          <span class="mobile-nav-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </span>
           Услуги
         </button>
         <button class="mobile-nav-item" onclick="showSection('schedule', this)">
           <span class="mobile-nav-item-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z" />
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+              <line x1="8" y1="14" x2="8" y2="14" />
+              <line x1="12" y1="14" x2="12" y2="14" />
+              <line x1="16" y1="14" x2="16" y2="14" />
             </svg>
           </span>
           Расписание
         </button>
         <button class="mobile-nav-item" onclick="showSection('profile', this)">
-          <span class="mobile-nav-item-icon">👤</span>
+          <span class="mobile-nav-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </span>
           Профиль
         </button>
       </nav>
@@ -1892,6 +2160,30 @@
           </div>
         </div>
       </div>
+      <!-- Модалка удаления услуги -->
+      <div id="deleteServiceModal" class="modal-overlay">
+        <div class="modal-box" style="text-align:center">
+          <div
+            style="width:48px;height:48px;background:rgba(192,80,74,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c0504a" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+              <path d="M10 11v6" />
+              <path d="M14 11v6" />
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+            </svg>
+          </div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Удалить услугу?</div>
+          <div style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">Это действие нельзя отменить</div>
+          <div style="display:flex;gap:12px;">
+            <button class="btn-outline" style="flex:1;margin-top:0;width:auto;"
+              onclick="closeDeleteServiceModal()">Отмена</button>
+            <button class="btn-danger" style="flex:1;padding:14px;" onclick="confirmDeleteService()">Удалить</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Bottom sheet: создать запись или перерыв -->
@@ -2073,8 +2365,8 @@
       document.getElementById('sidebarName').textContent = localStorage.getItem('master_name') || '—';
       const slug = localStorage.getItem('master_slug');
       const link = `${window.location.origin}/book?master=${slug}`;
-      document.getElementById('sidebarLink').textContent = link;
-      document.getElementById('mobileLinkUrl').textContent = link;
+      const profileLinkEl = document.getElementById('profileLinkText');
+      if (profileLinkEl) profileLinkEl.textContent = `seansa.ru/book?master=${slug}`;
       loadBookings();
     }
 
@@ -2092,10 +2384,10 @@
     function copyLink() {
       const slug = localStorage.getItem('master_slug');
       navigator.clipboard.writeText(`${window.location.origin}/book?master=${slug}`);
-      document.querySelectorAll('.btn-copy').forEach(btn => {
+      document.querySelectorAll('.hero-btn').forEach(btn => {
         btn.textContent = 'Скопировано ✓';
-        btn.style.color = 'var(--gold)';
-        setTimeout(() => { btn.textContent = 'Скопировать'; btn.style.color = ''; }, 2000);
+        btn.style.color = '#fff';
+        setTimeout(() => { btn.textContent = '📋 Скопировать'; btn.style.color = '#fff'; }, 3000);
       });
     }
 
@@ -2187,11 +2479,42 @@
 
     const weekCal = document.querySelector('.week-calendar');
     let touchStartX = 0;
+    let touchCurrentX = 0;
 
-    weekCal.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    weekCal.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      weekCal.style.transition = 'none';
+    });
+
+    weekCal.addEventListener('touchmove', e => {
+      touchCurrentX = e.touches[0].clientX;
+      const diff = touchCurrentX - touchStartX;
+      if (Math.abs(diff) > 10) {
+        weekCal.style.transform = `translateX(${diff * 0.3}px)`;
+      }
+    });
+
     weekCal.addEventListener('touchend', e => {
       const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) changeWeek(diff > 0 ? 1 : -1);
+      weekCal.style.transition = 'transform 0.3s ease';
+      weekCal.style.transform = 'translateX(0)';
+      if (Math.abs(diff) > 50) {
+        const dir = diff > 0 ? 1 : -1;
+        weekCal.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+        weekCal.style.opacity = '0';
+        weekCal.style.transform = `translateX(${dir * -30}px)`;
+        setTimeout(() => {
+          changeWeek(dir);
+          weekCal.style.transition = 'none';
+          weekCal.style.transform = `translateX(${dir * 30}px)`;
+          weekCal.style.opacity = '0';
+          requestAnimationFrame(() => {
+            weekCal.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+            weekCal.style.transform = 'translateX(0)';
+            weekCal.style.opacity = '1';
+          });
+        }, 150);
+      }
     });
 
     function renderDayBookings() {
@@ -2232,8 +2555,8 @@
         const timeStr = dt.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit', timeZone: tz });
         const isPastBooking = dateStr < toDateStr(new Date());
         const actions = !isPastBooking && b.status !== 'cancelled' ? `
-          ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 12px;font-size:10px" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
-          <button class="btn-danger" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
+  ${b.status === 'pending' ? `<button class="btn-outline" style="padding:8px 14px;font-size:11px;font-weight:500;border-radius:10px;" onclick="updateStatus(${b.id},'confirmed')">Подтвердить</button>` : ''}
+  <button class="btn-danger" style="border-radius:10px;" onclick="updateStatus(${b.id},'cancelled')">Отменить</button>` : '';
         return `<div class="booking-card">
   <div style="flex:1">
     <div class="booking-client">${b.client_name}</div>
@@ -2368,26 +2691,35 @@
         const el = document.getElementById('servicesList');
         if (!services.length) { el.innerHTML = '<div class="empty-state">Услуг пока нет — нажмите «+ Добавить»</div>'; return; }
         el.innerHTML = services.map(s => `
-          <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
-            <div><div class="service-card-name">${s.name}</div><div class="service-card-meta">${s.duration} мин</div></div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="service-card-price">${s.price.toLocaleString()} ₽</div>
-              <button class="btn-outline" style="padding:8px 12px;font-size:11px" onclick="editService(${s.id})">Изменить</button>
-              <button class="btn-danger" onclick="deleteService(${s.id})">Удалить</button>
-            </div>
-          </div>
-          <div class="add-service-form" id="edit-form-${s.id}">
-            <div class="section-label">Редактирование</div>
-            <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
-            <div class="form-row">
-              <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
-              <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
-            </div>
-            <div style="display:flex;gap:10px">
-              <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
-              <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
-            </div>
-          </div>`).join('');
+  <div class="service-card ${s.is_active ? '' : 'inactive'}" id="svc-card-${s.id}">
+    <div style="display:flex;align-items:center;gap:14px;min-width:0;flex:1;">
+      <div style="width:44px;height:44px;background:var(--gold-dim);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div style="min-width:0;">
+        <div class="service-card-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
+        <div class="service-card-meta">${s.duration} мин &nbsp;·&nbsp; <span style="color:var(--gold);font-weight:600;">${s.price.toLocaleString()} ₽</span></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:12px;">
+      <button class="btn-outline" style="padding:8px 12px;font-size:11px;white-space:nowrap;" onclick="editService(${s.id})">Изменить</button>
+      <button class="btn-danger" style="white-space:nowrap;" onclick="deleteService(${s.id})">Удалить</button>
+    </div>
+  </div>
+  <div class="add-service-form" id="edit-form-${s.id}">
+    <div class="section-label">Редактирование</div>
+    <div class="field"><label>Название</label><input type="text" id="edit-name-${s.id}" value="${s.name}"></div>
+    <div class="form-row">
+      <div class="field"><label>Длительность (мин)</label><input type="number" id="edit-duration-${s.id}" value="${s.duration}" min="15"></div>
+      <div class="field"><label>Цена (₽)</label><input type="number" id="edit-price-${s.id}" value="${s.price}" min="0"></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px" onclick="updateService(${s.id})">Сохранить</button>
+      <button class="btn-outline" onclick="document.getElementById('edit-form-${s.id}').classList.remove('show')">Отмена</button>
+    </div>
+  </div>`).join('');
       } catch (e) { document.getElementById('servicesList').innerHTML = '<div class="empty-state">Ошибка загрузки</div>'; }
     }
 
@@ -2411,9 +2743,22 @@
       } catch (e) { document.getElementById('svcError').textContent = e.message; document.getElementById('svcError').classList.add('show'); }
     }
 
-    async function deleteService(id) {
-      if (!confirm('Удалить услугу?')) return;
-      await apiFetch(`${API}/services/${id}`, { method: 'DELETE' });
+    let deleteServiceId = null;
+
+    function deleteService(id) {
+      deleteServiceId = id;
+      document.getElementById('deleteServiceModal').classList.add('show');
+    }
+
+    function closeDeleteServiceModal() {
+      document.getElementById('deleteServiceModal').classList.remove('show');
+      deleteServiceId = null;
+    }
+
+    async function confirmDeleteService() {
+      if (!deleteServiceId) return;
+      await apiFetch(`${API}/services/${deleteServiceId}`, { method: 'DELETE' });
+      closeDeleteServiceModal();
       loadServices();
     }
 
@@ -2731,12 +3076,36 @@
 
     schedCal.addEventListener('touchstart', e => {
       schedTouchStartX = e.touches[0].clientX;
+      schedCal.style.transition = 'none';
+    });
+
+    schedCal.addEventListener('touchmove', e => {
+      const diff = e.touches[0].clientX - schedTouchStartX;
+      if (Math.abs(diff) > 10) {
+        schedCal.style.transform = `translateX(${diff * 0.3}px)`;
+      }
     });
 
     schedCal.addEventListener('touchend', e => {
       const diff = schedTouchStartX - e.changedTouches[0].clientX;
+      schedCal.style.transition = 'transform 0.3s ease';
+      schedCal.style.transform = 'translateX(0)';
       if (Math.abs(diff) > 50) {
-        changeSchedMonth(diff > 0 ? 1 : -1);
+        const dir = diff > 0 ? 1 : -1;
+        schedCal.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+        schedCal.style.opacity = '0';
+        schedCal.style.transform = `translateX(${dir * -30}px)`;
+        setTimeout(() => {
+          changeSchedMonth(dir);
+          schedCal.style.transition = 'none';
+          schedCal.style.transform = `translateX(${dir * 30}px)`;
+          schedCal.style.opacity = '0';
+          requestAnimationFrame(() => {
+            schedCal.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+            schedCal.style.transform = 'translateX(0)';
+            schedCal.style.opacity = '1';
+          });
+        }, 150);
       }
     });
 
@@ -2919,20 +3288,22 @@
     }
     function toggleTheme() {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const knob = document.getElementById('themeToggleKnob');
+      const sw = document.getElementById('themeToggleSwitch');
       if (isDark) {
         document.documentElement.removeAttribute('data-theme');
         localStorage.setItem('theme', 'light');
-        document.getElementById('themeIcon').textContent = '🌙';
-        document.getElementById('themeLabel').textContent = 'Тёмная тема';
         document.getElementById('themeIconMobile').textContent = '🌙';
         document.getElementById('themeLabelMobile').textContent = 'Тёмная тема';
+        if (knob) knob.style.transform = 'translateX(0)';
+        if (sw) sw.style.background = 'var(--border2)';
       } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
-        document.getElementById('themeIcon').textContent = '☀️';
-        document.getElementById('themeLabel').textContent = 'Светлая тема';
         document.getElementById('themeIconMobile').textContent = '☀️';
         document.getElementById('themeLabelMobile').textContent = 'Светлая тема';
+        if (knob) knob.style.transform = 'translateX(16px)';
+        if (sw) sw.style.background = 'var(--gold)';
       }
     }
 
@@ -2941,10 +3312,12 @@
       const saved = localStorage.getItem('theme');
       if (saved === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeIcon').textContent = '☀️';
-        document.getElementById('themeLabel').textContent = 'Светлая тема';
         document.getElementById('themeIconMobile').textContent = '☀️';
         document.getElementById('themeLabelMobile').textContent = 'Светлая тема';
+        const knob = document.getElementById('themeToggleKnob');
+        const sw = document.getElementById('themeToggleSwitch');
+        if (knob) knob.style.transform = 'translateX(16px)';
+        if (sw) sw.style.background = 'var(--gold)';
       }
     })();
     function openProfilePage(page) {
@@ -2976,7 +3349,10 @@
       if (!schedRes) return;
       const schedule = await schedRes.json();
       const el = document.getElementById('profileScheduleList');
-      el.innerHTML = schedule.map(day => {
+      el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--gold-dim);border-radius:12px;margin-bottom:16px;font-size:13px;color:var(--gold);">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  Не забудьте нажать «Сохранить» после изменения каждого дня
+</div>` + schedule.map(day => {
         const start = day.start_time ? day.start_time.substring(0, 5) : '09:00';
         const end = day.end_time ? day.end_time.substring(0, 5) : '18:00';
         return `<div class="schedule-day ${day.is_working ? '' : 'day-off'}" id="profile-day-${day.weekday}">

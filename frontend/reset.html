@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Восстановление пароля — Seansa</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -18,14 +18,30 @@
         }
 
         :root {
-            --gold: #c9a84c;
-            --gold-light: #e8c97a;
+            --gold: #6C63FF;
+            --gold-light: #9B95FF;
+            --gold-dim: rgba(108, 99, 255, 0.12);
             --bg: #f8f7f5;
             --surface: #ffffff;
-            --border: rgba(201, 168, 76, 0.25);
+            --surface2: #f8f7f5;
+            --border: rgba(108, 99, 255, 0.25);
             --border2: rgba(0, 0, 0, 0.07);
             --text: #1a1a1a;
             --text-muted: #9a9080;
+            --error: #c0504a;
+        }
+
+        [data-theme="dark"] {
+            --gold: #6C63FF;
+            --gold-light: #9B95FF;
+            --gold-dim: rgba(108, 99, 255, 0.15);
+            --bg: #1A1F27;
+            --surface: #101722;
+            --surface2: #151B2A;
+            --border: rgba(108, 99, 255, 0.2);
+            --border2: rgba(255, 255, 255, 0.06);
+            --text: #f0ece4;
+            --text-muted: #6b6580;
             --error: #c0504a;
         }
 
@@ -36,6 +52,30 @@
             color: var(--text);
             font-family: 'DM Sans', sans-serif;
             font-weight: 400;
+            font-size: 16px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 70% 20%, rgba(108, 99, 255, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 20% 80%, rgba(108, 99, 255, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .layout {
@@ -44,21 +84,25 @@
             align-items: center;
             justify-content: center;
             padding: 24px;
+            position: relative;
+            z-index: 1;
         }
 
         .card {
             background: var(--surface);
-            border: 0.5px solid var(--border2);
-            border-radius: 12px;
-            padding: 48px 40px;
+            border: 1px solid var(--border2);
+            border-radius: 24px;
+            padding: 40px 36px;
             width: 100%;
             max-width: 400px;
+            animation: fadeUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
         }
 
         .logo {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 400;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--gold);
@@ -66,10 +110,22 @@
             text-align: center;
         }
 
+        .icon-wrap {
+            width: 56px;
+            height: 56px;
+            background: var(--gold-dim);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
         h1 {
-            font-size: 22px;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 600;
             margin-bottom: 8px;
+            text-align: center;
         }
 
         .subtitle {
@@ -77,6 +133,7 @@
             color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 28px;
+            text-align: center;
         }
 
         .field {
@@ -88,56 +145,82 @@
 
         .field label {
             font-size: 11px;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .field input {
-            background: var(--bg);
+            background: var(--surface2);
             border: 1px solid var(--border2);
-            border-radius: 6px;
+            border-radius: 12px;
             padding: 14px 16px;
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
             color: var(--text);
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
             width: 100%;
         }
 
         .field input:focus {
             border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
         }
 
         .field input::placeholder {
             color: var(--text-muted);
         }
 
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 48px;
+        }
+
+        .toggle-pass {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+        }
+
         .btn-primary {
             background: var(--gold);
             color: #fff;
             border: none;
-            padding: 15px;
+            padding: 14px;
             font-family: 'DM Sans', sans-serif;
             font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.15em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
             width: 100%;
-            border-radius: 6px;
+            border-radius: 12px;
             margin-top: 8px;
         }
 
         .btn-primary:hover {
             background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
         }
 
         .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
         }
 
         .error-msg {
@@ -146,7 +229,7 @@
             padding: 10px 14px;
             background: rgba(192, 80, 74, 0.08);
             border: 1px solid rgba(192, 80, 74, 0.2);
-            border-radius: 6px;
+            border-radius: 10px;
             display: none;
             margin-top: 12px;
         }
@@ -157,14 +240,15 @@
 
         .success-msg {
             font-size: 14px;
-            color: #3d7a4e;
+            color: #4CAF50;
             padding: 14px;
-            background: #edf6f0;
-            border: 1px solid #b8ddc4;
-            border-radius: 6px;
+            background: rgba(76, 175, 80, 0.08);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
             display: none;
             margin-top: 12px;
             line-height: 1.6;
+            text-align: center;
         }
 
         .success-msg.show {
@@ -194,6 +278,13 @@
 
             <!-- Форма ввода email -->
             <div id="emailForm">
+                <div class="icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                </div>
                 <h1>Забыли пароль?</h1>
                 <p class="subtitle">Введите email указанный при регистрации — мы отправим ссылку для восстановления.</p>
                 <div class="field">
@@ -203,30 +294,44 @@
                 <button class="btn-primary" id="emailBtn" onclick="submitEmail()">Отправить ссылку</button>
                 <div class="error-msg" id="emailError"></div>
                 <div class="success-msg" id="emailSuccess">
-                    Письмо отправлено! Проверьте почту и перейдите по ссылке в письме.
+                    ✓ Письмо отправлено! Проверьте почту и перейдите по ссылке в письме.
                 </div>
                 <a href="/app" class="back-link">← Вернуться ко входу</a>
             </div>
 
             <!-- Форма нового пароля -->
             <div id="resetForm" style="display:none">
+                <div class="icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                </div>
                 <h1>Новый пароль</h1>
                 <p class="subtitle">Придумайте новый пароль для вашего аккаунта.</p>
                 <div class="field">
                     <label>Новый пароль</label>
-                    <input type="password" id="newPassword" placeholder="Минимум 6 символов">
+                    <div class="password-wrap">
+                        <input type="password" id="newPassword" placeholder="Минимум 6 символов">
+                        <button type="button" class="toggle-pass"
+                            onclick="togglePassword('newPassword', this)">👁</button>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Повторите пароль</label>
-                    <input type="password" id="confirmPassword" placeholder="Повторите пароль">
+                    <div class="password-wrap">
+                        <input type="password" id="confirmPassword" placeholder="Повторите пароль">
+                        <button type="button" class="toggle-pass"
+                            onclick="togglePassword('confirmPassword', this)">👁</button>
+                    </div>
                 </div>
                 <button class="btn-primary" id="resetBtn" onclick="submitReset()">Сохранить пароль</button>
                 <div class="error-msg" id="resetError"></div>
                 <div class="success-msg" id="resetSuccess">
-                    Пароль успешно изменён! <a href="/app" style="color:#3d7a4e;">Войти</a>
+                    ✓ Пароль успешно изменён! <a href="/app" style="color:#6C63FF;font-weight:600;">Войти</a>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -234,10 +339,15 @@
         const API = '';
         const token = new URLSearchParams(window.location.search).get('token');
 
-        // Если есть токен в URL — показываем форму нового пароля
         if (token) {
             document.getElementById('emailForm').style.display = 'none';
             document.getElementById('resetForm').style.display = 'block';
+        }
+
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+            else { input.type = 'password'; btn.textContent = '👁'; }
         }
 
         async function submitEmail() {
@@ -249,11 +359,7 @@
             errEl.classList.remove('show');
             succEl.classList.remove('show');
 
-            if (!email) {
-                errEl.textContent = 'Введите email';
-                errEl.classList.add('show');
-                return;
-            }
+            if (!email) { errEl.textContent = 'Введите email'; errEl.classList.add('show'); return; }
 
             btn.disabled = true;
             btn.textContent = '...';
@@ -264,13 +370,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                 });
-                // Всегда показываем успех — не раскрываем существует ли email
                 succEl.classList.add('show');
                 btn.style.display = 'none';
             } catch (e) {
                 errEl.textContent = 'Ошибка. Попробуйте позже.';
                 errEl.classList.add('show');
-            } finally {
                 btn.disabled = false;
                 btn.textContent = 'Отправить ссылку';
             }
@@ -286,23 +390,9 @@
             errEl.classList.remove('show');
             succEl.classList.remove('show');
 
-            if (!newPassword || !confirmPassword) {
-                errEl.textContent = 'Заполните все поля';
-                errEl.classList.add('show');
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                errEl.textContent = 'Пароли не совпадают';
-                errEl.classList.add('show');
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                errEl.textContent = 'Пароль должен быть не менее 6 символов';
-                errEl.classList.add('show');
-                return;
-            }
+            if (!newPassword || !confirmPassword) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
+            if (newPassword !== confirmPassword) { errEl.textContent = 'Пароли не совпадают'; errEl.classList.add('show'); return; }
+            if (newPassword.length < 6) { errEl.textContent = 'Пароль должен быть не менее 6 символов'; errEl.classList.add('show'); return; }
 
             btn.disabled = true;
             btn.textContent = '...';
@@ -313,23 +403,21 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ token, new_password: newPassword })
                 });
-
                 const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.detail || 'Ошибка сброса пароля');
-                }
-
+                if (!res.ok) throw new Error(data.detail || 'Ошибка сброса пароля');
                 succEl.classList.add('show');
                 btn.style.display = 'none';
             } catch (e) {
                 errEl.textContent = e.message;
                 errEl.classList.add('show');
-            } finally {
                 btn.disabled = false;
                 btn.textContent = 'Сохранить пароль';
             }
         }
+
+        // Тема из localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     </script>
 </body>
 
