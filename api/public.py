@@ -15,6 +15,7 @@ from schemas.public import (
     BookingPublicResponse,
 )
 from schemas.service import ServiceResponse
+from utils.telegram import send_telegram_message
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import uuid
@@ -300,6 +301,16 @@ async def create_booking(
     db.add(booking)
     await db.commit()
     await db.refresh(booking)
+    if master.telegram_id:
+        local_start = booking.datetime_start.astimezone(master_tz)
+        await send_telegram_message(
+            master.telegram_id,
+            f"📅 <b>Новая запись!</b>\n\n"
+            f"👤 {booking.client_name}\n"
+            f"📞 {booking.client_phone}\n"
+            f"💼 {service.name}\n"
+            f"🕐 {local_start.strftime('%d.%m.%Y %H:%M')}",
+        )
 
     logger.info(
         f"Новая запись к мастеру {master.phone}: "

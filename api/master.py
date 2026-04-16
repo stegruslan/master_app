@@ -30,6 +30,8 @@ async def update_me(
         master.name = data.name
     if data.email is not None:
         master.email = data.email
+    if data.telegram_id is not None:
+        master.telegram_id = data.telegram_id
 
     await db.commit()
     await db.refresh(master)

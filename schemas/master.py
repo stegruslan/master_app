@@ -9,6 +9,7 @@ class MasterResponse(BaseModel):
     slug: str
     is_active: bool
     timezone: str = "Europe/Moscow"
+    telegram_id: int | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -17,3 +18,4 @@ class MasterUpdate(BaseModel):
     name: str | None = None
     email: str | None = None
     timezone: str | None = None
+    telegram_id: int | None = None

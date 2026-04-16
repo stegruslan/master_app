@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch, AsyncMock
 
 
 @pytest.mark.asyncio
@@ -120,3 +121,57 @@ async def test_update_booking_notes(
     )
     assert res.status_code == 200
     assert res.json()["notes"] is None
+
+
+@pytest.mark.asyncio
+async def test_booking_sends_telegram_notification(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    # Устанавливаем telegram_id мастеру
+    await client.put(
+        "/master/me",
+        json={"telegram_id": 123456789},
+        headers=auth_headers,
+    )
+
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    with patch("api.public.send_telegram_message", new_callable=AsyncMock) as mock_tg:
+        booking_res = await client.post(
+            f"/book/{slug}",
+            json={
+                "client_name": "Тест Клиент",
+                "client_phone": "+79991234568",
+                "service_id": service_id,
+                "datetime_start": "2026-06-10T11:00:00+00:00",
+            },
+        )
+        assert booking_res.status_code == 200
+        mock_tg.assert_called_once()
+        call_args = mock_tg.call_args
+        assert call_args[0][0] == 123456789  # правильный telegram_id
+        assert "Тест Клиент" in call_args[0][1]  # имя клиента в тексте
+
+
+@pytest.mark.asyncio
+async def test_booking_no_telegram_if_not_set(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    with patch("api.public.send_telegram_message", new_callable=AsyncMock) as mock_tg:
+        booking_res = await client.post(
+            f"/book/{slug}",
+            json={
+                "client_name": "Тест Клиент",
+                "client_phone": "+79991234568",
+                "service_id": service_id,
+                "datetime_start": "2026-06-10T12:00:00+00:00",
+            },
+        )
+        assert booking_res.status_code == 200
+        mock_tg.assert_not_called()  # уведомление не отправлялось
