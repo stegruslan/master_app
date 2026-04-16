@@ -19,4 +19,4 @@ async def send_telegram_message(telegram_id: int, text: str):
                 url, json={"chat_id": telegram_id, "text": text, "parse_mode": "HTML"}
             )
     except Exception as e:
-        logger.error(f"Ошибка отправки Telegram уведомления: {e}")
+        logger.error(f"Ошибка отправки Telegram уведомления: {e}", exc_info=True)
