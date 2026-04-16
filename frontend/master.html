@@ -908,14 +908,7 @@
       color: var(--text-muted);
     }
 
-    /* .service-card-price {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--gold);
-      margin-right: 12px;
-      white-space: nowrap;
-    } */
+
 
     .add-service-form {
       background: var(--surface);
@@ -2018,6 +2011,15 @@
                 style="opacity:0.5;cursor:not-allowed;"></div>
             <div class="field"><label>Email</label><input type="email" id="profileEmail"
                 placeholder="email@example.com"></div>
+            <div class="field">
+              <label>Telegram ID</label>
+              <input type="text" id="profileTelegramId" placeholder="Вставьте ваш Telegram ID">
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                Узнайте ваш ID у бота <a href="https://t.me/seansa_notify_bot" target="_blank"
+                  style="color:var(--gold);">@seansa_notify_bot</a>
+              </div>
+            </div>
+
             <div style="display:flex;gap:10px;align-items:center;">
               <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px"
                 onclick="saveProfile()">Сохранить</button>
@@ -3380,6 +3382,7 @@
       document.getElementById('profileName').value = data.name || '';
       document.getElementById('profilePhone').value = data.phone || '';
       document.getElementById('profileEmail').value = data.email || '';
+      document.getElementById('profileTelegramId').value = data.telegram_id || '';
     }
 
     function toggleProfileDay(weekday, isWorking) {
@@ -3403,6 +3406,7 @@
     async function saveProfile() {
       const name = document.getElementById('profileName').value.trim();
       const email = document.getElementById('profileEmail').value.trim();
+      const telegramId = document.getElementById('profileTelegramId').value.trim();
       const errEl = document.getElementById('profileError');
       const succEl = document.getElementById('profileSuccess');
       errEl.classList.remove('show');
@@ -3413,7 +3417,11 @@
       try {
         const res = await apiFetch(`${API}/master/me`, {
           method: 'PUT',
-          body: JSON.stringify({ name, email: email || null })
+          body: JSON.stringify({
+            name,
+            email: email || null,
+            telegram_id: telegramId ? parseInt(telegramId) : null
+          })
         });
         if (!res.ok) throw new Error('Ошибка сохранения');
         localStorage.setItem('master_name', name);

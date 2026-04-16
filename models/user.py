@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, BigInteger
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from core.database import Base
@@ -15,6 +15,7 @@ class Master(Base):
     slug = Column(String, unique=True, index=True, nullable=False)
     is_active = Column(Boolean, default=True)
     timezone = Column(String, nullable=False, server_default="Europe/Moscow")
+    telegram_id = Column(BigInteger, nullable=True, unique=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
