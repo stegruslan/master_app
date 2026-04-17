@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -303,13 +304,15 @@ async def create_booking(
     await db.refresh(booking)
     if master.telegram_id:
         local_start = booking.datetime_start.astimezone(master_tz)
-        await send_telegram_message(
-            master.telegram_id,
-            f"📅 <b>Новая запись!</b>\n\n"
-            f"👤 {booking.client_name}\n"
-            f"📞 {booking.client_phone}\n"
-            f"💼 {service.name}\n"
-            f"🕐 {local_start.strftime('%d.%m.%Y %H:%M')}",
+        asyncio.create_task(
+            send_telegram_message(
+                master.telegram_id,
+                f"📅 <b>Новая запись!</b>\n\n"
+                f"👤 {booking.client_name}\n"
+                f"📞 {booking.client_phone}\n"
+                f"💼 {service.name}\n"
+                f"🕐 {local_start.strftime('%d.%m.%Y %H:%M')}",
+            )
         )
 
     logger.info(
