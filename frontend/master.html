@@ -488,6 +488,7 @@
     .cabinet {
       display: none;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       position: relative;
       z-index: 1;
@@ -886,6 +887,19 @@
       justify-content: space-between;
       transition: all 0.2s;
       margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .service-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .service-card>div:last-child {
+        width: 100%;
+        justify-content: flex-end;
+      }
     }
 
     .service-card:hover {
@@ -2564,7 +2578,7 @@
     <div class="booking-client">${b.client_name}</div>
     <div class="booking-meta"><span>${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
     <div class="booking-notes" id="notes-display-${b.id}">
-      ${b.notes ? `<div style="font-size:13px;color:var(--text-muted);margin-top:8px;cursor:pointer" onclick="editNotes(${b.id})">📝 ${b.notes}</div>` : `<button style="background:none;border:none;color:var(--text-muted);font-size:11px;cursor:pointer;padding:4px 0;margin-top:4px" onclick="editNotes(${b.id})">+ заметка</button>`}
+      ${b.notes ? `<div style="font-size:13px;color:var(--text-muted);margin-top:8px;cursor:pointer" onclick="editNotes(${b.id})">📝 ${b.notes}</div>` : `<button style="background:none;border:1px dashed var(--border2);border-radius:6px;color:var(--text-muted);font-size:12px;cursor:pointer;padding:4px 10px;margin-top:6px;" onclick="editNotes(${b.id})">+ заметка</button>`}
     </div>
     <div id="notes-edit-${b.id}" style="display:none;margin-top:8px">
       <textarea id="notes-input-${b.id}" style="width:100%;background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:8px;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;rows:2" placeholder="Добавить заметку...">${b.notes || ''}</textarea>
@@ -2701,7 +2715,7 @@
         </svg>
       </div>
       <div style="min-width:0;">
-        <div class="service-card-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
+        <div class="service-card-name" >${s.name}</div>
         <div class="service-card-meta">${s.duration} мин &nbsp;·&nbsp; <span style="color:var(--gold);font-weight:600;">${s.price.toLocaleString()} ₽</span></div>
       </div>
     </div>
