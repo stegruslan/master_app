@@ -175,3 +175,44 @@ async def test_booking_no_telegram_if_not_set(
         )
         assert booking_res.status_code == 200
         mock_tg.assert_not_called()  # уведомление не отправлялось
+
+
+@pytest.mark.asyncio
+async def test_booking_without_phone(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    res = await client.post(
+        f"/book/{slug}",
+        json={
+            "client_name": "Тест Клиент",
+            "service_id": service_id,
+            "datetime_start": "2026-06-10T13:00:00+00:00",
+        },
+    )
+    assert res.status_code == 200
+    assert res.json()["client_name"] == "Тест Клиент"
+
+
+@pytest.mark.asyncio
+async def test_booking_with_social(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    res = await client.post(
+        f"/book/{slug}",
+        json={
+            "client_name": "Тест Клиент",
+            "client_phone": "+79991234567",
+            "client_social": "https://t.me/testuser",
+            "service_id": service_id,
+            "datetime_start": "2026-06-10T14:00:00+00:00",
+        },
+    )
+    assert res.status_code == 200

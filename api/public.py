@@ -293,6 +293,7 @@ async def create_booking(
         client_name=data.client_name,
         client_phone=data.client_phone,
         client_email=data.client_email,
+        client_social=data.client_social,
         datetime_start=data.datetime_start,
         datetime_end=datetime_end,
         cancel_token=str(uuid.uuid4()),
@@ -309,7 +310,9 @@ async def create_booking(
                 master.telegram_id,
                 f"📅 <b>Новая запись!</b>\n\n"
                 f"👤 {booking.client_name}\n"
-                f"📞 {booking.client_phone}\n"
+                f"📞 {booking.client_phone or '—'}\n"
+                f"📧 {booking.client_email or '—'}\n"
+                f"🔗 {booking.client_social or '—'}\n"
                 f"💼 {service.name}\n"
                 f"🕐 {local_start.strftime('%d.%m.%Y %H:%M')}",
             )
