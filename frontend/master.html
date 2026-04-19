@@ -1764,7 +1764,7 @@
         <div class="section-header">
           <div class="section-title">Мои записи <span id="bookingsCount"
               style="font-size:16px;color:var(--gold);font-weight:300"></span></div>
-          <button class="btn-outline" onclick="openAddBookingModal()">+ Добавить</button>
+
         </div>
         <div class="week-calendar">
           <div class="week-calendar-header">
@@ -2218,8 +2218,12 @@
       <div class="bottom-sheet-content" id="bsBookingForm">
         <div class="modal-fields" style="margin-bottom:0">
           <div class="field"><label>Имя клиента</label><input type="text" id="bsName" placeholder="Анна Иванова"></div>
-          <div class="field"><label>Телефон</label><input type="tel" id="bsPhone" placeholder="+79991234567"
-              oninput="formatPhone(this)"></div>
+          <div class="field"><label>Телефон <span
+                style="color:var(--text-muted);font-size:12px;">(необязательно)</span></label><input type="tel"
+              id="bsPhone" placeholder="+79991234567" oninput="formatPhone(this)"></div>
+          <div class="field"><label>Ссылка на соцсеть <span
+                style="color:var(--text-muted);font-size:12px;">(необязательно)</span></label><input type="text"
+              id="bsSocial" placeholder="Ссылка или @username"></div>
           <div class="field"><label>Услуга</label><select id="bsService"></select></div>
           <div class="form-row">
             <div class="field"><label>Дата</label><input type="date" id="bsDate" readonly></div>
@@ -3178,6 +3182,7 @@
     async function saveBsBooking() {
       const name = document.getElementById('bsName').value.trim();
       const phone = document.getElementById('bsPhone').value.trim();
+      const social = document.getElementById('bsSocial').value.trim();
       const serviceId = document.getElementById('bsService').value;
       const date = document.getElementById('bsDate').value;
       const time = document.getElementById('bsTime').value;
@@ -3185,7 +3190,7 @@
       const errEl = document.getElementById('bsBookingError');
       errEl.classList.remove('show');
 
-      if (!name || !phone || !serviceId || !date || !time) {
+      if (!name || !serviceId || !date || !time) {
         errEl.textContent = 'Заполните все поля';
         errEl.classList.add('show');
         return;
@@ -3198,7 +3203,15 @@
         const res = await fetch(`${API}/book/${slug}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ service_id: parseInt(serviceId), datetime_start: datetimeStart, client_name: name, client_phone: phone, client_email: '', notes: notes || null })
+          body: JSON.stringify({
+            service_id: parseInt(serviceId),
+            datetime_start: datetimeStart,
+            client_name: name,
+            client_phone: phone || null,
+            client_email: '',
+            client_social: social || null,
+            notes: notes || null
+          })
         });
         if (!res.ok) {
           const data = await res.json();

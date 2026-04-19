@@ -5,8 +5,10 @@ from datetime import datetime
 class BookingResponse(BaseModel):
     id: int
     client_name: str
-    client_phone: str
+    client_phone: str | None = None
     client_email: str | None
+    client_social: str | None = None
+
     datetime_start: datetime
     datetime_end: datetime
     status: str

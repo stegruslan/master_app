@@ -817,6 +817,10 @@
               <input type="tel" id="clientPhone" placeholder="+79991234567" oninput="formatPhone(this)">
             </div>
             <div class="field">
+              <label>Ссылка на соцсеть (необязательно)</label>
+              <input type="text" id="clientSocial" placeholder="Ссылка или @username">
+            </div>
+            <div class="field">
               <label>Email (необязательно)</label>
               <input type="email" id="clientEmail" placeholder="anna@mail.com">
             </div>
@@ -1048,6 +1052,7 @@
       const name = document.getElementById('clientName').value.trim();
       const phone = document.getElementById('clientPhone').value.trim();
       const email = document.getElementById('clientEmail').value.trim();
+      const social = document.getElementById('clientSocial').value.trim();
       const errEl = document.getElementById('bookingError');
       const btn = document.getElementById('btnBook');
       errEl.classList.remove('show');
@@ -1057,7 +1062,14 @@
         const res = await fetch(`${API}/book/${masterSlug}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ client_name: name, client_phone: phone, client_email: email || null, service_id: selectedService.id, datetime_start: selectedSlot })
+          body: JSON.stringify({
+            client_name: name,
+            client_phone: phone,
+            client_email: email || null,
+            client_social: social || null,
+            service_id: selectedService.id,
+            datetime_start: selectedSlot
+          })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || 'Ошибка записи');

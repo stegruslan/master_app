@@ -18,15 +18,18 @@ class SlotResponse(BaseModel):
 
 class BookingCreate(BaseModel):
     client_name: str
-    client_phone: str
+    client_phone: str | None = None
     client_email: str | None = None
+    client_social: str | None = None
     service_id: int
     datetime_start: datetime
     notes: str | None = None
 
-    @field_validator("client_phone")
+    @field_validator("client_phone", mode="before")
     @classmethod
     def validate_phone(cls, v):
+        if v is None:
+            return v
         return validate_phone_number(v)
 
 
