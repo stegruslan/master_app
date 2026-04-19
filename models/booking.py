@@ -13,7 +13,8 @@ class Booking(Base):
 
     # данные клиента
     client_name = Column(String, nullable=False)
-    client_phone = Column(String, nullable=False)
+    client_phone = Column(String, nullable=True)
+    client_social = Column(String, nullable=True)
     client_email = Column(String, nullable=True)
 
     # время записи
