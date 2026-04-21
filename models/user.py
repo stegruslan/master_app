@@ -16,6 +16,7 @@ class Master(Base):
     is_active = Column(Boolean, default=True)
     timezone = Column(String, nullable=False, server_default="Europe/Moscow")
     telegram_id = Column(BigInteger, nullable=True, unique=True)
+    notify_email = Column(Boolean, nullable=True, server_default="false")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()

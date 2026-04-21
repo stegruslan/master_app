@@ -216,3 +216,63 @@ async def test_booking_with_social(
         },
     )
     assert res.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_booking_sends_email_notification(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    await client.put(
+        "/master/me",
+        json={"email": "master@test.com", "notify_email": True},
+        headers=auth_headers,
+    )
+
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    with patch(
+        "api.public.send_new_booking_email", new_callable=AsyncMock
+    ) as mock_email:
+        booking_res = await client.post(
+            f"/book/{slug}",
+            json={
+                "client_name": "Тест Клиент",
+                "client_phone": "+79991234568",
+                "service_id": service_id,
+                "datetime_start": "2026-06-11T09:00:00+00:00",
+            },
+        )
+        assert booking_res.status_code == 200
+        mock_email.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_booking_no_email_if_disabled(
+    client, auth_headers, master_with_service, master_with_schedule
+):
+    await client.put(
+        "/master/me",
+        json={"email": "master@test.com", "notify_email": False},
+        headers=auth_headers,
+    )
+
+    master_res = await client.get("/master/me", headers=auth_headers)
+    slug = master_res.json()["slug"]
+    service_id = master_with_service["id"]
+
+    with patch(
+        "api.public.send_new_booking_email", new_callable=AsyncMock
+    ) as mock_email:
+        booking_res = await client.post(
+            f"/book/{slug}",
+            json={
+                "client_name": "Тест Клиент",
+                "client_phone": "+79991234568",
+                "service_id": service_id,
+                "datetime_start": "2026-06-11T10:00:00+00:00",
+            },
+        )
+        assert booking_res.status_code == 200
+        mock_email.assert_not_called()

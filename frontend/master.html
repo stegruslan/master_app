@@ -2033,6 +2033,20 @@
                   style="color:var(--gold);">@seansa_notify_bot</a>
               </div>
             </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
+              <div>
+                <div style="font-size:14px;color:var(--text);">Уведомления на Email</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Получать письмо о новых записях
+                </div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="profileNotifyEmail">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:-8px;">
+              После изменений не забудьте нажать «Сохранить»
+            </div>
 
             <div style="display:flex;gap:10px;align-items:center;">
               <button class="btn-primary" style="margin-top:0;width:auto;padding:12px 24px"
@@ -3419,6 +3433,7 @@
       document.getElementById('profilePhone').value = data.phone || '';
       document.getElementById('profileEmail').value = data.email || '';
       document.getElementById('profileTelegramId').value = data.telegram_id || '';
+      document.getElementById('profileNotifyEmail').checked = data.notify_email || false;
     }
 
     function toggleProfileDay(weekday, isWorking) {
@@ -3443,6 +3458,7 @@
       const name = document.getElementById('profileName').value.trim();
       const email = document.getElementById('profileEmail').value.trim();
       const telegramId = document.getElementById('profileTelegramId').value.trim();
+      const notifyEmail = document.getElementById('profileNotifyEmail').checked;
       const errEl = document.getElementById('profileError');
       const succEl = document.getElementById('profileSuccess');
       errEl.classList.remove('show');
@@ -3456,7 +3472,8 @@
           body: JSON.stringify({
             name,
             email: email || null,
-            telegram_id: telegramId ? parseInt(telegramId) : null
+            telegram_id: telegramId ? parseInt(telegramId) : null,
+            notify_email: notifyEmail
           })
         });
         if (!res.ok) throw new Error('Ошибка сохранения');
