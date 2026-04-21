@@ -2580,7 +2580,12 @@
         return `<div class="booking-card">
   <div style="flex:1">
     <div class="booking-client">${b.client_name}</div>
-    <div class="booking-meta"><span>${timeStr}</span><span>${b.client_phone}</span><span>${b.service_name || ''}</span></div>
+    <div class="booking-meta">
+  <span>${timeStr}</span>
+  ${b.client_phone ? `<span>${b.client_phone}</span>` : ''}
+  ${b.client_social ? `<span style="color:#6c63ff">${b.client_social}</span>` : ''}
+  <span>${b.service_name || ''}</span>
+</div>
     <div class="booking-notes" id="notes-display-${b.id}">
       ${b.notes ? `<div style="font-size:13px;color:var(--text-muted);margin-top:8px;cursor:pointer" onclick="editNotes(${b.id})">📝 ${b.notes}</div>` : `<button style="background:none;border:1px dashed var(--border2);border-radius:6px;color:var(--text-muted);font-size:12px;cursor:pointer;padding:4px 10px;margin-top:6px;" onclick="editNotes(${b.id})">+ заметка</button>`}
     </div>
@@ -3000,7 +3005,8 @@
           timeLabel: `${stStr} — ${enStr}`,
           name: b.client_name,
           service: b.service_name || '',
-          phone: b.client_phone
+          phone: b.client_phone || null,
+          social: b.client_social || null
         });
       });
 
@@ -3032,10 +3038,12 @@
 
         if (block.type === 'booking') {
           html += `<div class="sched-day-slot slot-booking">
-            <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">${block.timeLabel}</div>
-            <div style="font-size:15px;font-weight:400;margin-bottom:2px">${block.name}</div>
-            <div style="font-size:13px;color:var(--text-muted)">${block.service} · ${block.phone}</div>
-          </div>`;
+  <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">${block.timeLabel}</div>
+  <div style="font-size:15px;font-weight:400;margin-bottom:2px">${block.name}</div>
+  <div style="font-size:13px;color:var(--text-muted)">
+    ${block.service}${block.phone ? ' · ' + block.phone : ''}${block.social ? ' · <span style="color:#6c63ff">' + block.social + '</span>' : ''}
+  </div>
+</div>`;
         } else {
           html += `<div class="sched-day-slot slot-block">
             <div>
