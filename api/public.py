@@ -17,6 +17,7 @@ from schemas.public import (
 )
 from schemas.service import ServiceResponse
 from utils.telegram import send_telegram_message
+from utils.email import send_new_booking_email
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import uuid
@@ -303,8 +304,9 @@ async def create_booking(
     db.add(booking)
     await db.commit()
     await db.refresh(booking)
+    local_start = booking.datetime_start.astimezone(master_tz)
+
     if master.telegram_id:
-        local_start = booking.datetime_start.astimezone(master_tz)
         asyncio.create_task(
             send_telegram_message(
                 master.telegram_id,
@@ -315,6 +317,20 @@ async def create_booking(
                 f"🔗 {booking.client_social or '—'}\n"
                 f"💼 {service.name}\n"
                 f"🕐 {local_start.strftime('%d.%m.%Y %H:%M')}",
+            )
+        )
+    if master.notify_email and master.email:
+        asyncio.create_task(
+            send_new_booking_email(
+                master.email,
+                {
+                    "client_name": booking.client_name,
+                    "client_phone": booking.client_phone,
+                    "client_email": booking.client_email,
+                    "client_social": booking.client_social,
+                    "service_name": service.name,
+                    "datetime": local_start.strftime("%d.%m.%Y %H:%M"),
+                },
             )
         )
 

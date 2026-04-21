@@ -10,6 +10,7 @@ class MasterResponse(BaseModel):
     is_active: bool
     timezone: str = "Europe/Moscow"
     telegram_id: int | None = None
+    notify_email: bool = False
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -19,3 +20,4 @@ class MasterUpdate(BaseModel):
     email: str | None = None
     timezone: str | None = None
     telegram_id: int | None = None
+    notify_email: bool | None = None
