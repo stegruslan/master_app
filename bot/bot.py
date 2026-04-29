@@ -5,13 +5,11 @@ from aiogram.client.session.aiohttp import AiohttpSession
 from aiohttp_socks import ProxyConnector
 from core.config import settings
 
-connector = ProxyConnector.from_url(settings.PROXY_URL)
-session = AiohttpSession(connector=connector)
-bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
-db = Dispatcher()
+
+dp = Dispatcher()
 
 
-@db.message(Command("start"))
+@dp.message(Command("start"))
 async def start(message: types.Message):
     await message.answer(
         f"👋 Привет!\n\n"
@@ -22,7 +20,10 @@ async def start(message: types.Message):
 
 
 async def main():
-    await db.start_polling(bot)
+    connector = ProxyConnector.from_url(settings.PROXY_URL)
+    session = AiohttpSession(connector=connector)
+    bot = Bot(token=settings.TELEGRAM_BOT_TOKEN, session=session)
+    await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
