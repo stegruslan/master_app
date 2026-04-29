@@ -13,9 +13,8 @@ async def send_telegram_message(telegram_id: int, text: str):
 
     url = f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage"
     try:
-        async with httpx.AsyncClient(
-            proxy="socks5h://185.200.176.134:1080", timeout=30.0
-        ) as client:
+        proxy = settings.PROXY_URL if settings.PROXY_URL else None
+        async with httpx.AsyncClient(proxy=proxy, timeout=30.0) as client:
             await client.post(
                 url, json={"chat_id": telegram_id, "text": text, "parse_mode": "HTML"}
             )

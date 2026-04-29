@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = ""
     TELEGRAM_BOT_TOKEN: str = ""
     FRONTEND_URL: str = "https://seansa.ru"
+    PROXY_URL: str = ""
 
     DEBUG: bool = False
     ALLOWED_ORIGINS: list[str] = ["*"]
