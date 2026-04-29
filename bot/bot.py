@@ -1,9 +1,12 @@
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
+from aiogram.client.session.aiohttp import AiohttpSession
+from aiohttp_socks import ProxyConnector
 from core.config import settings
 
-
+connector = ProxyConnector.from_url(settings.PROXY_URL)
+session = AiohttpSession(connector=connector)
 bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
 db = Dispatcher()
 
