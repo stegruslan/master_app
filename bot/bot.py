@@ -1,9 +1,8 @@
 import asyncio
-import aiohttp
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.client.bot import DefaultBotProperties
-from aiohttp_socks import ProxyConnector
 from core.config import settings
 
 
@@ -21,12 +20,12 @@ async def start(message: types.Message):
 
 
 async def main():
-    connector = ProxyConnector.from_url(settings.PROXY_URL)
+    session = AiohttpSession(proxy=settings.PROXY_URL)
     bot = Bot(
         token=settings.TELEGRAM_BOT_TOKEN,
+        session=session,
         default=DefaultBotProperties(parse_mode="HTML"),
     )
-    bot.session._session = aiohttp.ClientSession(connector=connector)
     await dp.start_polling(bot)
 
 
