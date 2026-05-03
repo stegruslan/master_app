@@ -1,3 +1,7 @@
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green)
+![Tests](https://img.shields.io/badge/tests-19%20passed-brightgreen)
+![Demo](screenshots/demo.gif)
 # Seansa — онлайн-запись для специалистов
 
 SaaS-сервис, позволяющий специалистам принимать записи от клиентов через персональную публичную страницу. Мастер настраивает услуги и расписание — клиент записывается без регистрации.
